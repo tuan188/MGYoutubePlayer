@@ -1,0 +1,112 @@
+PODS:
+  - Alamofire (4.9.1)
+  - Differentiator (4.0.1)
+  - MBProgressHUD (1.2.0)
+  - MGAPIService (2.2.1):
+    - ObjectMapper (~> 3.5)
+    - RxAlamofire (~> 5.1)
+    - RxSwift (~> 5.1)
+  - MGArchitecture (1.3.1):
+    - RxCocoa (~> 5.1)
+    - RxSwift (~> 5.1)
+  - MGLoadMore (1.3.1):
+    - MJRefresh (~> 3.2)
+    - RxCocoa (~> 5.1)
+    - RxSwift (~> 5.1)
+  - MJRefresh (3.3.1)
+  - "NSObject+Rx (5.0.2)":
+    - RxSwift (~> 5.0)
+  - ObjectMapper (3.5.1)
+  - Reusable (4.1.1):
+    - Reusable/Storyboard (= 4.1.1)
+    - Reusable/View (= 4.1.1)
+  - Reusable/Storyboard (4.1.1)
+  - Reusable/View (4.1.1)
+  - RxAlamofire (5.1.0):
+    - RxAlamofire/Core (= 5.1.0)
+  - RxAlamofire/Core (5.1.0):
+    - Alamofire (~> 4.8)
+    - RxSwift (~> 5.0)
+  - RxBlocking (5.1.0):
+    - RxSwift (~> 5)
+  - RxCocoa (5.1.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxDataSources (4.0.1):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - RxRelay (5.1.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.0)
+  - SDWebImage (5.6.0):
+    - SDWebImage/Core (= 5.6.0)
+  - SDWebImage/Core (5.6.0)
+  - Then (2.6.0)
+  - Validator (3.2.1)
+  - YoutubePlayer-in-WKWebView (0.3.4)
+
+DEPENDENCIES:
+  - MBProgressHUD (~> 1.2)
+  - MGAPIService (~> 2.2.1)
+  - MGArchitecture (~> 1.3.1)
+  - MGLoadMore (~> 1.3.1)
+  - MJRefresh (~> 3.2)
+  - "NSObject+Rx (~> 5.0)"
+  - ObjectMapper (~> 3.5)
+  - Reusable (~> 4.1)
+  - RxBlocking (~> 5.1)
+  - RxDataSources (~> 4.0)
+  - SDWebImage (~> 5.6)
+  - Then (~> 2.4)
+  - Validator (~> 3.2.1)
+  - YoutubePlayer-in-WKWebView (~> 0.3.0)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Differentiator
+    - MBProgressHUD
+    - MGAPIService
+    - MGArchitecture
+    - MGLoadMore
+    - MJRefresh
+    - "NSObject+Rx"
+    - ObjectMapper
+    - Reusable
+    - RxAlamofire
+    - RxBlocking
+    - RxCocoa
+    - RxDataSources
+    - RxRelay
+    - RxSwift
+    - SDWebImage
+    - Then
+    - Validator
+    - YoutubePlayer-in-WKWebView
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  MGAPIService: 2ea8217d3bb8cde33bf47e6579882a73a9cccebb
+  MGArchitecture: 0fa04fdeea21f26469b8faab16ba48752af31499
+  MGLoadMore: a12ea88793ed989f2afd73b958aaf70e12048a7d
+  MJRefresh: eeda70fbf0ad277f3178cef1cd0c3532591d6237
+  "NSObject+Rx": 2eb2cf51fd1c554118449a7fbc36e4cd620b9e94
+  ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
+  Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
+  RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
+  RxBlocking: 5ef131267220f92ef68531dd6afeaf407cd6b41a
+  RxCocoa: 13d2a4d7546a34b8ececae8c281e4ea1dbb94f2b
+  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
+  RxRelay: a168bd6caf712d00c676ac344e9295afc93b418e
+  RxSwift: ad5874f24bb0dbffd1e9bb8443604e3578796c7a
+  SDWebImage: 21b19f56b4226cdfe3aefe4e6848dc43ed129a86
+  Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
+  Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
+  YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
+
+PODFILE CHECKSUM: 9c132d90541a6c451eff17f9dfa4c9a1808301b1
+
+COCOAPODS: 1.9.0
