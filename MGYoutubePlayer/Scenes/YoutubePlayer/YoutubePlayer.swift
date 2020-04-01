@@ -23,6 +23,24 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         case unknow
     }
     
+    struct Options {
+        var controls = false
+        var playsInline = true
+        var autohide = true
+        var showInfo = false
+        var modestBranding = true
+        
+        func toDictionary() -> [String: Any] {
+            return [
+                "controls": controls ? 1 : 0,
+                "playsinline": playsInline ? 1 : 0,
+                "autohide": autohide ? 1 : 0,
+                "showinfo": showInfo ? 1 : 0,
+                "modestbranding": modestBranding ? 1 : 0
+            ]
+        }
+    }
+    
     private var playerView: WKYTPlayerView?
     private var superView: UIView?
     private var timer: Timer?
@@ -99,7 +117,7 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         superView = view
     }
     
-    func load(videoId: String) {
+    func load(videoId: String, options: Options = Options()) {
         _playTime.onNext(0)
         _duration.onNext(0)
         _state.onNext(.unstarted)
@@ -117,13 +135,7 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
             })
         })
         
-        playerView?.load(withVideoId: videoId, playerVars: [
-            "controls": 0,
-            "playsinline": 1,
-            "autohide": 1,
-            "showinfo": 0,
-            "modestbranding": 1
-        ])
+        playerView?.load(withVideoId: videoId, playerVars: options.toDictionary())
     }
     
     func play() {
