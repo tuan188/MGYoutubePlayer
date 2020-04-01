@@ -10,11 +10,12 @@ import UIKit
 import YoutubePlayer_in_WKWebView
 
 final class YoutubePlayerView: UIView, NibOwnerLoadable {
-    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var slider: ProgressSlider!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playerBackgroundView: UIView!
     @IBOutlet weak var playTimeLabel: UILabel!
     @IBOutlet weak var remainingTimeLabel: UILabel!
+    @IBOutlet weak var durationLabel: UILabel!
     
     private var player: YoutubePlayer!
     
@@ -41,6 +42,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
         player.duration
             .drive(onNext: { [unowned self] duration in
                 self.slider.maximumValue = duration
+                self.durationLabel.text = duration.toMMSS()
             })
             .disposed(by: rx.disposeBag)
         
@@ -53,6 +55,12 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
         player.progress
             .drive(onNext: { [unowned self] progress in
                 self.slider.value = progress
+            })
+            .disposed(by: rx.disposeBag)
+        
+        player.loadedFraction
+            .drive(onNext: { progress in
+                self.slider.loadedProgress = CGFloat(progress)
             })
             .disposed(by: rx.disposeBag)
         

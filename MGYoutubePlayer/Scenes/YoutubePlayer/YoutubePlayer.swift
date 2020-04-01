@@ -25,6 +25,9 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
     
     private var playerView: WKYTPlayerView?
     private var superView: UIView?
+    private var timer: Timer?
+    
+    // MARK: - Public properties
     
     private let _state = BehaviorSubject(value: YoutubePlayer.State.unstarted)
     
@@ -68,6 +71,18 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         return _isReady.asDriver(onErrorJustReturn: false)
     }
     
+    private let _loadedFraction = BehaviorSubject(value: Float(0.0))
+    
+    var loadedFraction: Driver<Float> {
+        return _loadedFraction.asDriver(onErrorJustReturn: 0.0)
+    }
+    
+    // MARK: - Methods
+    
+    deinit {
+        timer?.invalidate()
+    }
+    
     func addPlayer(to view: UIView) {
         let player = WKYTPlayerView(frame: view.bounds)
         player.delegate = self
@@ -83,6 +98,18 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         _state.onNext(.unstarted)
         _isReady.onNext(false)
         _progress.onNext(0)
+        timer?.invalidate()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
+            self?.playerView?.getVideoLoadedFraction({ (fraction, error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    print(fraction)
+                    self?._loadedFraction.onNext(fraction)
+                }
+            })
+        })
         
         playerView?.load(withVideoId: videoId, playerVars: [
             "controls": 0,
@@ -115,6 +142,8 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
             if let error = error {
                 self?._error.onNext(error)
             } else {
+                self?._playTime.onNext(playTime)
+                
                 let duration = Float(time)
                 self?._duration.onNext(duration)
                 
@@ -128,6 +157,7 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
     }
 }
 
+// MARK: - WKYTPlayerViewDelegate
 extension YoutubePlayer: WKYTPlayerViewDelegate {
     func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
         _isReady.onNext(true)
@@ -164,7 +194,6 @@ extension YoutubePlayer: WKYTPlayerViewDelegate {
     }
     
     func playerView(_ playerView: WKYTPlayerView, didPlayTime playTime: Float) {
-        _playTime.onNext(playTime)
         getDuration(for: playerView, playTime: playTime)
     }
     
