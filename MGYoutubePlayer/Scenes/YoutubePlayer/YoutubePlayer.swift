@@ -29,7 +29,7 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
     
     // MARK: - Public properties
     
-    private let _state = BehaviorSubject(value: YoutubePlayer.State.unstarted)
+    private let _state = BehaviorSubject(value: YoutubePlayer.State.unknow)
     
     var state: Driver<YoutubePlayer.State> {
         return _state.asDriver(onErrorJustReturn: .unknow)
@@ -88,6 +88,13 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         player.delegate = self
         view.addSubview(player)
         
+        // Constraints
+        player.translatesAutoresizingMaskIntoConstraints = false
+        player.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        player.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+        player.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        player.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        
         playerView = player
         superView = view
     }
@@ -103,9 +110,8 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
             self?.playerView?.getVideoLoadedFraction({ (fraction, error) in
                 if let error = error {
-                    print(error)
+                    self?._error.onNext(error)
                 } else {
-                    print(fraction)
                     self?._loadedFraction.onNext(fraction)
                 }
             })

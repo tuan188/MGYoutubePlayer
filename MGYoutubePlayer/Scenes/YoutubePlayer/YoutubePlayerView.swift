@@ -18,6 +18,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
     @IBOutlet weak var durationLabel: UILabel!
     
     private var player: YoutubePlayer!
+    private var state = YoutubePlayer.State.unknow
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -25,14 +26,21 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
     }
     
     @IBAction private func play(_ sender: Any) {
-        player.play()
+        switch state {
+        case .playing, .buffering:
+            player.pause()
+        default:
+            player.play()
+        }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         configPlayer()
-        
-        player.load(videoId: "M7lc1UVf-VE")
+    }
+    
+    func load(videoId: String) {
+        player.load(videoId: videoId)
     }
     
     private func configPlayer() {
@@ -72,8 +80,23 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
         
         player.isReady
             .drive(onNext: { [unowned self] isReady in
+                print("Ready:", isReady)
                 self.playButton.isEnabled = isReady
                 self.slider.isEnabled = isReady
+            })
+            .disposed(by: rx.disposeBag)
+        
+        player.state
+            .drive(onNext: { [unowned self] state in
+                self.state = state
+                print(state)
+                
+                switch state {
+                case .playing, .buffering:
+                    self.playButton.setTitle("Pause", for: .normal)
+                default:
+                    self.playButton.setTitle("Play", for: .normal)
+                }
             })
             .disposed(by: rx.disposeBag)
     }

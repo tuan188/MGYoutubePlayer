@@ -12,6 +12,7 @@ import Reusable
 final class VideoDetailViewController: UIViewController, BindableType {
     
     // MARK: - IBOutlets
+    @IBOutlet weak var playerView: YoutubePlayerView!
     
     // MARK: - Properties
     
@@ -43,7 +44,9 @@ final class VideoDetailViewController: UIViewController, BindableType {
             .disposed(by: rx.disposeBag)
         
         output.videoId
-            .drive()
+            .drive(onNext: { [unowned self] videoId in
+                self.playerView.load(videoId: videoId)
+            })
             .disposed(by: rx.disposeBag)
     }
 }

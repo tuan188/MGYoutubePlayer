@@ -40,9 +40,9 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mhb-H8-GGS">
-                            <rect key="frame" x="150.5" y="36" width="40" height="40"/>
+                            <rect key="frame" x="140.5" y="36" width="60" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="40" id="4JP-zr-YDm"/>
+                                <constraint firstAttribute="width" constant="60" id="4JP-zr-YDm"/>
                                 <constraint firstAttribute="height" constant="40" id="6Bd-hx-qc6"/>
                             </constraints>
                             <state key="normal" title="Play"/>

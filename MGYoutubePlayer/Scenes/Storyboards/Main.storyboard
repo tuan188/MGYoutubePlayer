@@ -47,21 +47,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y8D-Zj-zcp" customClass="YoutubePlayerView" customModule="MGYoutubePlayer" customModuleProvider="target">
-                                <rect key="frame" x="16" y="20" width="343" height="313"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="313" id="Ao6-tT-Clb"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Y8D-Zj-zcp" firstAttribute="leading" secondItem="d60-x5-NMI" secondAttribute="leading" constant="16" id="dpe-Nk-BNK"/>
-                            <constraint firstItem="d60-x5-NMI" firstAttribute="trailing" secondItem="Y8D-Zj-zcp" secondAttribute="trailing" constant="16" id="jzG-e6-Gnk"/>
-                            <constraint firstItem="Y8D-Zj-zcp" firstAttribute="top" secondItem="d60-x5-NMI" secondAttribute="top" constant="20" id="ucg-V2-gZH"/>
+                            <constraint firstItem="d60-x5-NMI" firstAttribute="bottom" secondItem="Y8D-Zj-zcp" secondAttribute="bottom" id="3nJ-bW-17f"/>
+                            <constraint firstItem="Y8D-Zj-zcp" firstAttribute="leading" secondItem="d60-x5-NMI" secondAttribute="leading" id="dpe-Nk-BNK"/>
+                            <constraint firstItem="d60-x5-NMI" firstAttribute="trailing" secondItem="Y8D-Zj-zcp" secondAttribute="trailing" id="jzG-e6-Gnk"/>
+                            <constraint firstItem="Y8D-Zj-zcp" firstAttribute="top" secondItem="d60-x5-NMI" secondAttribute="top" id="ucg-V2-gZH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d60-x5-NMI"/>
                     </view>
+                    <connections>
+                        <outlet property="playerView" destination="Y8D-Zj-zcp" id="bEh-2D-T2g"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VF8-hV-kxO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
