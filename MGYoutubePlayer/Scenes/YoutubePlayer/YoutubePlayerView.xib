@@ -31,9 +31,9 @@
                     <rect key="frame" x="0.0" y="215" width="341" height="100"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vi0-da-rIT">
-                            <rect key="frame" x="290.5" y="39" width="42.5" height="16"/>
+                            <rect key="frame" x="290" y="39" width="43" height="16"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="42.5" id="A2u-Di-th2"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="43" id="A2u-Di-th2"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <nil key="textColor"/>
@@ -52,27 +52,34 @@
                         </button>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dc9-Uw-RHo" customClass="ProgressSlider" customModule="MGYoutubePlayer" customModuleProvider="target">
                             <rect key="frame" x="8" y="4" width="327" height="31"/>
+                            <connections>
+                                <action selector="progressSliderTouchedCancel:" destination="-1" eventType="touchCancel" id="FWx-I8-k4B"/>
+                                <action selector="progressSliderTouchedDown:" destination="-1" eventType="touchDown" id="hJP-Xn-2gd"/>
+                                <action selector="progressSliderTouchedUpInside:" destination="-1" eventType="touchUpInside" id="m9l-oo-EWH"/>
+                                <action selector="progressSliderTouchedUpOutside:" destination="-1" eventType="touchUpOutside" id="pIx-vq-fJj"/>
+                                <action selector="progressSliderValueChanged:" destination="-1" eventType="valueChanged" id="ta7-am-2Wc"/>
+                            </connections>
                         </slider>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="AFl-gF-e4d">
-                            <rect key="frame" x="8" y="39" width="85.5" height="16"/>
+                            <rect key="frame" x="8" y="39" width="86" height="16"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrW-IS-TbP">
-                                    <rect key="frame" x="0.0" y="0.0" width="36.5" height="16"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="37" height="16"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="36.5" id="NTz-9d-xBe"/>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="37" id="NTz-9d-xBe"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8O-QV-4ne">
-                                    <rect key="frame" x="40.5" y="0.0" width="4.5" height="16"/>
+                                    <rect key="frame" x="41" y="0.0" width="4.5" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gqe-Ja-goT">
-                                    <rect key="frame" x="49" y="0.0" width="36.5" height="16"/>
+                                    <rect key="frame" x="49.5" y="0.0" width="36.5" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>

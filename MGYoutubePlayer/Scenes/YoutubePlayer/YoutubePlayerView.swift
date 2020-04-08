@@ -17,8 +17,12 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
     @IBOutlet weak var remainingTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     
-    private var player: YoutubePlayer!
+    private var player: YoutubePlayer?
     private var state = YoutubePlayer.State.unknow
+    
+    var isConfigured: Bool {
+        return player != nil
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -28,57 +32,47 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
     @IBAction private func play(_ sender: Any) {
         switch state {
         case .playing, .buffering:
-            player.pause()
+            player?.pause()
         default:
-            player.play()
+            player?.play()
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        configPlayer()
-    }
-    
     func load(videoId: String) {
-        player.load(videoId: videoId)
+        player?.load(videoId: videoId)
     }
     
-    private func configPlayer() {
+    func configPlayer() {
         player = YoutubePlayer()
-        player.addPlayer(to: playerBackgroundView)
+        player?.addPlayer(to: playerBackgroundView)
         
-        player.duration
+        player?.rx.duration
             .drive(onNext: { [unowned self] duration in
                 self.slider.maximumValue = duration
                 self.durationLabel.text = duration.toMMSS()
             })
             .disposed(by: rx.disposeBag)
         
-        player.remainingTime
+        player?.rx.remainingTime
             .drive(onNext: { [unowned self] remainingTime in
                 self.remainingTimeLabel.text = "-" + remainingTime.toMMSS()
             })
             .disposed(by: rx.disposeBag)
         
-        player.progress
-            .drive(onNext: { [unowned self] progress in
-                self.slider.value = progress
-            })
-            .disposed(by: rx.disposeBag)
-        
-        player.loadedFraction
+        player?.rx.loadedFraction
             .drive(onNext: { progress in
                 self.slider.loadedProgress = CGFloat(progress)
             })
             .disposed(by: rx.disposeBag)
         
-        player.playTime
+        player?.rx.playTime
             .drive(onNext: { [unowned self] playTime in
+                self.slider.value = playTime
                 self.playTimeLabel.text = playTime.toMMSS()
             })
             .disposed(by: rx.disposeBag)
         
-        player.isReady
+        player?.rx.isReady
             .drive(onNext: { [unowned self] isReady in
                 print("Ready:", isReady)
                 self.playButton.isEnabled = isReady
@@ -86,7 +80,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
             })
             .disposed(by: rx.disposeBag)
         
-        player.state
+        player?.rx.state
             .drive(onNext: { [unowned self] state in
                 self.state = state
                 print(state)
@@ -103,6 +97,36 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        player.bingPlayerToFront()
+        player?.bingPlayerToFront()
+    }
+    
+    @IBAction private func progressSliderValueChanged(_ sender: UISlider) {
+//        seekTrigger.onNext(Double(sender.value))
+    }
+    
+    @IBAction private func progressSliderTouchedDown(_ sender: UISlider) {
+//        guard sender.isEnabled else { return }
+//        seekStateTrigger.onNext(.begin)
+    }
+    
+    @IBAction private func progressSliderTouchedUpInside(_ sender: UISlider) {
+//        guard sender.isEnabled else { return }
+//        seekStateTrigger.onNext(.seeking)
+        let time = sender.value
+        player?.seek(to: time)
+    }
+    
+    @IBAction private func progressSliderTouchedUpOutside(_ sender: UISlider) {
+//        guard sender.isEnabled else { return }
+//        seekStateTrigger.onNext(.seeking)
+        let time = sender.value
+        player?.seek(to: time)
+    }
+    
+    @IBAction private func progressSliderTouchedCancel(_ sender: UISlider) {
+//        guard sender.isEnabled else { return }
+//        seekStateTrigger.onNext(.seeking)
+        let time = sender.value
+        player?.seek(to: time)
     }
 }

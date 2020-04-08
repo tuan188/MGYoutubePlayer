@@ -24,6 +24,11 @@ final class VideoDetailViewController: UIViewController, BindableType {
         super.viewDidLoad()
         configView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        playerView.configPlayer()
+    }
 
     deinit {
         logDeinit()
@@ -36,7 +41,12 @@ final class VideoDetailViewController: UIViewController, BindableType {
     }
 
     func bindViewModel() {
-        let input = VideoDetailViewModel.Input(loadTrigger: Driver.just(()))
+        let loadTrigger = self.rx.methodInvoked(#selector(UIViewController.viewDidAppear))
+            .map { $0.first as? Bool ?? false }
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
+        
+        let input = VideoDetailViewModel.Input(loadTrigger: loadTrigger)
         let output = viewModel.transform(input)
         
         output.title

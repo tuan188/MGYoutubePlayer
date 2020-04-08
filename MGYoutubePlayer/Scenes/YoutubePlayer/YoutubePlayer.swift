@@ -11,6 +11,10 @@ import YoutubePlayer_in_WKWebView
 import RxSwift
 import RxCocoa
 
+struct YoutubePlayerError: Error {
+    
+}
+
 class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
     
     enum State {
@@ -21,6 +25,12 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         case buffering
         case queued
         case unknow
+    }
+    
+    enum SeekState {
+        case none
+        case dragging
+        case seek(TimeInterval)
     }
     
     struct Options {
@@ -47,53 +57,22 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
     
     // MARK: - Public properties
     
-    private let _state = BehaviorSubject(value: YoutubePlayer.State.unknow)
+    private(set) var playTime: Float = 0.0
+    private(set) var state: YoutubePlayer.State = .unknow
+    private(set) var duration: Float = 0.0
+    private(set) var remainingTime: Float = 0.0
+    private(set) var isReady = false
+    private(set) var loadedFraction: Float = 0.0
     
-    var state: Driver<YoutubePlayer.State> {
-        return _state.asDriver(onErrorJustReturn: .unknow)
-    }
+    // MARK: - Private properties
     
-    private let _playTime = BehaviorSubject(value: Float(0.0))
-    
-    var playTime: Driver<Float> {
-        return _playTime.asDriver(onErrorJustReturn: 0.0)
-    }
-    
-    private let _duration = BehaviorSubject(value: Float(0.0))
-    
-    var duration: Driver<Float> {
-        return _duration.asDriver(onErrorJustReturn: 0.0)
-    }
-    
-    private let _progress = BehaviorSubject(value: Float(0.0))
-    
-    var progress: Driver<Float> {
-        return _progress.asDriver(onErrorJustReturn: 0.0)
-    }
-    
-    private let _remainingTime = BehaviorSubject(value: Float(0.0))
-    
-    var remainingTime: Driver<Float> {
-        return _remainingTime.asDriver(onErrorJustReturn: 0.0)
-    }
-    
-    private let _error = PublishSubject<Error>()
-    
-    var error: Driver<Error> {
-        return _error.asDriverOnErrorJustComplete()
-    }
-    
-    private let _isReady = BehaviorSubject(value: false)
-    
-    var isReady: Driver<Bool> {
-        return _isReady.asDriver(onErrorJustReturn: false)
-    }
-    
-    private let _loadedFraction = BehaviorSubject(value: Float(0.0))
-    
-    var loadedFraction: Driver<Float> {
-        return _loadedFraction.asDriver(onErrorJustReturn: 0.0)
-    }
+    fileprivate let _state = BehaviorSubject(value: YoutubePlayer.State.unknow)
+    fileprivate let _playTime = BehaviorSubject(value: Float(0.0))
+    fileprivate let _duration = BehaviorSubject(value: Float(0.0))
+    fileprivate let _remainingTime = BehaviorSubject(value: Float(0.0))
+    fileprivate let _error = PublishSubject<Error>()
+    fileprivate let _isReady = BehaviorSubject(value: false)
+    fileprivate let _loadedFraction = BehaviorSubject(value: Float(0.0))
     
     // MARK: - Methods
     
@@ -118,11 +97,16 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
     }
     
     func load(videoId: String, options: Options = Options()) {
+        playTime = 0
+        duration = 0
+        state = .unknow
+        isReady = false
+        
         _playTime.onNext(0)
         _duration.onNext(0)
-        _state.onNext(.unstarted)
+        _state.onNext(.unknow)
         _isReady.onNext(false)
-        _progress.onNext(0)
+        
         timer?.invalidate()
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
@@ -150,6 +134,10 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         playerView?.pauseVideo()
     }
     
+    func seek(to seconds: Float) {
+        playerView?.seek(toSeconds: seconds, allowSeekAhead: true)
+    }
+    
     func bingPlayerToFront() {
         guard let playerView = playerView else { return }
         superView?.bringSubviewToFront(playerView)
@@ -160,18 +148,46 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
             if let error = error {
                 self?._error.onNext(error)
             } else {
-                self?._playTime.onNext(playTime)
-                
                 let duration = Float(time)
+                self?.duration = duration
                 self?._duration.onNext(duration)
                 
-                let progress = playTime / duration
-                self?._progress.onNext(progress)
-                
                 let remainingTime = duration - playTime
+                self?.remainingTime = remainingTime
                 self?._remainingTime.onNext(remainingTime)
             }
         })
+    }
+}
+
+// MARK: - Reactive
+extension Reactive where Base: YoutubePlayer {
+    var state: Driver<YoutubePlayer.State> {
+        return self.base._state.asDriver(onErrorJustReturn: .unknow)
+    }
+    
+    var playTime: Driver<Float> {
+        return self.base._playTime.asDriver(onErrorJustReturn: 0.0)
+    }
+    
+    var duration: Driver<Float> {
+        return self.base._duration.asDriver(onErrorJustReturn: 0.0)
+    }
+    
+    var remainingTime: Driver<Float> {
+        return self.base._remainingTime.asDriver(onErrorJustReturn: 0.0)
+    }
+    
+    var error: Driver<Error> {
+        return self.base._error.asDriver(onErrorJustReturn: YoutubePlayerError())
+    }
+    
+    var isReady: Driver<Bool> {
+        return self.base._isReady.asDriver(onErrorJustReturn: false)
+    }
+    
+    var loadedFraction: Driver<Float> {
+        return self.base._loadedFraction.asDriver(onErrorJustReturn: 0.0)
     }
 }
 
@@ -183,24 +199,27 @@ extension YoutubePlayer: WKYTPlayerViewDelegate {
     }
 
     func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
+        let playerState: YoutubePlayer.State
+        
         switch state {
         case .unstarted:
-            _state.onNext(.unstarted)
+            playerState = .unstarted
         case .ended:
-            _state.onNext(.ended)
+            playerState = .ended
         case .playing:
-            _state.onNext(.playing)
+            playerState = .playing
         case .paused:
-            _state.onNext(.paused)
+            playerState = .paused
         case .buffering:
-            _state.onNext(.buffering)
+            playerState = .buffering
         case .queued:
-            _state.onNext(.queued)
-        case .unknown:
-            _state.onNext(.unknow)
+            playerState = .queued
         default:
-            break
+            playerState = .unknow
         }
+        
+        self.state = playerState
+        self._state.onNext(playerState)
     }
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {
@@ -212,6 +231,8 @@ extension YoutubePlayer: WKYTPlayerViewDelegate {
     }
     
     func playerView(_ playerView: WKYTPlayerView, didPlayTime playTime: Float) {
+        self.playTime = playTime
+        _playTime.onNext(playTime)
         getDuration(for: playerView, playTime: playTime)
     }
     
