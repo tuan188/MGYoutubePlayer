@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import YoutubePlayer_in_WKWebView
 import RxSwift
 import RxCocoa
 
@@ -27,12 +26,6 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         case unknow
     }
     
-    enum SeekState {
-        case none
-        case dragging
-        case seek(TimeInterval)
-    }
-    
     struct Options {
         var controls = false
         var playsInline = true
@@ -50,29 +43,47 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
             ]
         }
     }
+    // MARK: - Public properties
+    
+    var shouldRequestDurationChanges = false
+    
+    var playTime: Float {
+        return _playTime.value
+    }
+    
+    var state: YoutubePlayer.State {
+        return _state.value
+    }
+    
+    var duration: Float {
+        return _duration.value
+    }
+    
+    var remainingTime: Float {
+        return _remainingTime.value
+    }
+    
+    var isReady: Bool {
+        return _isReady.value
+    }
+    
+    var loadedFraction: Float {
+        return _loadedFraction.value
+    }
+    
+    // MARK: - Private properties
     
     private var playerView: WKYTPlayerView?
     private var superView: UIView?
     private var timer: Timer?
     
-    // MARK: - Public properties
-    
-    private(set) var playTime: Float = 0.0
-    private(set) var state: YoutubePlayer.State = .unknow
-    private(set) var duration: Float = 0.0
-    private(set) var remainingTime: Float = 0.0
-    private(set) var isReady = false
-    private(set) var loadedFraction: Float = 0.0
-    
-    // MARK: - Private properties
-    
-    fileprivate let _state = BehaviorSubject(value: YoutubePlayer.State.unknow)
-    fileprivate let _playTime = BehaviorSubject(value: Float(0.0))
-    fileprivate let _duration = BehaviorSubject(value: Float(0.0))
-    fileprivate let _remainingTime = BehaviorSubject(value: Float(0.0))
+    fileprivate let _state = BehaviorRelay(value: YoutubePlayer.State.unknow)
+    fileprivate let _playTime = BehaviorRelay(value: Float.zero)
+    fileprivate let _duration = BehaviorRelay(value: Float.zero)
+    fileprivate let _remainingTime = BehaviorRelay(value: Float.zero)
     fileprivate let _error = PublishSubject<Error>()
-    fileprivate let _isReady = BehaviorSubject(value: false)
-    fileprivate let _loadedFraction = BehaviorSubject(value: Float(0.0))
+    fileprivate let _isReady = BehaviorRelay(value: false)
+    fileprivate let _loadedFraction = BehaviorRelay(value: Float.zero)
     
     // MARK: - Methods
     
@@ -97,15 +108,10 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
     }
     
     func load(videoId: String, options: Options = Options()) {
-        playTime = 0
-        duration = 0
-        state = .unknow
-        isReady = false
-        
-        _playTime.onNext(0)
-        _duration.onNext(0)
-        _state.onNext(.unknow)
-        _isReady.onNext(false)
+        _playTime.accept(0)
+        _duration.accept(0)
+        _state.accept(.unknow)
+        _isReady.accept(false)
         
         timer?.invalidate()
         
@@ -114,7 +120,7 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
                 if let error = error {
                     self?._error.onNext(error)
                 } else {
-                    self?._loadedFraction.onNext(fraction)
+                    self?._loadedFraction.accept(fraction)
                 }
             })
         })
@@ -149,12 +155,10 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
                 self?._error.onNext(error)
             } else {
                 let duration = Float(time)
-                self?.duration = duration
-                self?._duration.onNext(duration)
+                self?._duration.accept(duration)
                 
                 let remainingTime = duration - playTime
-                self?.remainingTime = remainingTime
-                self?._remainingTime.onNext(remainingTime)
+                self?._remainingTime.accept(remainingTime)
             }
         })
     }
@@ -194,7 +198,7 @@ extension Reactive where Base: YoutubePlayer {
 // MARK: - WKYTPlayerViewDelegate
 extension YoutubePlayer: WKYTPlayerViewDelegate {
     func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
-        _isReady.onNext(true)
+        _isReady.accept(true)
         getDuration(for: playerView, playTime: 0)
     }
 
@@ -218,8 +222,7 @@ extension YoutubePlayer: WKYTPlayerViewDelegate {
             playerState = .unknow
         }
         
-        self.state = playerState
-        self._state.onNext(playerState)
+        self._state.accept(playerState)
     }
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {
@@ -231,9 +234,14 @@ extension YoutubePlayer: WKYTPlayerViewDelegate {
     }
     
     func playerView(_ playerView: WKYTPlayerView, didPlayTime playTime: Float) {
-        self.playTime = playTime
-        _playTime.onNext(playTime)
-        getDuration(for: playerView, playTime: playTime)
+        _playTime.accept(playTime)
+        
+        if shouldRequestDurationChanges {
+            getDuration(for: playerView, playTime: playTime)
+        } else {
+            let remainingTime = self.duration - playTime
+            self._remainingTime.accept(remainingTime)
+        }
     }
     
     func playerViewPreferredWebViewBackgroundColor(_ playerView: WKYTPlayerView) -> UIColor {

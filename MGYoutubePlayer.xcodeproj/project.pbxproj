@@ -29,8 +29,11 @@
 		1750DC68242CFD16000371B1 /* YoutubePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1750DC67242CFD16000371B1 /* YoutubePlayerView.swift */; };
 		1750DC6A242CFD2C000371B1 /* YoutubePlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1750DC69242CFD2C000371B1 /* YoutubePlayerView.xib */; };
 		1759EC69243DB79E00F7101C /* YoutubePlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC68243DB79E00F7101C /* YoutubePlayerViewModel.swift */; };
+		1759EC6B243DD03500F7101C /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC6A243DD03500F7101C /* Double+.swift */; };
+		1759EC6D243DE85800F7101C /* Float+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC6C243DE85800F7101C /* Float+.swift */; };
+		1759EC75243EC82100F7101C /* WKYTPlayerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1759EC72243EC82000F7101C /* WKYTPlayerView.bundle */; };
+		1759EC76243EC82100F7101C /* WKYTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC73243EC82000F7101C /* WKYTPlayerView.m */; };
 		17793FEB242F0A3E005D86B2 /* YoutubePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17793FEA242F0A3E005D86B2 /* YoutubePlayer.swift */; };
-		17793FED242F4B9F005D86B2 /* Float+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17793FEC242F4B9F005D86B2 /* Float+.swift */; };
 		179A41062428F288004FE81F /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179A41052428F288004FE81F /* Video.swift */; };
 		179A410E2428F2CD004FE81F /* VideoListNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179A41072428F2CB004FE81F /* VideoListNavigator.swift */; };
 		179A410F2428F2CD004FE81F /* VideoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179A41082428F2CC004FE81F /* VideoListViewModel.swift */; };
@@ -90,8 +93,12 @@
 		1750DC67242CFD16000371B1 /* YoutubePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayerView.swift; sourceTree = "<group>"; };
 		1750DC69242CFD2C000371B1 /* YoutubePlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YoutubePlayerView.xib; sourceTree = "<group>"; };
 		1759EC68243DB79E00F7101C /* YoutubePlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayerViewModel.swift; sourceTree = "<group>"; };
+		1759EC6A243DD03500F7101C /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
+		1759EC6C243DE85800F7101C /* Float+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float+.swift"; sourceTree = "<group>"; };
+		1759EC72243EC82000F7101C /* WKYTPlayerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WKYTPlayerView.bundle; sourceTree = "<group>"; };
+		1759EC73243EC82000F7101C /* WKYTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKYTPlayerView.m; sourceTree = "<group>"; };
+		1759EC74243EC82000F7101C /* WKYTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKYTPlayerView.h; sourceTree = "<group>"; };
 		17793FEA242F0A3E005D86B2 /* YoutubePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayer.swift; sourceTree = "<group>"; };
-		17793FEC242F4B9F005D86B2 /* Float+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float+.swift"; sourceTree = "<group>"; };
 		179A41052428F288004FE81F /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		179A41072428F2CB004FE81F /* VideoListNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListNavigator.swift; sourceTree = "<group>"; };
 		179A41082428F2CC004FE81F /* VideoListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListViewModel.swift; sourceTree = "<group>"; };
@@ -220,7 +227,8 @@
 			children = (
 				171C0B392427B35800788ADE /* UIViewController+.swift */,
 				171C0B3A2427B35800788ADE /* UIViewController+Rx.swift */,
-				17793FEC242F4B9F005D86B2 /* Float+.swift */,
+				1759EC6A243DD03500F7101C /* Double+.swift */,
+				1759EC6C243DE85800F7101C /* Float+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -327,9 +335,20 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		1759EC71243EC82000F7101C /* WKYTPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				1759EC72243EC82000F7101C /* WKYTPlayerView.bundle */,
+				1759EC73243EC82000F7101C /* WKYTPlayerView.m */,
+				1759EC74243EC82000F7101C /* WKYTPlayerView.h */,
+			);
+			path = WKYTPlayerView;
+			sourceTree = "<group>";
+		};
 		17793FE7242EF065005D86B2 /* YoutubePlayer */ = {
 			isa = PBXGroup;
 			children = (
+				1759EC71243EC82000F7101C /* WKYTPlayerView */,
 				1759EC68243DB79E00F7101C /* YoutubePlayerViewModel.swift */,
 				17793FEA242F0A3E005D86B2 /* YoutubePlayer.swift */,
 				1750DC67242CFD16000371B1 /* YoutubePlayerView.swift */,
@@ -447,6 +466,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1759EC75243EC82100F7101C /* WKYTPlayerView.bundle in Resources */,
 				171C0B5F2427B68800788ADE /* Main.storyboard in Resources */,
 				179A41182428F3E3004FE81F /* VideoCell.xib in Resources */,
 				1750DC6A242CFD2C000371B1 /* YoutubePlayerView.xib in Resources */,
@@ -568,6 +588,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1759EC6D243DE85800F7101C /* Float+.swift in Sources */,
+				1759EC76243EC82100F7101C /* WKYTPlayerView.m in Sources */,
 				17B564532434390E0079B626 /* ProgressSlider.swift in Sources */,
 				171C0B512427B35800788ADE /* UIViewController+Rx.swift in Sources */,
 				1750DC68242CFD16000371B1 /* YoutubePlayerView.swift in Sources */,
@@ -577,7 +599,7 @@
 				171C0B4E2427B35800788ADE /* AppViewModel.swift in Sources */,
 				179A41112428F2CD004FE81F /* VideoViewModel.swift in Sources */,
 				179A41222428F479004FE81F /* VideoDetailUseCase.swift in Sources */,
-				17793FED242F4B9F005D86B2 /* Float+.swift in Sources */,
+				1759EC6B243DD03500F7101C /* Double+.swift in Sources */,
 				17793FEB242F0A3E005D86B2 /* YoutubePlayer.swift in Sources */,
 				179A41142428F2CD004FE81F /* VideoListUseCase.swift in Sources */,
 				171C0B592427B35800788ADE /* Assembler.swift in Sources */,

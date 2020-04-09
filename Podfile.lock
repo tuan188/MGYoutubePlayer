@@ -44,7 +44,6 @@ PODS:
   - SDWebImage/Core (5.6.0)
   - Then (2.6.0)
   - Validator (3.2.1)
-  - YoutubePlayer-in-WKWebView (0.3.4)
 
 DEPENDENCIES:
   - MBProgressHUD (~> 1.2)
@@ -60,7 +59,6 @@ DEPENDENCIES:
   - SDWebImage (~> 5.6)
   - Then (~> 2.4)
   - Validator (~> 3.2.1)
-  - YoutubePlayer-in-WKWebView (~> 0.3.0)
 
 SPEC REPOS:
   trunk:
@@ -83,7 +81,6 @@ SPEC REPOS:
     - SDWebImage
     - Then
     - Validator
-    - YoutubePlayer-in-WKWebView
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -105,8 +102,7 @@ SPEC CHECKSUMS:
   SDWebImage: 21b19f56b4226cdfe3aefe4e6848dc43ed129a86
   Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
   Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
-  YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 9c132d90541a6c451eff17f9dfa4c9a1808301b1
+PODFILE CHECKSUM: 12ffc5bc3683249af461a6e2cf1696367acd77ec
 
 COCOAPODS: 1.9.0

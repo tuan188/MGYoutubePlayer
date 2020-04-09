@@ -20,7 +20,7 @@ def pods
     # Others
     pod 'MBProgressHUD', '~> 1.2'
     pod 'SDWebImage', '~> 5.6'
-    pod "YoutubePlayer-in-WKWebView", "~> 0.3.0"
+#    pod "YoutubePlayer-in-WKWebView", "~> 0.3.0"
 end
 
 def test_pods

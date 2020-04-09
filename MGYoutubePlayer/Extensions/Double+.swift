@@ -1,12 +1,12 @@
 //
-//  Float+.swift
+//  Double+.swift
 //  MGYoutubePlayer
 //
 //  Created by Tuan Truong on 4/8/20.
 //  Copyright © 2020 Tuan Truong. All rights reserved.
 //
 
-extension Float {
+extension Double {
     public func toMMSS() -> String {
         guard !self.isNaN else { return "00:00" }
         
