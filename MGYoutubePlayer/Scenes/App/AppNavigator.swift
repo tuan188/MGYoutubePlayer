@@ -10,6 +10,7 @@ import UIKit
 
 protocol AppNavigatorType {
     func toVideoList()
+    func toMain()
 }
 
 struct AppNavigator: AppNavigatorType {
@@ -22,6 +23,12 @@ struct AppNavigator: AppNavigatorType {
         nav.viewControllers = [vc]
         
         window.rootViewController = nav
+        window.makeKeyAndVisible()
+    }
+    
+    func toMain() {
+        let vc: MainViewController = assembler.resolve(window: window)
+        window.rootViewController = vc
         window.makeKeyAndVisible()
     }
 }

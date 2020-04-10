@@ -7,6 +7,7 @@
 //
 
 protocol Assembler: class,
+    MainAssembler,
     VideoDetailAssembler,
     VideoListAssembler,
     AppAssembler {

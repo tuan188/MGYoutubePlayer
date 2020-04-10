@@ -31,7 +31,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         let input = AppViewModel.Input(loadTrigger: Driver.just(()))
         let output = vm.transform(input)
         
-        output.toVideoList
+        output.toMain
             .drive()
             .disposed(by: rx.disposeBag)
     }

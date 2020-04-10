@@ -18,13 +18,13 @@ extension AppViewModel: ViewModelType {
     }
     
     struct Output {
-        let toVideoList: Driver<Void>
+        let toMain: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
-        let toVideoList = input.loadTrigger
-            .do(onNext: navigator.toVideoList)
+        let toMain = input.loadTrigger
+            .do(onNext: navigator.toMain)
         
-        return Output(toVideoList: toVideoList)
+        return Output(toMain: toMain)
     }
 }

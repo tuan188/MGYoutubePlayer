@@ -33,6 +33,11 @@
 		1759EC6D243DE85800F7101C /* Float+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC6C243DE85800F7101C /* Float+.swift */; };
 		1759EC75243EC82100F7101C /* WKYTPlayerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1759EC72243EC82000F7101C /* WKYTPlayerView.bundle */; };
 		1759EC76243EC82100F7101C /* WKYTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC73243EC82000F7101C /* WKYTPlayerView.m */; };
+		1759EC89244048E000F7101C /* MainAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC84244048E000F7101C /* MainAssembler.swift */; };
+		1759EC8A244048E000F7101C /* MainNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC85244048E000F7101C /* MainNavigator.swift */; };
+		1759EC8B244048E000F7101C /* MainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC86244048E000F7101C /* MainUseCase.swift */; };
+		1759EC8C244048E000F7101C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC87244048E000F7101C /* MainViewController.swift */; };
+		1759EC8D244048E000F7101C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1759EC88244048E000F7101C /* MainViewModel.swift */; };
 		17793FEB242F0A3E005D86B2 /* YoutubePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17793FEA242F0A3E005D86B2 /* YoutubePlayer.swift */; };
 		179A41062428F288004FE81F /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179A41052428F288004FE81F /* Video.swift */; };
 		179A410E2428F2CD004FE81F /* VideoListNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179A41072428F2CB004FE81F /* VideoListNavigator.swift */; };
@@ -98,6 +103,11 @@
 		1759EC72243EC82000F7101C /* WKYTPlayerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WKYTPlayerView.bundle; sourceTree = "<group>"; };
 		1759EC73243EC82000F7101C /* WKYTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKYTPlayerView.m; sourceTree = "<group>"; };
 		1759EC74243EC82000F7101C /* WKYTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKYTPlayerView.h; sourceTree = "<group>"; };
+		1759EC84244048E000F7101C /* MainAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAssembler.swift; sourceTree = "<group>"; };
+		1759EC85244048E000F7101C /* MainNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigator.swift; sourceTree = "<group>"; };
+		1759EC86244048E000F7101C /* MainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUseCase.swift; sourceTree = "<group>"; };
+		1759EC87244048E000F7101C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		1759EC88244048E000F7101C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		17793FEA242F0A3E005D86B2 /* YoutubePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayer.swift; sourceTree = "<group>"; };
 		179A41052428F288004FE81F /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		179A41072428F2CB004FE81F /* VideoListNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListNavigator.swift; sourceTree = "<group>"; };
@@ -192,6 +202,7 @@
 		171C0B302427B35800788ADE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				1759EC79244046CF00F7101C /* Main */,
 				17793FE7242EF065005D86B2 /* YoutubePlayer */,
 				1750DC66242CFCF3000371B1 /* Common */,
 				171C0B612427B6C400788ADE /* VideoDetail */,
@@ -343,6 +354,18 @@
 				1759EC74243EC82000F7101C /* WKYTPlayerView.h */,
 			);
 			path = WKYTPlayerView;
+			sourceTree = "<group>";
+		};
+		1759EC79244046CF00F7101C /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				1759EC84244048E000F7101C /* MainAssembler.swift */,
+				1759EC85244048E000F7101C /* MainNavigator.swift */,
+				1759EC86244048E000F7101C /* MainUseCase.swift */,
+				1759EC87244048E000F7101C /* MainViewController.swift */,
+				1759EC88244048E000F7101C /* MainViewModel.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		17793FE7242EF065005D86B2 /* YoutubePlayer */ = {
@@ -609,10 +632,12 @@
 				179A411F2428F479004FE81F /* VideoDetailNavigator.swift in Sources */,
 				179A41062428F288004FE81F /* Video.swift in Sources */,
 				179A41212428F479004FE81F /* VideoDetailViewController.swift in Sources */,
+				1759EC89244048E000F7101C /* MainAssembler.swift in Sources */,
 				171C0B582427B35800788ADE /* APIUrls.swift in Sources */,
 				171C0B0F2427B29100788ADE /* AppDelegate.swift in Sources */,
 				171C0B4C2427B35800788ADE /* AppAssembler.swift in Sources */,
 				171C0B522427B35800788ADE /* UnitTestViewController.swift in Sources */,
+				1759EC8B244048E000F7101C /* MainUseCase.swift in Sources */,
 				17B56455243439650079B626 /* ProgressView.swift in Sources */,
 				1759EC69243DB79E00F7101C /* YoutubePlayerViewModel.swift in Sources */,
 				171C0B502427B35800788ADE /* UIViewController+.swift in Sources */,
@@ -620,10 +645,13 @@
 				171C0B552427B35800788ADE /* APIService.swift in Sources */,
 				179A41172428F3E3004FE81F /* VideoCell.swift in Sources */,
 				171C0B4F2427B35800788ADE /* AppUseCase.swift in Sources */,
+				1759EC8C244048E000F7101C /* MainViewController.swift in Sources */,
+				1759EC8D244048E000F7101C /* MainViewModel.swift in Sources */,
 				171C0B4D2427B35800788ADE /* AppNavigator.swift in Sources */,
 				179A410F2428F2CD004FE81F /* VideoListViewModel.swift in Sources */,
 				171C0B532427B35800788ADE /* Utils.swift in Sources */,
 				171C0B542427B35800788ADE /* APIError.swift in Sources */,
+				1759EC8A244048E000F7101C /* MainNavigator.swift in Sources */,
 				179A410E2428F2CD004FE81F /* VideoListNavigator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
