@@ -48,6 +48,7 @@ extension MainAssembler where Self: DefaultAssembler {
         
         let vm: MainViewModel = resolve(window: window)
         mainViewController.bindViewModel(to: vm)
+        
         return mainViewController
     }
     

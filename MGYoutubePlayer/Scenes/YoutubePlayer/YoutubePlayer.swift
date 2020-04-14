@@ -71,9 +71,11 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         return _loadedFraction.value
     }
     
+    private(set) var videoId: String?
+    
     // MARK: - Private properties
     
-    private var playerView: WKYTPlayerView?
+    var playerView: WKYTPlayerView?
     private var superView: UIView?
     private var timer: Timer?
     
@@ -107,7 +109,22 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         superView = view
     }
     
+    func movePlayer(to view: UIView) {
+        guard let player = self.playerView else { return }
+        player.removeFromSuperview()
+        view.addSubview(player)
+        superView = view
+        
+        // Constraints
+        player.translatesAutoresizingMaskIntoConstraints = false
+        player.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        player.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+        player.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        player.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+    }
+    
     func load(videoId: String, options: Options = Options()) {
+        self.videoId = videoId
         _playTime.accept(0)
         _duration.accept(0)
         _state.accept(.unknow)
@@ -126,6 +143,11 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         })
         
         playerView?.load(withVideoId: videoId, playerVars: options.toDictionary())
+    }
+    
+    func continuePlay() {
+        guard let videoId = self.videoId else { return }
+        playerView?.cueVideo(byId: videoId, startSeconds: playTime, suggestedQuality: .auto)
     }
     
     func play() {

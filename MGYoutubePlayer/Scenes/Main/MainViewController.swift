@@ -13,7 +13,6 @@ final class MainViewController: UITabBarController, BindableType {
     // MARK: - IBOutlets
     
     // MARK: - Properties
-    
     var viewModel: MainViewModel!
     
     // MARK: - Life Cycle
@@ -35,11 +34,54 @@ final class MainViewController: UITabBarController, BindableType {
     
     func bindViewModel() {
         let input = MainViewModel.Input()
-        let _ = viewModel.transform(input)
+        _ = viewModel.transform(input)
     }
+    
 }
 
 // MARK: - Binders
 extension MainViewController {
     
 }
+
+extension UITabBarController {
+    var miniPlayer: YoutubeMiniPlayerView? {
+        return view.subviews.first(where: { $0 is YoutubeMiniPlayerView }) as? YoutubeMiniPlayerView
+    }
+    
+    var hasMiniPlayer: Bool {
+        return miniPlayer != nil
+    }
+    
+    @discardableResult
+    func addMiniPlayer() -> YoutubeMiniPlayerView {
+        if let miniPlayer = self.miniPlayer {
+            return miniPlayer
+        }
+        
+        var bottomInset: CGFloat = 0
+        
+        if #available(iOS 11.0, *) {
+            if let safeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets {
+                bottomInset = safeAreaInsets.bottom
+            }
+        }
+        
+        let miniPlayer = YoutubeMiniPlayerView.loadFromNib()
+        miniPlayer.isUserInteractionEnabled = true
+        
+        let screenSize = UIScreen.main.bounds
+        let miniPlayerHeight: CGFloat = 64
+        miniPlayer.frame = CGRect(x: 0,
+                                  y: screenSize.height + bottomInset - miniPlayerHeight - tabBar.bounds.height,
+                                  width: screenSize.width,
+                                  height: miniPlayerHeight)
+        view.addSubview(miniPlayer)
+        return miniPlayer
+    }
+    
+    func removeMiniPlayer() {
+        miniPlayer?.removeFromSuperview()
+    }
+}
+

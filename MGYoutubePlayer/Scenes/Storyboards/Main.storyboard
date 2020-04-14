@@ -38,7 +38,7 @@
             </objects>
             <point key="canvasLocation" x="168" y="143"/>
         </scene>
-        <!--Video Detail View Controller-->
+        <!--Title-->
         <scene sceneID="vqO-Ir-KcS">
             <objects>
                 <viewController storyboardIdentifier="VideoDetailViewController" id="hP5-Tx-auT" customClass="VideoDetailViewController" customModule="MGYoutubePlayer" customModuleProvider="target" sceneMemberID="viewController">
@@ -47,7 +47,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y8D-Zj-zcp" customClass="YoutubePlayerView" customModule="MGYoutubePlayer" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                         </subviews>
@@ -60,7 +60,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d60-x5-NMI"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="NNQ-P2-1OT">
+                        <barButtonItem key="rightBarButtonItem" title="Minimize" id="dWD-qK-9CG"/>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="minimizeButton" destination="dWD-qK-9CG" id="9mO-hG-CWL"/>
                         <outlet property="playerView" destination="Y8D-Zj-zcp" id="bEh-2D-T2g"/>
                     </connections>
                 </viewController>

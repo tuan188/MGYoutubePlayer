@@ -7,10 +7,18 @@
 //
 
 protocol VideoDetailNavigatorType {
-
+    func minimize()
 }
 
 struct VideoDetailNavigator: VideoDetailNavigatorType {
     unowned let assembler: Assembler
     unowned let navigationController: UINavigationController
+    
+    var tabBarController: MainViewController? {
+        return navigationController.tabBarController as? MainViewController
+    }
+    
+    func minimize() {
+        
+    }
 }

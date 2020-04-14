@@ -8,24 +8,31 @@
 
 import UIKit
 
-final class YoutubePlayerView: UIView, NibOwnerLoadable {
+final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
     @IBOutlet weak var slider: ProgressSlider!
     @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var playerBackgroundView: UIView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var playTimeLabel: UILabel!
     @IBOutlet weak var remainingTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     
-    private var player: YoutubePlayer?
+    var player: YoutubePlayer?
     private var disposeBag = DisposeBag()
     
     private let loadTrigger = PublishSubject<String>()
-    private let playTrigger = PublishSubject<Void>()
     private let stopTrigger = PublishSubject<Void>()
     private let seekTrigger = PublishSubject<YoutubePlayerViewModel.SeekState>()
     
+    var playerView: WKYTPlayerView? {
+        return player?.playerView
+    }
+    
     var isConfigured: Bool {
         return player != nil
+    }
+    
+    var videoContainerView: UIView {
+        return containerView
     }
     
     required init?(coder: NSCoder) {
@@ -33,8 +40,8 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
         loadNibContent()
     }
     
-    @IBAction private func play(_ sender: Any) {
-        playTrigger.onNext(())
+    deinit {
+        print("YoutubePlayerView deinit")
     }
     
     func load(videoId: String) {
@@ -44,7 +51,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
     func configPlayer() {
         // Init player
         let player = YoutubePlayer()
-        player.addPlayer(to: playerBackgroundView)
+        player.addPlayer(to: containerView)
         self.player = player
         
         // Binding
@@ -58,7 +65,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
         
         let input = YoutubePlayerViewModel.Input(
             loadTrigger: loadTrigger.asDriverOnErrorJustComplete(),
-            playTrigger: playTrigger.asDriverOnErrorJustComplete(),
+            playTrigger: playButton.rx.tap.asDriver(),
             stopTrigger: stopTrigger.asDriverOnErrorJustComplete(),
             seekTrigger: seekTrigger.asDriverOnErrorJustComplete(),
             playTime: player.rx.playTime,
@@ -104,7 +111,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable {
             .disposed(by: disposeBag)
         
         output.loadedFraction
-            .drive(onNext: { progress in
+            .drive(onNext: { [unowned self] progress in
                 self.slider.loadedProgress = CGFloat(progress)
             })
             .disposed(by: disposeBag)

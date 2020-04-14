@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="YoutubeMiniPlayerView" customModule="MGYoutubePlayer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qtc-1f-1aB">
+                    <rect key="frame" x="0.0" y="0.0" width="156.5" height="88"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="qtc-1f-1aB" secondAttribute="height" multiplier="16:9" id="89z-qh-Bkr"/>
+                    </constraints>
+                </view>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="DU5-bD-CP4">
+                    <rect key="frame" x="0.0" y="88" width="414" height="2"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="iZJ-si-93H"/>
+                    </constraints>
+                </progressView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="258-wS-wfi">
+                    <rect key="frame" x="258" y="25" width="60" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="02C-sW-4nJ"/>
+                        <constraint firstAttribute="height" constant="40" id="wy0-sU-2xg"/>
+                    </constraints>
+                    <state key="normal" title="Play"/>
+                    <connections>
+                        <action selector="play:" destination="iN0-l3-epB" eventType="touchUpInside" id="DN6-Ix-hdM"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56s-bp-aGF">
+                    <rect key="frame" x="334" y="25" width="60" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="3yp-uG-Ckn"/>
+                        <constraint firstAttribute="width" constant="60" id="7Nl-Nc-PaR"/>
+                    </constraints>
+                    <state key="normal" title="Close"/>
+                    <connections>
+                        <action selector="close:" destination="iN0-l3-epB" eventType="touchUpInside" id="OMI-aE-yl8"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="DU5-bD-CP4" secondAttribute="bottom" id="5Is-IG-wXB"/>
+                <constraint firstItem="258-wS-wfi" firstAttribute="centerY" secondItem="56s-bp-aGF" secondAttribute="centerY" id="BRK-sX-25J"/>
+                <constraint firstItem="DU5-bD-CP4" firstAttribute="top" secondItem="qtc-1f-1aB" secondAttribute="bottom" id="PTs-ZQ-C8s"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="56s-bp-aGF" secondAttribute="trailing" constant="20" id="Trj-mU-4iO"/>
+                <constraint firstItem="56s-bp-aGF" firstAttribute="leading" secondItem="258-wS-wfi" secondAttribute="trailing" constant="16" id="WvO-6m-vzT"/>
+                <constraint firstItem="56s-bp-aGF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="hTE-8p-wBR"/>
+                <constraint firstItem="qtc-1f-1aB" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="kTK-xh-Cke"/>
+                <constraint firstItem="DU5-bD-CP4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="km5-q0-oHG"/>
+                <constraint firstAttribute="trailing" secondItem="DU5-bD-CP4" secondAttribute="trailing" id="li6-vp-oYX"/>
+                <constraint firstItem="qtc-1f-1aB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="zjS-jA-CXN"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="closeButton" destination="56s-bp-aGF" id="EYB-KH-GrY"/>
+                <outlet property="containerView" destination="qtc-1f-1aB" id="Iwy-Bi-TXs"/>
+                <outlet property="playButton" destination="258-wS-wfi" id="9QX-bq-mku"/>
+            </connections>
+            <point key="canvasLocation" x="153.62318840579712" y="81.696428571428569"/>
+        </view>
+    </objects>
+</document>

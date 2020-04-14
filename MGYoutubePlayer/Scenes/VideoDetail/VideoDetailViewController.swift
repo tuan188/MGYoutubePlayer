@@ -13,21 +13,30 @@ final class VideoDetailViewController: UIViewController, BindableType {
     
     // MARK: - IBOutlets
     @IBOutlet weak var playerView: YoutubePlayerView!
+    @IBOutlet weak var minimizeButton: UIBarButtonItem!
     
     // MARK: - Properties
     
     var viewModel: VideoDetailViewModel!
+    
+//    override var viewForPopupInteractionGestureRecognizer: UIView {
+//        return playerView
+//    }
 
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        playerView.configPlayer()
+//        configView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        moveVideoToMiniPlayer()
     }
 
     deinit {
@@ -36,17 +45,34 @@ final class VideoDetailViewController: UIViewController, BindableType {
     
     // MARK: - Methods
 
-    private func configView() {
-        
+    func configView() {
+        if moveVideoFromMiniPlayer() {
+//            (self.tabBarController as? MainViewController)?.miniPlayer?.removeFromSuperview()
+        } else {
+            playerView.configPlayer()
+        }
     }
 
     func bindViewModel() {
-        let loadTrigger = self.rx.methodInvoked(#selector(UIViewController.viewDidAppear))
+        let loadTrigger = self.rx.methodInvoked(#selector(UIViewController.viewWillAppear))
             .map { $0.first as? Bool ?? false }
             .mapToVoid()
             .asDriverOnErrorJustComplete()
         
-        let input = VideoDetailViewModel.Input(loadTrigger: loadTrigger)
+//        self.rx.methodInvoked(#selector(UIViewController.viewDidAppear))
+//            .map { $0.first as? Bool ?? false }
+//            .skip(1)
+//            .mapToVoid()
+//            .asDriverOnErrorJustComplete()
+//            .drive(onNext: { [unowned self] in
+////                self.playerView.continuePlay()
+//            })
+//            .disposed(by: rx.disposeBag)
+        
+        let input = VideoDetailViewModel.Input(
+            loadTrigger: loadTrigger,
+            minimizeTrigger: minimizeButton.rx.tap.asDriver()
+        )
         let output = viewModel.transform(input)
         
         output.title
@@ -54,18 +80,49 @@ final class VideoDetailViewController: UIViewController, BindableType {
             .disposed(by: rx.disposeBag)
         
         output.videoId
-            .drive(onNext: { [unowned self] videoId in
-                self.playerView.load(videoId: videoId)
-            })
+            .drive(videoIdBinder)
             .disposed(by: rx.disposeBag)
+        
+        output.minimize
+            .drive(minimizeBinder)
+            .disposed(by: rx.disposeBag)
+    }
+    
+    private func moveVideoToMiniPlayer() {
+        guard let tabBarController = self.tabBarController else { return }
+        
+        let miniPlayer = tabBarController.addMiniPlayer()
+        playerView.movePlayer(to: miniPlayer)
+    }
+    
+    @discardableResult
+    private func moveVideoFromMiniPlayer() -> Bool {
+        guard let tabBarController = self.tabBarController,
+            let miniPlayer = tabBarController.miniPlayer else { return false }
+        
+        miniPlayer.movePlayer(to: playerView)
+        tabBarController.removeMiniPlayer()
+        return true
     }
 }
 
 // MARK: - Binders
 extension VideoDetailViewController {
     var videoIdBinder: Binder<String> {
-        return Binder(self) { _, videoId in
-            print(videoId)
+        return Binder(self) { vc, videoId in
+            if let tabBarController = vc.tabBarController,
+                tabBarController.hasMiniPlayer {
+                vc.moveVideoFromMiniPlayer()
+            } else {
+                vc.playerView.configPlayer()
+                vc.playerView.load(videoId: videoId)
+            }
+        }
+    }
+    
+    var minimizeBinder: Binder<Void> {
+        return Binder(self) { vc, _  in
+//            vc.moveVideoToMiniPlayer()
         }
     }
 }
