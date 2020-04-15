@@ -47,13 +47,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y8D-Zj-zcp" customClass="YoutubePlayerView" customModule="MGYoutubePlayer" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="558"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="d60-x5-NMI" firstAttribute="bottom" secondItem="Y8D-Zj-zcp" secondAttribute="bottom" id="3nJ-bW-17f"/>
+                            <constraint firstItem="d60-x5-NMI" firstAttribute="bottom" secondItem="Y8D-Zj-zcp" secondAttribute="bottom" constant="65" id="XNp-gf-UZ4"/>
                             <constraint firstItem="Y8D-Zj-zcp" firstAttribute="leading" secondItem="d60-x5-NMI" secondAttribute="leading" id="dpe-Nk-BNK"/>
                             <constraint firstItem="d60-x5-NMI" firstAttribute="trailing" secondItem="Y8D-Zj-zcp" secondAttribute="trailing" id="jzG-e6-Gnk"/>
                             <constraint firstItem="Y8D-Zj-zcp" firstAttribute="top" secondItem="d60-x5-NMI" secondAttribute="top" id="ucg-V2-gZH"/>

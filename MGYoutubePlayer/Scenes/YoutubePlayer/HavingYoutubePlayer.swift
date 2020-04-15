@@ -13,6 +13,7 @@ protocol HavingYoutubePlayer: class {
     var videoContainerView: UIView { get }
     
     func bindViewModel()
+    func unbindViewModel()
 }
 
 extension HavingYoutubePlayer {
@@ -20,5 +21,7 @@ extension HavingYoutubePlayer {
         player?.movePlayer(to: object.videoContainerView)
         object.player = player
         object.bindViewModel()
+        player = nil
+        unbindViewModel()
     }
 }

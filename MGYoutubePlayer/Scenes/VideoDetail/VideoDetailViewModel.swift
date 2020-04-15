@@ -21,7 +21,7 @@ extension VideoDetailViewModel: ViewModelType {
 
     struct Output {
         let title: Driver<String>
-        let videoId: Driver<String>
+        let video: Driver<Video>
         let minimize: Driver<Void>
     }
 
@@ -29,15 +29,15 @@ extension VideoDetailViewModel: ViewModelType {
         let title = input.loadTrigger
             .map { self.video.title }
     
-        let videoId = input.loadTrigger
-            .map { self.video.id }
+        let video = input.loadTrigger
+            .map { self.video }
         
         let minimize = input.minimizeTrigger
             .do(onNext: navigator.minimize)
         
         return Output(
             title: title,
-            videoId: videoId,
+            video: video,
             minimize: minimize
         )
     }

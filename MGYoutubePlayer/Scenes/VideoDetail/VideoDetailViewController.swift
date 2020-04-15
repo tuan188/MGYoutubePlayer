@@ -79,8 +79,8 @@ final class VideoDetailViewController: UIViewController, BindableType {
             .drive(self.rx.title)
             .disposed(by: rx.disposeBag)
         
-        output.videoId
-            .drive(videoIdBinder)
+        output.video
+            .drive(videoBinder)
             .disposed(by: rx.disposeBag)
         
         output.minimize
@@ -89,7 +89,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
     }
     
     private func moveVideoToMiniPlayer() {
-        guard let tabBarController = self.tabBarController else { return }
+        guard let tabBarController = self.tabBarController, !tabBarController.hasMiniPlayer else { return }
         
         let miniPlayer = tabBarController.addMiniPlayer()
         playerView.movePlayer(to: miniPlayer)
@@ -108,21 +108,21 @@ final class VideoDetailViewController: UIViewController, BindableType {
 
 // MARK: - Binders
 extension VideoDetailViewController {
-    var videoIdBinder: Binder<String> {
-        return Binder(self) { vc, videoId in
+    var videoBinder: Binder<Video> {
+        return Binder(self) { vc, video in
             if let tabBarController = vc.tabBarController,
                 tabBarController.hasMiniPlayer {
                 vc.moveVideoFromMiniPlayer()
             } else {
                 vc.playerView.configPlayer()
-                vc.playerView.load(videoId: videoId)
+                vc.playerView.load(video: video)
             }
         }
     }
     
     var minimizeBinder: Binder<Void> {
         return Binder(self) { vc, _  in
-//            vc.moveVideoToMiniPlayer()
+            vc.moveVideoToMiniPlayer()
         }
     }
 }

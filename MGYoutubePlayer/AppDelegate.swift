@@ -13,6 +13,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var assembler: Assembler = DefaultAssembler()
+    var disposeBag = DisposeBag()
 
     func applicationDidFinishLaunching(_ application: UIApplication) {
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -33,6 +34,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         output.toMain
             .drive()
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
     }
 }

@@ -34,9 +34,6 @@
                         <constraint firstAttribute="height" constant="40" id="wy0-sU-2xg"/>
                     </constraints>
                     <state key="normal" title="Play"/>
-                    <connections>
-                        <action selector="play:" destination="iN0-l3-epB" eventType="touchUpInside" id="DN6-Ix-hdM"/>
-                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56s-bp-aGF">
                     <rect key="frame" x="334" y="25" width="60" height="40"/>
@@ -69,6 +66,7 @@
                 <outlet property="closeButton" destination="56s-bp-aGF" id="EYB-KH-GrY"/>
                 <outlet property="containerView" destination="qtc-1f-1aB" id="Iwy-Bi-TXs"/>
                 <outlet property="playButton" destination="258-wS-wfi" id="9QX-bq-mku"/>
+                <outlet property="progressView" destination="DU5-bD-CP4" id="Wcq-oR-tkl"/>
             </connections>
             <point key="canvasLocation" x="153.62318840579712" y="81.696428571428569"/>
         </view>

@@ -10,11 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-struct YoutubePlayerError: Error {
-    
-}
-
-class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
+final class YoutubePlayer: NSObject {
     
     enum State {
         case unstarted
@@ -23,7 +19,7 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         case paused
         case buffering
         case queued
-        case unknow
+        case unknown
     }
     
     struct Options {
@@ -46,6 +42,8 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
     // MARK: - Public properties
     
     var shouldRequestDurationChanges = false
+    var playerView: WKYTPlayerView?
+    private(set) var video: Video?
     
     var playTime: Float {
         return _playTime.value
@@ -71,15 +69,11 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         return _loadedFraction.value
     }
     
-    private(set) var videoId: String?
-    
     // MARK: - Private properties
-    
-    var playerView: WKYTPlayerView?
     private var superView: UIView?
     private var timer: Timer?
     
-    fileprivate let _state = BehaviorRelay(value: YoutubePlayer.State.unknow)
+    fileprivate let _state = BehaviorRelay(value: YoutubePlayer.State.unknown)
     fileprivate let _playTime = BehaviorRelay(value: Float.zero)
     fileprivate let _duration = BehaviorRelay(value: Float.zero)
     fileprivate let _remainingTime = BehaviorRelay(value: Float.zero)
@@ -123,11 +117,11 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
         player.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     }
     
-    func load(videoId: String, options: Options = Options()) {
-        self.videoId = videoId
+    func load(video: Video, options: Options = Options()) {
+        self.video = video
         _playTime.accept(0)
         _duration.accept(0)
-        _state.accept(.unknow)
+        _state.accept(.unknown)
         _isReady.accept(false)
         
         timer?.invalidate()
@@ -142,11 +136,11 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
             })
         })
         
-        playerView?.load(withVideoId: videoId, playerVars: options.toDictionary())
+        playerView?.load(withVideoId: video.id, playerVars: options.toDictionary())
     }
     
     func continuePlay() {
-        guard let videoId = self.videoId else { return }
+        guard let videoId = self.video?.id else { return }
         playerView?.cueVideo(byId: videoId, startSeconds: playTime, suggestedQuality: .auto)
     }
     
@@ -186,10 +180,14 @@ class YoutubePlayer: NSObject {  // swiftlint:disable:this final_class
     }
 }
 
+enum YoutubePlayerError: Error {
+    case unknown
+}
+
 // MARK: - Reactive
 extension Reactive where Base: YoutubePlayer {
     var state: Driver<YoutubePlayer.State> {
-        return self.base._state.asDriver(onErrorJustReturn: .unknow)
+        return self.base._state.asDriver(onErrorJustReturn: .unknown)
     }
     
     var playTime: Driver<Float> {
@@ -205,7 +203,7 @@ extension Reactive where Base: YoutubePlayer {
     }
     
     var error: Driver<Error> {
-        return self.base._error.asDriver(onErrorJustReturn: YoutubePlayerError())
+        return self.base._error.asDriver(onErrorJustReturn: YoutubePlayerError.unknown)
     }
     
     var isReady: Driver<Bool> {
@@ -241,7 +239,7 @@ extension YoutubePlayer: WKYTPlayerViewDelegate {
         case .queued:
             playerState = .queued
         default:
-            playerState = .unknow
+            playerState = .unknown
         }
         
         self._state.accept(playerState)

@@ -16,12 +16,14 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
     @IBOutlet weak var remainingTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     
-    var player: YoutubePlayer?
-    private var disposeBag = DisposeBag()
+    // MARK: - Properties
     
-    private let loadTrigger = PublishSubject<String>()
+    private var disposeBag = DisposeBag()
+    private let loadTrigger = PublishSubject<Video>()
     private let stopTrigger = PublishSubject<Void>()
     private let seekTrigger = PublishSubject<YoutubePlayerViewModel.SeekState>()
+    
+    var player: YoutubePlayer?
     
     var playerView: WKYTPlayerView? {
         return player?.playerView
@@ -44,8 +46,8 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
         print("YoutubePlayerView deinit")
     }
     
-    func load(videoId: String) {
-        loadTrigger.onNext(videoId)
+    func load(video: Video) {
+        loadTrigger.onNext(video)
     }
     
     func configPlayer() {
@@ -80,8 +82,8 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
         let output = viewModel.transform(input)
         
         output.load
-            .drive(onNext: { [unowned self] videoId in
-                self.player?.load(videoId: videoId)
+            .drive(onNext: { [unowned self] video in
+                self.player?.load(video: video)
             })
             .disposed(by: disposeBag)
         
@@ -94,6 +96,12 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
         output.pause
             .drive(onNext: { [unowned self] in
                 self.player?.pause()
+            })
+            .disposed(by: rx.disposeBag)
+        
+        output.stop
+            .drive(onNext: { [unowned self] in
+                self.player?.stop()
             })
             .disposed(by: rx.disposeBag)
         
@@ -150,6 +158,10 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
                 self.player?.seek(to: time)
             })
             .disposed(by: rx.disposeBag)
+    }
+    
+    func unbindViewModel() {
+        disposeBag = DisposeBag()
     }
     
     override func layoutSubviews() {
