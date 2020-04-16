@@ -13,7 +13,8 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
-    
+    @IBOutlet weak var titleLabel: UILabel!
+
     private var disposeBag = DisposeBag()
     private let loadTrigger = PublishSubject<Video>()
     private let stopTrigger = PublishSubject<Void>()
@@ -29,7 +30,8 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
     
     @objc
     private func tap() {
-        print(#function)
+        guard let video = player?.video else { return }
+        NotificationCenter.default.post(name: .showVideo, object: video)
     }
     
     var videoContainerView: UIView {
@@ -74,7 +76,7 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
             isReady: player.rx.isReady
         )
         
-        let viewModel = YoutubeMiniPlayerViewModel()
+        let viewModel = YoutubeMiniPlayerViewModel(video: player.video)
         let output = viewModel.transform(input)
         
         output.load
@@ -108,15 +110,11 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
             .disposed(by: disposeBag)
         
         output.progress
-            .drive(onNext: { [unowned self] progress in
-                self.progressView.progress = progress
-            })
+            .drive(progressView.rx.progress)
             .disposed(by: rx.disposeBag)
         
         output.isReady
-            .drive(onNext: { [unowned self] isReady in
-                self.playButton.isEnabled = isReady
-            })
+            .drive(playButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         output.state
@@ -131,6 +129,10 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
                 }
             })
             .disposed(by: disposeBag)
+        
+        output.videoTitle
+            .drive(titleLabel.rx.text)
+            .disposed(by: rx.disposeBag)
     }
     
     func unbindViewModel() {

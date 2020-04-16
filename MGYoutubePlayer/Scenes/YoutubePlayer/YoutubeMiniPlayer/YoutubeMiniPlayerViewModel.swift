@@ -7,7 +7,7 @@
 //
 
 struct YoutubeMiniPlayerViewModel {
-
+    var video: Video?
 }
 
 // MARK: - ViewModelType
@@ -34,9 +34,18 @@ extension YoutubeMiniPlayerViewModel: ViewModelType {
         let remainingTime: Driver<Float>
         let progress: Driver<Float>
         let isReady: Driver<Bool>
+        let videoTitle: Driver<String>
     }
     
     func transform(_ input: Input) -> Output {
+        let video = input.loadTrigger
+            .mapToOptional()
+            .startWith(self.video)
+            .unwrap()
+        
+        let videoTitle = video
+            .map { $0.title }
+        
         let state = input.state
         
         let play = input.playTrigger
@@ -61,7 +70,8 @@ extension YoutubeMiniPlayerViewModel: ViewModelType {
             duration: input.duration,
             remainingTime: input.remainingTime,
             progress: progress,
-            isReady: input.isReady
+            isReady: input.isReady,
+            videoTitle: videoTitle
         )
     }
 }

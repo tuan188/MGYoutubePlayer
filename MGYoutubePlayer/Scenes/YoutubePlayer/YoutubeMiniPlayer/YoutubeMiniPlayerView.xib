@@ -28,32 +28,42 @@
                     </constraints>
                 </progressView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="258-wS-wfi">
-                    <rect key="frame" x="258" y="25" width="60" height="40"/>
+                    <rect key="frame" x="298" y="25" width="50" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="60" id="02C-sW-4nJ"/>
+                        <constraint firstAttribute="width" constant="50" id="02C-sW-4nJ"/>
                         <constraint firstAttribute="height" constant="40" id="wy0-sU-2xg"/>
                     </constraints>
                     <state key="normal" title="Play"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56s-bp-aGF">
-                    <rect key="frame" x="334" y="25" width="60" height="40"/>
+                    <rect key="frame" x="356" y="25" width="50" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="3yp-uG-Ckn"/>
-                        <constraint firstAttribute="width" constant="60" id="7Nl-Nc-PaR"/>
+                        <constraint firstAttribute="width" constant="50" id="7Nl-Nc-PaR"/>
                     </constraints>
                     <state key="normal" title="Close"/>
                     <connections>
                         <action selector="close:" destination="iN0-l3-epB" eventType="touchUpInside" id="OMI-aE-yl8"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n3p-fd-SUc">
+                    <rect key="frame" x="164.5" y="8" width="125.5" height="72"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
+                <constraint firstItem="258-wS-wfi" firstAttribute="leading" secondItem="n3p-fd-SUc" secondAttribute="trailing" constant="8" id="0nV-Wr-Pcu"/>
+                <constraint firstItem="n3p-fd-SUc" firstAttribute="leading" secondItem="qtc-1f-1aB" secondAttribute="trailing" constant="8" id="3UC-yo-NGx"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="DU5-bD-CP4" secondAttribute="bottom" id="5Is-IG-wXB"/>
                 <constraint firstItem="258-wS-wfi" firstAttribute="centerY" secondItem="56s-bp-aGF" secondAttribute="centerY" id="BRK-sX-25J"/>
                 <constraint firstItem="DU5-bD-CP4" firstAttribute="top" secondItem="qtc-1f-1aB" secondAttribute="bottom" id="PTs-ZQ-C8s"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="56s-bp-aGF" secondAttribute="trailing" constant="20" id="Trj-mU-4iO"/>
-                <constraint firstItem="56s-bp-aGF" firstAttribute="leading" secondItem="258-wS-wfi" secondAttribute="trailing" constant="16" id="WvO-6m-vzT"/>
+                <constraint firstItem="n3p-fd-SUc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="QhA-4a-sFv"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="56s-bp-aGF" secondAttribute="trailing" constant="8" id="Trj-mU-4iO"/>
+                <constraint firstItem="56s-bp-aGF" firstAttribute="leading" secondItem="258-wS-wfi" secondAttribute="trailing" constant="8" id="WvO-6m-vzT"/>
+                <constraint firstItem="DU5-bD-CP4" firstAttribute="top" secondItem="n3p-fd-SUc" secondAttribute="bottom" constant="8" id="fd8-NI-PFf"/>
                 <constraint firstItem="56s-bp-aGF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="hTE-8p-wBR"/>
                 <constraint firstItem="qtc-1f-1aB" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="kTK-xh-Cke"/>
                 <constraint firstItem="DU5-bD-CP4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="km5-q0-oHG"/>
@@ -67,8 +77,9 @@
                 <outlet property="containerView" destination="qtc-1f-1aB" id="Iwy-Bi-TXs"/>
                 <outlet property="playButton" destination="258-wS-wfi" id="9QX-bq-mku"/>
                 <outlet property="progressView" destination="DU5-bD-CP4" id="Wcq-oR-tkl"/>
+                <outlet property="titleLabel" destination="n3p-fd-SUc" id="LIm-Zv-kS6"/>
             </connections>
-            <point key="canvasLocation" x="153.62318840579712" y="81.696428571428569"/>
+            <point key="canvasLocation" x="153.59999999999999" y="80.959520239880064"/>
         </view>
     </objects>
 </document>

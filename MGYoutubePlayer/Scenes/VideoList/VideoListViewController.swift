@@ -48,10 +48,16 @@ final class VideoListViewController: UIViewController, BindableType {
     }
 
     func bindViewModel() {
+        let showVideoTrigger = NotificationCenter.default.rx.notification(.showVideo)
+            .map { $0.object as? Video }
+            .unwrap()
+            .asDriverOnErrorJustComplete()
+        
         let input = VideoListViewModel.Input(
             loadTrigger: Driver.just(()),
             reloadTrigger: tableView.refreshTrigger,
-            selectVideoTrigger: tableView.rx.itemSelected.asDriver()
+            selectVideoTrigger: tableView.rx.itemSelected.asDriver(),
+            showVideoTrigger: showVideoTrigger
         )
 
         let output = viewModel.transform(input)

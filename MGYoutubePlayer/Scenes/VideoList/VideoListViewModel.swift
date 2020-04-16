@@ -17,6 +17,7 @@ extension VideoListViewModel: ViewModelType {
         let loadTrigger: Driver<Void>
         let reloadTrigger: Driver<Void>
         let selectVideoTrigger: Driver<IndexPath>
+        let showVideoTrigger: Driver<Video>
     }
 
     struct Output {
@@ -36,7 +37,8 @@ extension VideoListViewModel: ViewModelType {
         
         let (videoList, error, isLoading, isReloading) = getListResult.destructured
 
-        let selectedVideo = select(trigger: input.selectVideoTrigger, items: videoList)
+        let selectedVideo = Driver.merge(select(trigger: input.selectVideoTrigger, items: videoList),
+                                         input.showVideoTrigger)
             .do(onNext: navigator.toVideoDetail)
             .mapToVoid()
 

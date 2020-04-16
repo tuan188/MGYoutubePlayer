@@ -47,10 +47,13 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
     }
     
     func load(video: Video) {
+        if player == nil {
+            configPlayer()
+        }
         loadTrigger.onNext(video)
     }
     
-    func configPlayer() {
+    private func configPlayer() {
         // Init player
         let player = YoutubePlayer()
         player.addPlayer(to: containerView)

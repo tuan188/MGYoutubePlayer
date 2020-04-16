@@ -45,29 +45,11 @@ final class VideoDetailViewController: UIViewController, BindableType {
     
     // MARK: - Methods
 
-    func configView() {
-        if moveVideoFromMiniPlayer() {
-//            (self.tabBarController as? MainViewController)?.miniPlayer?.removeFromSuperview()
-        } else {
-            playerView.configPlayer()
-        }
-    }
-
     func bindViewModel() {
         let loadTrigger = self.rx.methodInvoked(#selector(UIViewController.viewWillAppear))
             .map { $0.first as? Bool ?? false }
             .mapToVoid()
             .asDriverOnErrorJustComplete()
-        
-//        self.rx.methodInvoked(#selector(UIViewController.viewDidAppear))
-//            .map { $0.first as? Bool ?? false }
-//            .skip(1)
-//            .mapToVoid()
-//            .asDriverOnErrorJustComplete()
-//            .drive(onNext: { [unowned self] in
-////                self.playerView.continuePlay()
-//            })
-//            .disposed(by: rx.disposeBag)
         
         let input = VideoDetailViewModel.Input(
             loadTrigger: loadTrigger,
@@ -114,7 +96,6 @@ extension VideoDetailViewController {
                 tabBarController.hasMiniPlayer {
                 vc.moveVideoFromMiniPlayer()
             } else {
-                vc.playerView.configPlayer()
                 vc.playerView.load(video: video)
             }
         }

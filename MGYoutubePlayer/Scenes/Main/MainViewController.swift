@@ -50,7 +50,7 @@ extension UITabBarController {
     }
     
     var hasMiniPlayer: Bool {
-        return miniPlayer != nil
+        return miniPlayer?.player != nil
     }
     
     @discardableResult
@@ -59,24 +59,26 @@ extension UITabBarController {
             return miniPlayer
         }
         
-        var bottomInset: CGFloat = 0
-        
-        if #available(iOS 11.0, *) {
-            if let safeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets {
-                bottomInset = safeAreaInsets.bottom
-            }
-        }
-        
         let miniPlayer = YoutubeMiniPlayerView.loadFromNib()
         miniPlayer.isUserInteractionEnabled = true
         
-        let screenSize = UIScreen.main.bounds
-        let miniPlayerHeight: CGFloat = 64
-        miniPlayer.frame = CGRect(x: 0,
-                                  y: screenSize.height + bottomInset - miniPlayerHeight - tabBar.bounds.height,
-                                  width: screenSize.width,
-                                  height: miniPlayerHeight)
+        // shadow
+        miniPlayer.layer.shadowColor = UIColor.black.cgColor
+        miniPlayer.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        miniPlayer.layer.shadowOpacity = 0.2
+        miniPlayer.layer.shadowRadius = 10
+        
         view.addSubview(miniPlayer)
+        
+        // constraints
+        let miniPlayerHeight: CGFloat = 56
+        let margin: CGFloat = 12
+        miniPlayer.translatesAutoresizingMaskIntoConstraints = false
+        miniPlayer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: margin).isActive = true
+        miniPlayer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -margin).isActive = true
+        miniPlayer.bottomAnchor.constraint(equalTo: tabBar.topAnchor, constant: -margin).isActive = true
+        miniPlayer.heightAnchor.constraint(equalToConstant: miniPlayerHeight).isActive = true
+    
         return miniPlayer
     }
     

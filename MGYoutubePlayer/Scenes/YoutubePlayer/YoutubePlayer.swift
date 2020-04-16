@@ -22,23 +22,6 @@ final class YoutubePlayer: NSObject {
         case unknown
     }
     
-    struct Options {
-        var controls = false
-        var playsInline = true
-        var autohide = true
-        var showInfo = false
-        var modestBranding = true
-        
-        func toDictionary() -> [String: Any] {
-            return [
-                "controls": controls ? 1 : 0,
-                "playsinline": playsInline ? 1 : 0,
-                "autohide": autohide ? 1 : 0,
-                "showinfo": showInfo ? 1 : 0,
-                "modestbranding": modestBranding ? 1 : 0
-            ]
-        }
-    }
     // MARK: - Public properties
     
     var shouldRequestDurationChanges = false
@@ -117,7 +100,22 @@ final class YoutubePlayer: NSObject {
         player.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     }
     
-    func load(video: Video, options: Options = Options()) {
+    func load(video: Video) {
+        let playerVars = [
+            "autohide": 0,
+            "controls": 0,
+            "playsinline": 1,
+            "showinfo": 0,
+            "rel": 0,
+            "modestbranding": 1,
+            "iv_load_policy": 3
+            //"theme" : "dark"
+            //"autoplay"     : 1
+        ]
+        load(video: video, playerVars: playerVars)
+    }
+    
+    func load(video: Video, playerVars: [String: Any]) {
         self.video = video
         _playTime.accept(0)
         _duration.accept(0)
@@ -136,7 +134,7 @@ final class YoutubePlayer: NSObject {
             })
         })
         
-        playerView?.load(withVideoId: video.id, playerVars: options.toDictionary())
+        playerView?.load(withVideoId: video.id, playerVars: playerVars)
     }
     
     func continuePlay() {
