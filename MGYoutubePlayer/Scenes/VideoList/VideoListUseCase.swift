@@ -11,9 +11,9 @@ protocol VideoListUseCaseType {
 }
 
 struct VideoListUseCase: VideoListUseCaseType {
+    let videoRepository: VideoRepositoryType
+    
     func getVideoList() -> Observable<[Video]> {
-        return Observable.just([
-            Video(id: "M7lc1UVf-VE", title: "Embeded Web Player")
-        ])
+        return videoRepository.getVideoList()
     }
 }

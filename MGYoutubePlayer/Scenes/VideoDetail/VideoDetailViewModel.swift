@@ -23,6 +23,7 @@ extension VideoDetailViewModel: ViewModelType {
         let title: Driver<String>
         let video: Driver<Video>
         let minimize: Driver<Void>
+        let videoList: Driver<[Video]>
     }
 
     func transform(_ input: Input) -> Output {
@@ -38,7 +39,8 @@ extension VideoDetailViewModel: ViewModelType {
         return Output(
             title: title,
             video: video,
-            minimize: minimize
+            minimize: minimize,
+            videoList: Driver.empty()
         )
     }
 }

@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -46,17 +46,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y8D-Zj-zcp" customClass="YoutubePlayerView" customModule="MGYoutubePlayer" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="375" height="558"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RjY-46-Yhl" customClass="LoadMoreTableView" customModule="MGLoadMore">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            </view>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="Y8D-Zj-zcp" customClass="YoutubePlayerView" customModule="MGYoutubePlayer" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="217"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                </view>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="d60-x5-NMI" firstAttribute="bottom" secondItem="Y8D-Zj-zcp" secondAttribute="bottom" constant="65" id="XNp-gf-UZ4"/>
-                            <constraint firstItem="Y8D-Zj-zcp" firstAttribute="leading" secondItem="d60-x5-NMI" secondAttribute="leading" id="dpe-Nk-BNK"/>
-                            <constraint firstItem="d60-x5-NMI" firstAttribute="trailing" secondItem="Y8D-Zj-zcp" secondAttribute="trailing" id="jzG-e6-Gnk"/>
-                            <constraint firstItem="Y8D-Zj-zcp" firstAttribute="top" secondItem="d60-x5-NMI" secondAttribute="top" id="ucg-V2-gZH"/>
+                            <constraint firstItem="RjY-46-Yhl" firstAttribute="leading" secondItem="d60-x5-NMI" secondAttribute="leading" id="4WO-yb-K4Q"/>
+                            <constraint firstItem="d60-x5-NMI" firstAttribute="bottom" secondItem="RjY-46-Yhl" secondAttribute="bottom" id="ANk-t1-KQ4"/>
+                            <constraint firstItem="d60-x5-NMI" firstAttribute="trailing" secondItem="RjY-46-Yhl" secondAttribute="trailing" id="N3S-E4-DQN"/>
+                            <constraint firstItem="RjY-46-Yhl" firstAttribute="top" secondItem="d60-x5-NMI" secondAttribute="top" id="f6U-nh-39f"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d60-x5-NMI"/>
                     </view>
@@ -67,6 +72,7 @@
                     <connections>
                         <outlet property="minimizeButton" destination="dWD-qK-9CG" id="9mO-hG-CWL"/>
                         <outlet property="playerView" destination="Y8D-Zj-zcp" id="bEh-2D-T2g"/>
+                        <outlet property="tableView" destination="RjY-46-Yhl" id="QuB-gd-X88"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VF8-hV-kxO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

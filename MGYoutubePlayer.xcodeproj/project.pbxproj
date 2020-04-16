@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17100E2524480EB900672B8E /* VideoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17100E2424480EB900672B8E /* VideoRepository.swift */; };
+		17100E2724480EF900672B8E /* RepositoriesAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17100E2624480EF900672B8E /* RepositoriesAssembler.swift */; };
+		17100E292448349800672B8E /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17100E282448349800672B8E /* CacheManager.swift */; };
+		17100E2B24485B9300672B8E /* YoutubePlayerControlBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17100E2A24485B9300672B8E /* YoutubePlayerControlBarView.swift */; };
+		17100E2D24485BA100672B8E /* YoutubePlayerControlBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17100E2C24485BA100672B8E /* YoutubePlayerControlBarView.xib */; };
 		171C0B0F2427B29100788ADE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C0B0E2427B29100788ADE /* AppDelegate.swift */; };
 		171C0B182427B29400788ADE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171C0B172427B29400788ADE /* Assets.xcassets */; };
 		171C0B1B2427B29400788ADE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 171C0B192427B29400788ADE /* LaunchScreen.storyboard */; };
@@ -76,6 +81,11 @@
 
 /* Begin PBXFileReference section */
 		07B8318818C3460D7FAA513B /* Pods-MGYoutubePlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MGYoutubePlayer.release.xcconfig"; path = "Target Support Files/Pods-MGYoutubePlayer/Pods-MGYoutubePlayer.release.xcconfig"; sourceTree = "<group>"; };
+		17100E2424480EB900672B8E /* VideoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRepository.swift; sourceTree = "<group>"; };
+		17100E2624480EF900672B8E /* RepositoriesAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesAssembler.swift; sourceTree = "<group>"; };
+		17100E282448349800672B8E /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		17100E2A24485B9300672B8E /* YoutubePlayerControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayerControlBarView.swift; sourceTree = "<group>"; };
+		17100E2C24485BA100672B8E /* YoutubePlayerControlBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YoutubePlayerControlBarView.xib; sourceTree = "<group>"; };
 		171C0B0B2427B29100788ADE /* MGYoutubePlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGYoutubePlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		171C0B0E2427B29100788ADE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		171C0B172427B29400788ADE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -291,6 +301,8 @@
 		171C0B412427B35800788ADE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				17100E2424480EB900672B8E /* VideoRepository.swift */,
+				17100E2624480EF900672B8E /* RepositoriesAssembler.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -382,6 +394,7 @@
 				1799ED082445A8C900136B3F /* HavingYoutubePlayer.swift */,
 				17B564522434390E0079B626 /* ProgressSlider.swift */,
 				17B56454243439650079B626 /* ProgressView.swift */,
+				17100E282448349800672B8E /* CacheManager.swift */,
 			);
 			path = YoutubePlayer;
 			sourceTree = "<group>";
@@ -392,6 +405,8 @@
 				1759EC68243DB79E00F7101C /* YoutubePlayerViewModel.swift */,
 				1750DC67242CFD16000371B1 /* YoutubePlayerView.swift */,
 				1750DC69242CFD2C000371B1 /* YoutubePlayerView.xib */,
+				17100E2A24485B9300672B8E /* YoutubePlayerControlBarView.swift */,
+				17100E2C24485BA100672B8E /* YoutubePlayerControlBarView.xib */,
 			);
 			path = YoutubePlayer;
 			sourceTree = "<group>";
@@ -517,6 +532,7 @@
 				1759EC75243EC82100F7101C /* WKYTPlayerView.bundle in Resources */,
 				171C0B5F2427B68800788ADE /* Main.storyboard in Resources */,
 				179A41182428F3E3004FE81F /* VideoCell.xib in Resources */,
+				17100E2D24485BA100672B8E /* YoutubePlayerControlBarView.xib in Resources */,
 				1799ED0424455EC300136B3F /* YoutubeMiniPlayerView.xib in Resources */,
 				1750DC6A242CFD2C000371B1 /* YoutubePlayerView.xib in Resources */,
 				171C0B1B2427B29400788ADE /* LaunchScreen.storyboard in Resources */,
@@ -640,6 +656,7 @@
 				1759EC6D243DE85800F7101C /* Float+.swift in Sources */,
 				1759EC76243EC82100F7101C /* WKYTPlayerView.m in Sources */,
 				17B564532434390E0079B626 /* ProgressSlider.swift in Sources */,
+				17100E2B24485B9300672B8E /* YoutubePlayerControlBarView.swift in Sources */,
 				171C0B512427B35800788ADE /* UIViewController+Rx.swift in Sources */,
 				1750DC68242CFD16000371B1 /* YoutubePlayerView.swift in Sources */,
 				179A41202428F479004FE81F /* VideoDetailAssembler.swift in Sources */,
@@ -680,9 +697,12 @@
 				179A410F2428F2CD004FE81F /* VideoListViewModel.swift in Sources */,
 				171C0B532427B35800788ADE /* Utils.swift in Sources */,
 				1799ED0224455EB800136B3F /* YoutubeMiniPlayerView.swift in Sources */,
+				17100E2524480EB900672B8E /* VideoRepository.swift in Sources */,
+				17100E2724480EF900672B8E /* RepositoriesAssembler.swift in Sources */,
 				171C0B542427B35800788ADE /* APIError.swift in Sources */,
 				1759EC8A244048E000F7101C /* MainNavigator.swift in Sources */,
 				179A410E2428F2CD004FE81F /* VideoListNavigator.swift in Sources */,
+				17100E292448349800672B8E /* CacheManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

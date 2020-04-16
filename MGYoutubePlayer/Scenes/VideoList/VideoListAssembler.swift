@@ -37,6 +37,6 @@ extension VideoListAssembler where Self: DefaultAssembler {
     }
 
     func resolve() -> VideoListUseCaseType {
-        return VideoListUseCase()
+        return VideoListUseCase(videoRepository: resolve())
     }
 }

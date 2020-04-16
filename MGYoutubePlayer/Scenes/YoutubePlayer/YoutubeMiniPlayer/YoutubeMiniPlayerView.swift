@@ -21,6 +21,8 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
     
     var player: YoutubePlayer?
     
+    var closeAction: (() -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -39,11 +41,11 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
     }
     
     @IBAction private func close(_ sender: Any) {
-        removeFromSuperview()
+        closeAction?()
     }
     
     deinit {
-        print("YoutubePlayerView deinit")
+        print("YoutubeMiniPlayerView deinit")
     }
     
     func load(video: Video) {

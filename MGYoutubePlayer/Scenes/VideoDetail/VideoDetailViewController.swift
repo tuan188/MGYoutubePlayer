@@ -12,6 +12,7 @@ import Reusable
 final class VideoDetailViewController: UIViewController, BindableType {
     
     // MARK: - IBOutlets
+    @IBOutlet weak var tableView: LoadMoreTableView!
     @IBOutlet weak var playerView: YoutubePlayerView!
     @IBOutlet weak var minimizeButton: UIBarButtonItem!
     
@@ -19,19 +20,11 @@ final class VideoDetailViewController: UIViewController, BindableType {
     
     var viewModel: VideoDetailViewModel!
     
-//    override var viewForPopupInteractionGestureRecognizer: UIView {
-//        return playerView
-//    }
-
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        configView()
+        configView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,6 +37,19 @@ final class VideoDetailViewController: UIViewController, BindableType {
     }
     
     // MARK: - Methods
+    
+    private func configView() {
+        tableView.do {
+            $0.estimatedRowHeight = 550
+            $0.rowHeight = UITableView.automaticDimension
+            $0.register(cellType: VideoCell.self)
+            $0.refreshFooter = nil
+        }
+        
+        tableView.rx
+            .setDelegate(self)
+            .disposed(by: rx.disposeBag)
+    }
 
     func bindViewModel() {
         let loadTrigger = self.rx.methodInvoked(#selector(UIViewController.viewWillAppear))
@@ -68,22 +74,35 @@ final class VideoDetailViewController: UIViewController, BindableType {
         output.minimize
             .drive(minimizeBinder)
             .disposed(by: rx.disposeBag)
+        
+        output.videoList
+            .drive(tableView.rx.items) { tableView, index, video in
+                return tableView.dequeueReusableCell(
+                    for: IndexPath(row: index, section: 0),
+                    cellType: VideoCell.self)
+                    .then {
+                        $0.bindViewModel(VideoViewModel(video: video))
+                    }
+            }
+            .disposed(by: rx.disposeBag)
     }
     
     private func moveVideoToMiniPlayer() {
-        guard let tabBarController = self.tabBarController, !tabBarController.hasMiniPlayer else { return }
+        guard let tabBarController = self.tabBarController as? MainViewController,
+            !tabBarController.hasMiniPlayer else { return }
         
         let miniPlayer = tabBarController.addMiniPlayer()
+        tabBarController.showMiniPlayer()
         playerView.movePlayer(to: miniPlayer)
     }
     
     @discardableResult
     private func moveVideoFromMiniPlayer() -> Bool {
-        guard let tabBarController = self.tabBarController,
+        guard let tabBarController = self.tabBarController as? MainViewController,
             let miniPlayer = tabBarController.miniPlayer else { return false }
         
         miniPlayer.movePlayer(to: playerView)
-        tabBarController.removeMiniPlayer()
+        tabBarController.hideMiniPlayer()
         return true
     }
 }
@@ -92,9 +111,16 @@ final class VideoDetailViewController: UIViewController, BindableType {
 extension VideoDetailViewController {
     var videoBinder: Binder<Video> {
         return Binder(self) { vc, video in
-            if let tabBarController = vc.tabBarController,
-                tabBarController.hasMiniPlayer {
-                vc.moveVideoFromMiniPlayer()
+            if let tabBarController = vc.tabBarController as? MainViewController,
+                let player = tabBarController.miniPlayer?.player {
+                if player.video?.id == video.id {
+                    vc.moveVideoFromMiniPlayer()
+//                    vc.playerView.player?.pause()
+//                    vc.playerView.player?.play()
+                } else {
+                    tabBarController.hideMiniPlayer()
+                    vc.playerView.load(video: video)
+                }
             } else {
                 vc.playerView.load(video: video)
             }
@@ -105,6 +131,13 @@ extension VideoDetailViewController {
         return Binder(self) { vc, _  in
             vc.moveVideoToMiniPlayer()
         }
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension VideoDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
