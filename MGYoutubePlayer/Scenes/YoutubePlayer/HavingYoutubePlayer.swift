@@ -17,11 +17,31 @@ protocol HavingYoutubePlayer: class {
 }
 
 extension HavingYoutubePlayer {
+    var isPlaying: Bool {
+        return player?.isPlaying ?? false
+    }
+    
+    var isActive: Bool {
+        return player?.isActive ?? false
+    }
+    
     func movePlayer(to object: HavingYoutubePlayer) {
         player?.movePlayer(to: object.videoContainerView)
         object.player = player
         object.bindViewModel()
         player = nil
         unbindViewModel()
+    }
+    
+    func play() {
+        player?.play()
+    }
+    
+    func pause() {
+        player?.pause()
+    }
+    
+    func stop() {
+        player?.stop()
     }
 }

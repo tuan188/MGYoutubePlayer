@@ -21,6 +21,6 @@ final class YoutubePlayerControlBarView: UIView, NibOwnerLoadable {
         loadNibContent()
         
         slider.loadedProgressTintColor = .lightGray
-        slider.setThumbImage(UIImage(named: "slider"), for: .normal)
+        slider.setThumbImage(UIImage.slider, for: .normal)
     }
 }

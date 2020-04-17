@@ -52,6 +52,18 @@ final class YoutubePlayer: NSObject {
         return _loadedFraction.value
     }
     
+    var isPlaying: Bool {
+        let state = self.state
+        return state == YoutubePlayer.State.playing || state == YoutubePlayer.State.buffering
+    }
+    
+    var isActive: Bool {
+        let state = self.state
+        return state == YoutubePlayer.State.playing
+            || state == YoutubePlayer.State.buffering
+            || state == YoutubePlayer.State.paused
+    }
+    
     // MARK: - Private properties
     private var superView: UIView?
     private var timer: Timer?
@@ -116,13 +128,8 @@ final class YoutubePlayer: NSObject {
     }
     
     func load(video: Video, playerVars: [String: Any]) {
+        resetStats()
         self.video = video
-        _playTime.accept(0)
-        _duration.accept(0)
-        _state.accept(.unknown)
-        _isReady.accept(false)
-        
-        timer?.invalidate()
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
             self?.playerView?.getVideoLoadedFraction({ (fraction, error) in
@@ -137,9 +144,19 @@ final class YoutubePlayer: NSObject {
         playerView?.load(withVideoId: video.id, playerVars: playerVars)
     }
     
-    func continuePlay() {
+    private func resetStats() {
+        _playTime.accept(0)
+        _duration.accept(0)
+        _state.accept(.unknown)
+        _isReady.accept(false)
+        
+        timer?.invalidate()
+    }
+    
+    func reload() {
         guard let videoId = self.video?.id else { return }
-        playerView?.cueVideo(byId: videoId, startSeconds: playTime, suggestedQuality: .auto)
+        playerView?.cueVideo(byId: videoId, startSeconds: 0, suggestedQuality: .auto)
+        resetStats()
     }
     
     func play() {
@@ -147,6 +164,7 @@ final class YoutubePlayer: NSObject {
     }
     
     func stop() {
+        resetStats()
         playerView?.stopVideo()
     }
     
@@ -156,6 +174,7 @@ final class YoutubePlayer: NSObject {
     
     func seek(to seconds: Float) {
         playerView?.seek(toSeconds: seconds, allowSeekAhead: true)
+        playerView?.playVideo()
     }
     
     func bingPlayerToFront() {
@@ -210,6 +229,12 @@ extension Reactive where Base: YoutubePlayer {
     
     var loadedFraction: Driver<Float> {
         return self.base._loadedFraction.asDriver(onErrorJustReturn: 0.0)
+    }
+    
+    var isPlaying: Driver<Bool> {
+        return self.base._state
+            .map { $0 == YoutubePlayer.State.playing || $0 == YoutubePlayer.State.buffering }
+            .asDriver(onErrorJustReturn: false)
     }
 }
 

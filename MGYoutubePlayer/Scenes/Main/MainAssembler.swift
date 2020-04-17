@@ -33,7 +33,7 @@ extension MainAssembler where Self: DefaultAssembler {
         
         videoListViewController.tabBarItem = UITabBarItem(
             title: "Video List",
-            image: UIImage(named: "videos"),
+            image: UIImage.videos,
             selectedImage: nil
         )
         

@@ -28,6 +28,9 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
         addGestureRecognizer(tapGesture)
+        
+        tintColor = UIColor(white: 0.1, alpha: 1)
+        progressView.tintColor = UIColor.magenta
     }
     
     @objc
@@ -91,13 +94,19 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
             .drive(onNext: { [unowned self] in
                 self.player?.play()
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         output.pause
             .drive(onNext: { [unowned self] in
                 self.player?.pause()
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
+        
+        output.stop
+            .drive(onNext: { [unowned self] in
+                self.player?.stop()
+            })
+            .disposed(by: disposeBag)
         
         output.duration
             .drive()
@@ -113,7 +122,7 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
         
         output.progress
             .drive(progressView.rx.progress)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         output.isReady
             .drive(playButton.rx.isEnabled)
@@ -121,20 +130,20 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
         
         output.state
             .drive(onNext: { [unowned self] state in
-                print(state)
+                print("Youtube Mini Player", state)
                 
                 switch state {
                 case .playing, .buffering:
-                    self.playButton.setTitle("Pause", for: .normal)
+                    self.playButton.setImage(UIImage.pause, for: .normal)
                 default:
-                    self.playButton.setTitle("Play", for: .normal)
+                    self.playButton.setImage(UIImage.play, for: .normal)
                 }
             })
             .disposed(by: disposeBag)
         
         output.videoTitle
             .drive(titleLabel.rx.text)
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func unbindViewModel() {

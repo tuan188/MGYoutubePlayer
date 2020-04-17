@@ -16,13 +16,11 @@ struct VideoDetailViewModel {
 extension VideoDetailViewModel: ViewModelType {
     struct Input {
         let loadTrigger: Driver<Void>
-        let minimizeTrigger: Driver<Void>
     }
 
     struct Output {
         let title: Driver<String>
         let video: Driver<Video>
-        let minimize: Driver<Void>
         let videoList: Driver<[Video]>
     }
 
@@ -33,13 +31,9 @@ extension VideoDetailViewModel: ViewModelType {
         let video = input.loadTrigger
             .map { self.video }
         
-        let minimize = input.minimizeTrigger
-            .do(onNext: navigator.minimize)
-        
         return Output(
             title: title,
             video: video,
-            minimize: minimize,
             videoList: Driver.empty()
         )
     }

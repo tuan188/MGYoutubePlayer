@@ -10,7 +10,7 @@ import UIKit
 
 final class MainViewController: UITabBarController, BindableType {
     
-    // MARK: - IBOutlets
+    static weak var instance: MainViewController?
     
     // MARK: - Properties
     var viewModel: MainViewModel!
@@ -21,6 +21,8 @@ final class MainViewController: UITabBarController, BindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MainViewController.instance = self
+        
         configView()
     }
     
@@ -64,7 +66,8 @@ extension MainViewController {
         
         let miniPlayer = YoutubeMiniPlayerView.loadFromNib()
         miniPlayer.isUserInteractionEnabled = true
-        miniPlayer.closeAction = { [weak self] in
+        miniPlayer.closeAction = { [weak self, miniPlayer] in
+            miniPlayer.stop()
             self?.hideMiniPlayer()
         }
         
@@ -78,15 +81,15 @@ extension MainViewController {
         view.addSubview(miniPlayer)
         
         // constraints
-        let miniPlayerHeight: CGFloat = 56
-        let margin: CGFloat = 12
+        let config = MiniPlayerConfiguration.youtube
         miniPlayer.translatesAutoresizingMaskIntoConstraints = false
-        miniPlayer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: margin).isActive = true
-        miniPlayer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -margin).isActive = true
-        let bottomConstraint = miniPlayer.bottomAnchor.constraint(equalTo: tabBar.topAnchor, constant: 120)
+        miniPlayer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: config.leftMargin).isActive = true
+        miniPlayer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: config.rightMargin).isActive = true
+        let bottomConstraint = miniPlayer.bottomAnchor.constraint(equalTo: tabBar.topAnchor,
+                                                                  constant: config.hiddenBottomMargin)
         bottomConstraint.isActive = true
         self.miniPlayerBottomConstraint = bottomConstraint
-        miniPlayer.heightAnchor.constraint(equalToConstant: miniPlayerHeight).isActive = true
+        miniPlayer.heightAnchor.constraint(equalToConstant: config.height).isActive = true
     
         return miniPlayer
     }
@@ -95,24 +98,49 @@ extension MainViewController {
         miniPlayer?.removeFromSuperview()
     }
     
-    func hideMiniPlayer() {
-        miniPlayerBottomConstraint?.constant = 120
+    func hideMiniPlayer(animated: Bool = true) {
+        miniPlayerBottomConstraint?.constant = MiniPlayerConfiguration.youtube.hiddenBottomMargin
         view.setNeedsUpdateConstraints()
         
-        UIView.animate(withDuration: 0.5) {
-            self.miniPlayer?.alpha = 0
-            self.view.layoutIfNeeded()
+        func setMiniPlayerAlpha() {
+            miniPlayer?.alpha = 0
+            view.layoutIfNeeded()
+        }
+        
+        if animated {
+            UIView.animate(withDuration: 0.33) {
+                setMiniPlayerAlpha()
+            }
+        } else {
+            setMiniPlayerAlpha()
         }
     }
     
-    func showMiniPlayer() {
-        miniPlayerBottomConstraint?.constant = -12
+    func showMiniPlayer(animated: Bool = true) {
+        miniPlayerBottomConstraint?.constant = MiniPlayerConfiguration.youtube.bottomMargin
         view.setNeedsUpdateConstraints()
         
-        UIView.animate(withDuration: 0.5) {
-            self.miniPlayer?.alpha = 1
-            self.view.layoutIfNeeded()
+        func setMiniPlayerAlpha() {
+            miniPlayer?.alpha = 1
+            view.layoutIfNeeded()
+        }
+        
+        if animated {
+            UIView.animate(withDuration: 0.33) {
+                setMiniPlayerAlpha()
+            }
+        } else {
+            setMiniPlayerAlpha()
         }
     }
 }
 
+struct MiniPlayerConfiguration {
+    var height: CGFloat = 60
+    var leftMargin: CGFloat = 14
+    var rightMargin: CGFloat = -14
+    var bottomMargin: CGFloat = -12
+    var hiddenBottomMargin: CGFloat = 120
+    
+    static let youtube = MiniPlayerConfiguration()
+}

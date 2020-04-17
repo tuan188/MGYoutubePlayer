@@ -72,7 +72,10 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
     func load(video: Video) {
         if player == nil {
             configPlayer()
+        } else {
+            bindViewModel()
         }
+        
         loadTrigger.onNext(video)
     }
     
@@ -117,19 +120,19 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
             .drive(onNext: { [unowned self] in
                 self.player?.play()
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         output.pause
             .drive(onNext: { [unowned self] in
                 self.player?.pause()
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         output.stop
             .drive(onNext: { [unowned self] in
                 self.player?.stop()
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
         
         output.duration
             .drive(onNext: { [unowned self] duration in
@@ -161,10 +164,12 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
                 print("Ready:", isReady)
                 self.controlBarView.playButton.isEnabled = isReady
                 self.controlBarView.slider.isEnabled = isReady
+                self.controlBarView.playTimeLabel.isHidden = !isReady
                 
                 if isReady {
                     self.controlBarView.activityIndicatorView.stopAnimating()
                 } else {
+                    self.controlBarView.remainingTimeLabel.text = "--:--"
                     self.controlBarView.activityIndicatorView.startAnimating()
                 }
             })
@@ -172,13 +177,14 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
         
         output.state
             .drive(onNext: { [unowned self] state in
-                print(state)
+                print("Youtube Player", state)
                 
                 switch state {
                 case .playing, .buffering:
-                    self.controlBarView.playButton.setImage(UIImage(named: "pause"), for: .normal)
+                    self.controlBarView.playButton.setImage(UIImage.pause, for: .normal)
+                    self.stopMiniPlayerIfNeeded()
                 default:
-                    self.controlBarView.playButton.setImage(UIImage(named: "play"), for: .normal)
+                    self.controlBarView.playButton.setImage(UIImage.play, for: .normal)
                 }
             })
             .disposed(by: disposeBag)
@@ -188,11 +194,21 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
                 print("seek")
                 self.player?.seek(to: time)
             })
-            .disposed(by: rx.disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func unbindViewModel() {
         disposeBag = DisposeBag()
+    }
+    
+    func stopMiniPlayerIfNeeded() {
+        guard let miniPlayer = MainViewController.instance?.miniPlayer,
+            let miniPlayerVideo = miniPlayer.player?.video,
+            let playerVideo = player?.video else { return }
+        
+        if !playerVideo.isSameAs(miniPlayerVideo) {
+            miniPlayer.stop()
+        }
     }
     
     override func layoutSubviews() {

@@ -14,7 +14,6 @@ final class VideoDetailViewController: UIViewController, BindableType {
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: LoadMoreTableView!
     @IBOutlet weak var playerView: YoutubePlayerView!
-    @IBOutlet weak var minimizeButton: UIBarButtonItem!
     
     // MARK: - Properties
     
@@ -25,6 +24,11 @@ final class VideoDetailViewController: UIViewController, BindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
         configView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MainViewController.instance?.hideMiniPlayer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -58,8 +62,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
             .asDriverOnErrorJustComplete()
         
         let input = VideoDetailViewModel.Input(
-            loadTrigger: loadTrigger,
-            minimizeTrigger: minimizeButton.rx.tap.asDriver()
+            loadTrigger: loadTrigger
         )
         let output = viewModel.transform(input)
         
@@ -69,10 +72,6 @@ final class VideoDetailViewController: UIViewController, BindableType {
         
         output.video
             .drive(videoBinder)
-            .disposed(by: rx.disposeBag)
-        
-        output.minimize
-            .drive(minimizeBinder)
             .disposed(by: rx.disposeBag)
         
         output.videoList
@@ -88,22 +87,39 @@ final class VideoDetailViewController: UIViewController, BindableType {
     }
     
     private func moveVideoToMiniPlayer() {
-        guard let tabBarController = self.tabBarController as? MainViewController,
-            !tabBarController.hasMiniPlayer else { return }
+        guard let mainViewController = MainViewController.instance else { return }
         
-        let miniPlayer = tabBarController.addMiniPlayer()
-        tabBarController.showMiniPlayer()
-        playerView.movePlayer(to: miniPlayer)
+        let miniPlayer = mainViewController.addMiniPlayer()
+        
+        if !miniPlayer.isActive {
+            playerView.movePlayer(to: miniPlayer)
+        }
     }
     
-    @discardableResult
-    private func moveVideoFromMiniPlayer() -> Bool {
-        guard let tabBarController = self.tabBarController as? MainViewController,
-            let miniPlayer = tabBarController.miniPlayer else { return false }
+    func loadVideo(_ video: Video) {
+        guard let mainViewController = MainViewController.instance else { return }
         
-        miniPlayer.movePlayer(to: playerView)
-        tabBarController.hideMiniPlayer()
-        return true
+        // if miniplayer exists
+        if let miniPlayer = mainViewController.miniPlayer {
+            // if videos are the same, move player from mini player to player view and hide mini player
+            if let miniPlayerVideo = miniPlayer.player?.video,
+                miniPlayerVideo.isSameAs(video) {
+                miniPlayer.movePlayer(to: playerView)
+                
+                if !playerView.isActive {
+                    playerView.load(video: video)
+                }
+            } else if miniPlayer.isActive {
+                // keep playing, init another player and assign to view controller's player view
+                playerView.load(video: video)
+            } else {
+                // if not playing, move player from mini player to player view, hide mini player and load video
+                miniPlayer.movePlayer(to: playerView)
+                playerView.load(video: video)
+            }
+        } else {
+            playerView.load(video: video)
+        }
     }
 }
 
@@ -111,25 +127,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
 extension VideoDetailViewController {
     var videoBinder: Binder<Video> {
         return Binder(self) { vc, video in
-            if let tabBarController = vc.tabBarController as? MainViewController,
-                let player = tabBarController.miniPlayer?.player {
-                if player.video?.id == video.id {
-                    vc.moveVideoFromMiniPlayer()
-//                    vc.playerView.player?.pause()
-//                    vc.playerView.player?.play()
-                } else {
-                    tabBarController.hideMiniPlayer()
-                    vc.playerView.load(video: video)
-                }
-            } else {
-                vc.playerView.load(video: video)
-            }
-        }
-    }
-    
-    var minimizeBinder: Binder<Void> {
-        return Binder(self) { vc, _  in
-            vc.moveVideoToMiniPlayer()
+            vc.loadVideo(video)
         }
     }
 }

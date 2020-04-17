@@ -65,12 +65,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d60-x5-NMI"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="NNQ-P2-1OT">
-                        <barButtonItem key="rightBarButtonItem" title="Minimize" id="dWD-qK-9CG"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Title" id="NNQ-P2-1OT"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="minimizeButton" destination="dWD-qK-9CG" id="9mO-hG-CWL"/>
                         <outlet property="playerView" destination="Y8D-Zj-zcp" id="bEh-2D-T2g"/>
                         <outlet property="tableView" destination="RjY-46-Yhl" id="QuB-gd-X88"/>
                     </connections>

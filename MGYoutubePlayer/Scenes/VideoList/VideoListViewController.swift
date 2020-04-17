@@ -25,6 +25,18 @@ final class VideoListViewController: UIViewController, BindableType {
         super.viewDidLoad()
         configView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let mainViewController = MainViewController.instance,
+            let miniPlayer = mainViewController.miniPlayer,
+            miniPlayer.isActive {
+            after(interval: 0.1) {
+                mainViewController.showMiniPlayer()
+            }
+        }
+    }
 
     deinit {
         logDeinit()

@@ -46,13 +46,14 @@ final class YoutubePlayerViewModel: ViewModelType {
     func transform(_ input: Input) -> Output {
         let state = input.state
         
-        let play = input.playTrigger
-            .withLatestFrom(input.state)
+        let playState = input.playTrigger
+            .withLatestFrom(state)
+        
+        let play = playState
             .filter { $0 != .playing && $0 != .buffering }
             .mapToVoid()
         
-        let pause = input.playTrigger
-            .withLatestFrom(input.state)
+        let pause = playState
             .filter { $0 == .playing || $0 == .buffering }
             .mapToVoid()
         
