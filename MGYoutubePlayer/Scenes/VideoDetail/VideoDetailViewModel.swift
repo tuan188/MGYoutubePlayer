@@ -16,12 +16,19 @@ struct VideoDetailViewModel {
 extension VideoDetailViewModel: ViewModelType {
     struct Input {
         let loadTrigger: Driver<Void>
+        let reloadTrigger: Driver<Void>
+        let selectVideoTrigger: Driver<IndexPath>
     }
 
     struct Output {
         let title: Driver<String>
         let video: Driver<Video>
+        let error: Driver<Error>
+        let isLoading: Driver<Bool>
+        let isReloading: Driver<Bool>
         let videoList: Driver<[Video]>
+        let selectedVideo: Driver<Void>
+        let isEmpty: Driver<Bool>
     }
 
     func transform(_ input: Input) -> Output {
@@ -31,10 +38,29 @@ extension VideoDetailViewModel: ViewModelType {
         let video = input.loadTrigger
             .map { self.video }
         
+        let getListResult = getList(
+            loadTrigger: input.loadTrigger,
+            reloadTrigger: input.reloadTrigger,
+            getItems: useCase.getVideoList)
+        
+        let (videoList, error, isLoading, isReloading) = getListResult.destructured
+        
+        let selectedVideo = select(trigger: input.selectVideoTrigger, items: videoList)
+            .do(onNext: navigator.toVideoDetail)
+            .mapToVoid()
+        
+        let isEmpty = checkIfDataIsEmpty(trigger: Driver.merge(isLoading, isReloading),
+                                         items: videoList)
+        
         return Output(
             title: title,
             video: video,
-            videoList: Driver.empty()
+            error: error,
+            isLoading: isLoading,
+            isReloading: isReloading,
+            videoList: videoList,
+            selectedVideo: selectedVideo,
+            isEmpty: isEmpty
         )
     }
 }

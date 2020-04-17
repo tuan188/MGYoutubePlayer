@@ -7,9 +7,13 @@
 //
 
 protocol VideoDetailUseCaseType {
-
+    func getVideoList() -> Observable<[Video]>
 }
 
 struct VideoDetailUseCase: VideoDetailUseCaseType {
-
+    let videoRepository: VideoRepositoryType
+    
+    func getVideoList() -> Observable<[Video]> {
+        return videoRepository.getVideoList()
+    }
 }

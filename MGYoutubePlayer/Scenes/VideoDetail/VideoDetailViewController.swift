@@ -28,7 +28,9 @@ final class VideoDetailViewController: UIViewController, BindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        MainViewController.instance?.hideMiniPlayer()
+        after(interval: 0.1) {
+            MainViewController.instance?.hideMiniPlayer()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -62,7 +64,9 @@ final class VideoDetailViewController: UIViewController, BindableType {
             .asDriverOnErrorJustComplete()
         
         let input = VideoDetailViewModel.Input(
-            loadTrigger: loadTrigger
+            loadTrigger: loadTrigger,
+            reloadTrigger: tableView.refreshTrigger,
+            selectVideoTrigger: tableView.rx.itemSelected.asDriver()
         )
         let output = viewModel.transform(input)
         
@@ -72,6 +76,26 @@ final class VideoDetailViewController: UIViewController, BindableType {
         
         output.video
             .drive(videoBinder)
+            .disposed(by: rx.disposeBag)
+        
+        output.error
+            .drive(rx.error)
+            .disposed(by: rx.disposeBag)
+        
+        output.isLoading
+            .drive(rx.isLoading)
+            .disposed(by: rx.disposeBag)
+        
+        output.isReloading
+            .drive(tableView.isRefreshing)
+            .disposed(by: rx.disposeBag)
+        
+        output.selectedVideo
+            .drive()
+            .disposed(by: rx.disposeBag)
+        
+        output.isEmpty
+            .drive()
             .disposed(by: rx.disposeBag)
         
         output.videoList

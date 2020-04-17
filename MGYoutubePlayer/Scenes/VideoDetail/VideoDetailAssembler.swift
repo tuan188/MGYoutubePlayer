@@ -38,6 +38,6 @@ extension VideoDetailAssembler where Self: DefaultAssembler {
     }
 
     func resolve() -> VideoDetailUseCaseType {
-        return VideoDetailUseCase()
+        return VideoDetailUseCase(videoRepository: resolve())
     }
 }

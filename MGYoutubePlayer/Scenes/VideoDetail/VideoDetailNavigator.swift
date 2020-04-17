@@ -7,7 +7,7 @@
 //
 
 protocol VideoDetailNavigatorType {
-    func minimize()
+    func toVideoDetail(video: Video)
 }
 
 struct VideoDetailNavigator: VideoDetailNavigatorType {
@@ -18,7 +18,9 @@ struct VideoDetailNavigator: VideoDetailNavigatorType {
         return navigationController.tabBarController as? MainViewController
     }
     
-    func minimize() {
-        
+    func toVideoDetail(video: Video) {
+        let videoDetailVC: VideoDetailViewController = assembler.resolve(navigationController: navigationController,
+                                                                         video: video)
+        navigationController.pushViewController(videoDetailVC, animated: true)
     }
 }
