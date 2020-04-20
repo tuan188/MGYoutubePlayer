@@ -1,15 +1,15 @@
 //
-//  VideoListViewController.swift
+//  AudioListViewController.swift
 //  MGYoutubePlayer
 //
-//  Created by Tuan Truong on 3/23/20.
+//  Created by Tuan Truong on 4/20/20.
 //  Copyright © 2020 Sun Asterisk. All rights reserved.
 //
 
 import UIKit
 import Reusable
 
-final class VideoListViewController: UIViewController, BindableType {
+final class AudioListViewController: UIViewController, BindableType {
 
     // MARK: - IBOutlets
 
@@ -17,25 +17,13 @@ final class VideoListViewController: UIViewController, BindableType {
 
     // MARK: - Properties
 
-    var viewModel: VideoListViewModel!
+    var viewModel: AudioListViewModel!
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if let mainViewController = MainViewController.shared,
-            let miniPlayer = mainViewController.miniPlayer,
-            miniPlayer.isActive {
-            after(interval: 0.1) {
-                mainViewController.showMiniPlayer()
-            }
-        }
     }
 
     deinit {
@@ -48,7 +36,7 @@ final class VideoListViewController: UIViewController, BindableType {
         tableView.do {
             $0.estimatedRowHeight = 550
             $0.rowHeight = UITableView.automaticDimension
-            $0.register(cellType: VideoCell.self)
+            $0.register(cellType: AudioCell.self)
             $0.refreshFooter = nil
         }
 
@@ -56,31 +44,25 @@ final class VideoListViewController: UIViewController, BindableType {
             .setDelegate(self)
             .disposed(by: rx.disposeBag)
         
-        title = "Video List"
+        title = "AudioList"
     }
 
     func bindViewModel() {
-        let showVideoTrigger = NotificationCenter.default.rx.notification(.showVideo)
-            .map { $0.object as? Video }
-            .unwrap()
-            .asDriverOnErrorJustComplete()
-        
-        let input = VideoListViewModel.Input(
+        let input = AudioListViewModel.Input(
             loadTrigger: Driver.just(()),
             reloadTrigger: tableView.refreshTrigger,
-            selectVideoTrigger: tableView.rx.itemSelected.asDriver(),
-            showVideoTrigger: showVideoTrigger
+            selectAudioTrigger: tableView.rx.itemSelected.asDriver()
         )
 
         let output = viewModel.transform(input)
 
-        output.videoList
-            .drive(tableView.rx.items) { tableView, index, video in
+        output.audioList
+            .drive(tableView.rx.items) { tableView, index, audio in
                 return tableView.dequeueReusableCell(
                     for: IndexPath(row: index, section: 0),
-                    cellType: VideoCell.self)
+                    cellType: AudioCell.self)
                     .then {
-                        $0.bindViewModel(VideoViewModel(video: video))
+                        $0.bindViewModel(AudioViewModel(audio: audio))
                     }
             }
             .disposed(by: rx.disposeBag)
@@ -97,7 +79,7 @@ final class VideoListViewController: UIViewController, BindableType {
             .drive(tableView.isRefreshing)
             .disposed(by: rx.disposeBag)
 
-        output.selectedVideo
+        output.selectedAudio
             .drive()
             .disposed(by: rx.disposeBag)
 
@@ -108,18 +90,18 @@ final class VideoListViewController: UIViewController, BindableType {
 }
 
 // MARK: - Binders
-extension VideoListViewController {
+extension AudioListViewController {
 
 }
 
 // MARK: - UITableViewDelegate
-extension VideoListViewController: UITableViewDelegate {
+extension AudioListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 // MARK: - StoryboardSceneBased
-extension VideoListViewController: StoryboardSceneBased {
+extension AudioListViewController: StoryboardSceneBased {
     static var sceneStoryboard = Storyboards.main
 }

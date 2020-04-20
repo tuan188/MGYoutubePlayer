@@ -202,7 +202,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
     }
     
     func stopMiniPlayerIfNeeded() {
-        guard let miniPlayer = MainViewController.instance?.miniPlayer,
+        guard let miniPlayer = MainViewController.shared?.miniPlayer,
             let miniPlayerVideo = miniPlayer.player?.video,
             let playerVideo = player?.video else { return }
         

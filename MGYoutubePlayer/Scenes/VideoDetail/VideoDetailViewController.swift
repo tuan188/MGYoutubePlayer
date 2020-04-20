@@ -29,7 +29,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         after(interval: 0.1) {
-            MainViewController.instance?.hideMiniPlayer()
+            MainViewController.shared?.hideMiniPlayer()
         }
     }
     
@@ -111,7 +111,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
     }
     
     private func moveVideoToMiniPlayer() {
-        guard let mainViewController = MainViewController.instance else { return }
+        guard let mainViewController = MainViewController.shared else { return }
         
         let miniPlayer = mainViewController.addMiniPlayer()
         
@@ -121,7 +121,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
     }
     
     func loadVideo(_ video: Video) {
-        guard let mainViewController = MainViewController.instance else { return }
+        guard let mainViewController = MainViewController.shared else { return }
         
         // if miniplayer exists
         if let miniPlayer = mainViewController.miniPlayer {

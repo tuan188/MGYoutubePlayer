@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioPlayerView" customModule="MGYoutubePlayer" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicatorView" destination="daj-a0-bBc" id="1bE-mX-wO6"/>
+                <outlet property="coverImageView" destination="6Kr-eX-pTs" id="JuR-YF-96d"/>
+                <outlet property="playButton" destination="bcX-5p-LvT" id="kh4-Qc-OpY"/>
+                <outlet property="playTimeLabel" destination="5nH-yT-pgd" id="ucF-at-cmK"/>
+                <outlet property="remainingTimeLabel" destination="nq9-BP-Qp2" id="ccG-9t-xQd"/>
+                <outlet property="slider" destination="W8q-74-sUv" id="I58-vH-STo"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="296"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="audio_cover" translatesAutoresizingMaskIntoConstraints="NO" id="6Kr-eX-pTs">
+                    <rect key="frame" x="107" y="24" width="200" height="200"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="12q-cd-uz9"/>
+                        <constraint firstAttribute="width" constant="200" id="Ne9-Zo-8Fq"/>
+                    </constraints>
+                </imageView>
+                <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="01X-Vb-rEj">
+                    <rect key="frame" x="16" y="248" width="382" height="32"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TEK-nt-LoD">
+                        <rect key="frame" x="0.0" y="0.0" width="382" height="32"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <color key="backgroundColor" white="0.90126173708920176" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <blurEffect style="light"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </visualEffectView>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Dfy-HB-Bdf">
+                    <rect key="frame" x="16" y="248" width="382" height="32"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bcX-5p-LvT">
+                            <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="32" id="uJ7-xM-pRe"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="7" minY="7" maxX="7" maxY="7"/>
+                            <state key="normal" image="play"/>
+                        </button>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="daj-a0-bBc">
+                            <rect key="frame" x="38" y="0.0" width="20" height="32"/>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5nH-yT-pgd">
+                            <rect key="frame" x="64" y="0.0" width="26.333333333333329" height="32"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="W8q-74-sUv" customClass="ProgressSlider" customModule="MGYoutubePlayer" customModuleProvider="target">
+                            <rect key="frame" x="94.333333333333314" y="0.0" width="257.33333333333337" height="33"/>
+                            <color key="tintColor" red="1" green="0.2527923882" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </slider>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nq9-BP-Qp2">
+                            <rect key="frame" x="355.66666666666669" y="0.0" width="26.333333333333314" height="32"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="BIn-gk-iTW"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="01X-Vb-rEj" firstAttribute="leading" secondItem="Dfy-HB-Bdf" secondAttribute="leading" id="0Vj-1Y-Vws"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Dfy-HB-Bdf" secondAttribute="trailing" constant="16" id="C5C-Jb-GGc"/>
+                <constraint firstItem="6Kr-eX-pTs" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Jl7-lM-d9s"/>
+                <constraint firstItem="6Kr-eX-pTs" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="Xbm-7x-rdI"/>
+                <constraint firstItem="01X-Vb-rEj" firstAttribute="top" secondItem="Dfy-HB-Bdf" secondAttribute="top" id="oCP-EE-uwg"/>
+                <constraint firstItem="01X-Vb-rEj" firstAttribute="trailing" secondItem="Dfy-HB-Bdf" secondAttribute="trailing" id="qoA-Ws-SwC"/>
+                <constraint firstItem="01X-Vb-rEj" firstAttribute="bottom" secondItem="Dfy-HB-Bdf" secondAttribute="bottom" id="xOy-Az-PsU"/>
+                <constraint firstItem="Dfy-HB-Bdf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="xmv-se-r7o"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Dfy-HB-Bdf" secondAttribute="bottom" constant="16" id="yDr-ly-byr"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="137.68115942028987" y="215.62500000000003"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="audio_cover" width="200" height="200"/>
+        <image name="play" width="25" height="25"/>
+    </resources>
+</document>

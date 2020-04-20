@@ -7,9 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		170247EB244D38BD00B6EA96 /* AudioListAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247E6244D38BD00B6EA96 /* AudioListAssembler.swift */; };
+		170247EC244D38BD00B6EA96 /* AudioListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247E7244D38BD00B6EA96 /* AudioListViewController.swift */; };
+		170247ED244D38BD00B6EA96 /* AudioListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247E8244D38BD00B6EA96 /* AudioListUseCase.swift */; };
+		170247EE244D38BD00B6EA96 /* AudioListNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247E9244D38BD00B6EA96 /* AudioListNavigator.swift */; };
+		170247EF244D38BD00B6EA96 /* AudioListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247EA244D38BD00B6EA96 /* AudioListViewModel.swift */; };
+		170247F6244D432800B6EA96 /* AudioDetailAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247F1244D432800B6EA96 /* AudioDetailAssembler.swift */; };
+		170247F7244D432800B6EA96 /* AudioDetailNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247F2244D432800B6EA96 /* AudioDetailNavigator.swift */; };
+		170247F8244D432800B6EA96 /* AudioDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247F3244D432800B6EA96 /* AudioDetailUseCase.swift */; };
+		170247F9244D432800B6EA96 /* AudioDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247F4244D432800B6EA96 /* AudioDetailViewController.swift */; };
+		170247FA244D432800B6EA96 /* AudioDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247F5244D432800B6EA96 /* AudioDetailViewModel.swift */; };
+		170247FE244D909E00B6EA96 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247FD244D909E00B6EA96 /* AudioPlayer.swift */; };
+		17024800244D90B100B6EA96 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170247FF244D90B100B6EA96 /* AudioPlayerView.swift */; };
+		17024802244D941100B6EA96 /* AudioPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17024801244D941100B6EA96 /* AudioPlayerView.xib */; };
+		17024806244D948800B6EA96 /* AudioMiniPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17024805244D948800B6EA96 /* AudioMiniPlayerView.xib */; };
+		17024808244D949700B6EA96 /* AudioMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17024807244D949700B6EA96 /* AudioMiniPlayerView.swift */; };
 		17100E2524480EB900672B8E /* VideoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17100E2424480EB900672B8E /* VideoRepository.swift */; };
 		17100E2724480EF900672B8E /* RepositoriesAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17100E2624480EF900672B8E /* RepositoriesAssembler.swift */; };
-		17100E292448349800672B8E /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17100E282448349800672B8E /* CacheManager.swift */; };
 		17100E2B24485B9300672B8E /* YoutubePlayerControlBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17100E2A24485B9300672B8E /* YoutubePlayerControlBarView.swift */; };
 		17100E2D24485BA100672B8E /* YoutubePlayerControlBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17100E2C24485BA100672B8E /* YoutubePlayerControlBarView.xib */; };
 		171C0B0F2427B29100788ADE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171C0B0E2427B29100788ADE /* AppDelegate.swift */; };
@@ -63,8 +77,13 @@
 		179A41232428F479004FE81F /* VideoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179A411E2428F479004FE81F /* VideoDetailViewModel.swift */; };
 		17B564532434390E0079B626 /* ProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B564522434390E0079B626 /* ProgressSlider.swift */; };
 		17B56455243439650079B626 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B56454243439650079B626 /* ProgressView.swift */; };
+		17DA5EC0244D376A0062E1F1 /* AudioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DA5EB9244D376A0062E1F1 /* AudioViewModel.swift */; };
+		17DA5EC9244D37AA0062E1F1 /* AudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DA5EC7244D37AA0062E1F1 /* AudioCell.swift */; };
+		17DA5ECA244D37AA0062E1F1 /* AudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17DA5EC8244D37AA0062E1F1 /* AudioCell.xib */; };
 		17E63DE124480336000383B2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E63DE024480336000383B2 /* Constants.swift */; };
 		17E6445D244475D5000088AC /* YoutubeMiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */; };
+		17F57CA92449ACA4002665AA /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F57CA82449ACA4002665AA /* Audio.swift */; };
+		17F57CAB2449AEC6002665AA /* AudioRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F57CAA2449AEC6002665AA /* AudioRepository.swift */; };
 		303D1AB98D99BCB49B37EC2E /* Pods_MGYoutubePlayerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0FE3BB990CF9A313844CD1E /* Pods_MGYoutubePlayerTests.framework */; };
 		FA5735493AA068518B10FAEF /* Pods_MGYoutubePlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B0B8DA5DB0DB4156ADD44E /* Pods_MGYoutubePlayer.framework */; };
 /* End PBXBuildFile section */
@@ -81,9 +100,23 @@
 
 /* Begin PBXFileReference section */
 		07B8318818C3460D7FAA513B /* Pods-MGYoutubePlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MGYoutubePlayer.release.xcconfig"; path = "Target Support Files/Pods-MGYoutubePlayer/Pods-MGYoutubePlayer.release.xcconfig"; sourceTree = "<group>"; };
+		170247E6244D38BD00B6EA96 /* AudioListAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListAssembler.swift; sourceTree = "<group>"; };
+		170247E7244D38BD00B6EA96 /* AudioListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListViewController.swift; sourceTree = "<group>"; };
+		170247E8244D38BD00B6EA96 /* AudioListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListUseCase.swift; sourceTree = "<group>"; };
+		170247E9244D38BD00B6EA96 /* AudioListNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListNavigator.swift; sourceTree = "<group>"; };
+		170247EA244D38BD00B6EA96 /* AudioListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListViewModel.swift; sourceTree = "<group>"; };
+		170247F1244D432800B6EA96 /* AudioDetailAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDetailAssembler.swift; sourceTree = "<group>"; };
+		170247F2244D432800B6EA96 /* AudioDetailNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDetailNavigator.swift; sourceTree = "<group>"; };
+		170247F3244D432800B6EA96 /* AudioDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDetailUseCase.swift; sourceTree = "<group>"; };
+		170247F4244D432800B6EA96 /* AudioDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDetailViewController.swift; sourceTree = "<group>"; };
+		170247F5244D432800B6EA96 /* AudioDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDetailViewModel.swift; sourceTree = "<group>"; };
+		170247FD244D909E00B6EA96 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		170247FF244D90B100B6EA96 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
+		17024801244D941100B6EA96 /* AudioPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPlayerView.xib; sourceTree = "<group>"; };
+		17024805244D948800B6EA96 /* AudioMiniPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioMiniPlayerView.xib; sourceTree = "<group>"; };
+		17024807244D949700B6EA96 /* AudioMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMiniPlayerView.swift; sourceTree = "<group>"; };
 		17100E2424480EB900672B8E /* VideoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRepository.swift; sourceTree = "<group>"; };
 		17100E2624480EF900672B8E /* RepositoriesAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesAssembler.swift; sourceTree = "<group>"; };
-		17100E282448349800672B8E /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		17100E2A24485B9300672B8E /* YoutubePlayerControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayerControlBarView.swift; sourceTree = "<group>"; };
 		17100E2C24485BA100672B8E /* YoutubePlayerControlBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YoutubePlayerControlBarView.xib; sourceTree = "<group>"; };
 		171C0B0B2427B29100788ADE /* MGYoutubePlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGYoutubePlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,8 +177,13 @@
 		179A411E2428F479004FE81F /* VideoDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDetailViewModel.swift; sourceTree = "<group>"; };
 		17B564522434390E0079B626 /* ProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSlider.swift; sourceTree = "<group>"; };
 		17B56454243439650079B626 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		17DA5EB9244D376A0062E1F1 /* AudioViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewModel.swift; sourceTree = "<group>"; };
+		17DA5EC7244D37AA0062E1F1 /* AudioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCell.swift; sourceTree = "<group>"; };
+		17DA5EC8244D37AA0062E1F1 /* AudioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioCell.xib; sourceTree = "<group>"; };
 		17E63DE024480336000383B2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeMiniPlayerViewModel.swift; sourceTree = "<group>"; };
+		17F57CA82449ACA4002665AA /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		17F57CAA2449AEC6002665AA /* AudioRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRepository.swift; sourceTree = "<group>"; };
 		18DA4CBE17AEA8559E9849DE /* Pods-MGYoutubePlayerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MGYoutubePlayerTests.debug.xcconfig"; path = "Target Support Files/Pods-MGYoutubePlayerTests/Pods-MGYoutubePlayerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		673F2EF6C7B9116A80E04F94 /* Pods-MGYoutubePlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MGYoutubePlayer.debug.xcconfig"; path = "Target Support Files/Pods-MGYoutubePlayer/Pods-MGYoutubePlayer.debug.xcconfig"; sourceTree = "<group>"; };
 		70B0B8DA5DB0DB4156ADD44E /* Pods_MGYoutubePlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MGYoutubePlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +211,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		170247F0244D430D00B6EA96 /* AudioDetail */ = {
+			isa = PBXGroup;
+			children = (
+				170247F1244D432800B6EA96 /* AudioDetailAssembler.swift */,
+				170247F2244D432800B6EA96 /* AudioDetailNavigator.swift */,
+				170247F3244D432800B6EA96 /* AudioDetailUseCase.swift */,
+				170247F4244D432800B6EA96 /* AudioDetailViewController.swift */,
+				170247F5244D432800B6EA96 /* AudioDetailViewModel.swift */,
+			);
+			path = AudioDetail;
+			sourceTree = "<group>";
+		};
+		170247FB244D907500B6EA96 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				17B564522434390E0079B626 /* ProgressSlider.swift */,
+				17B56454243439650079B626 /* ProgressView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		170247FC244D908400B6EA96 /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				17024804244D946700B6EA96 /* AudioMiniPlayer */,
+				17024803244D942600B6EA96 /* AudioPlayer */,
+				170247FD244D909E00B6EA96 /* AudioPlayer.swift */,
+			);
+			path = AudioPlayer;
+			sourceTree = "<group>";
+		};
+		17024803244D942600B6EA96 /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				170247FF244D90B100B6EA96 /* AudioPlayerView.swift */,
+				17024801244D941100B6EA96 /* AudioPlayerView.xib */,
+			);
+			path = AudioPlayer;
+			sourceTree = "<group>";
+		};
+		17024804244D946700B6EA96 /* AudioMiniPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				17024805244D948800B6EA96 /* AudioMiniPlayerView.xib */,
+				17024807244D949700B6EA96 /* AudioMiniPlayerView.swift */,
+			);
+			path = AudioMiniPlayer;
+			sourceTree = "<group>";
+		};
 		171C0B022427B29100788ADE = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +310,10 @@
 		171C0B302427B35800788ADE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				170247FC244D908400B6EA96 /* AudioPlayer */,
+				170247FB244D907500B6EA96 /* Common */,
+				170247F0244D430D00B6EA96 /* AudioDetail */,
+				17DA5EB8244D373B0062E1F1 /* AudioList */,
 				1759EC79244046CF00F7101C /* Main */,
 				17793FE7242EF065005D86B2 /* YoutubePlayer */,
 				171C0B612427B6C400788ADE /* VideoDetail */,
@@ -276,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				179A41052428F288004FE81F /* Video.swift */,
+				17F57CA82449ACA4002665AA /* Audio.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,6 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				17100E2424480EB900672B8E /* VideoRepository.swift */,
+				17F57CAA2449AEC6002665AA /* AudioRepository.swift */,
 				17100E2624480EF900672B8E /* RepositoriesAssembler.swift */,
 			);
 			path = Repositories;
@@ -392,11 +485,23 @@
 				1759EC71243EC82000F7101C /* WKYTPlayerView */,
 				17793FEA242F0A3E005D86B2 /* YoutubePlayer.swift */,
 				1799ED082445A8C900136B3F /* HavingYoutubePlayer.swift */,
-				17B564522434390E0079B626 /* ProgressSlider.swift */,
-				17B56454243439650079B626 /* ProgressView.swift */,
-				17100E282448349800672B8E /* CacheManager.swift */,
 			);
 			path = YoutubePlayer;
+			sourceTree = "<group>";
+		};
+		17DA5EB8244D373B0062E1F1 /* AudioList */ = {
+			isa = PBXGroup;
+			children = (
+				170247E6244D38BD00B6EA96 /* AudioListAssembler.swift */,
+				170247E9244D38BD00B6EA96 /* AudioListNavigator.swift */,
+				170247E8244D38BD00B6EA96 /* AudioListUseCase.swift */,
+				170247E7244D38BD00B6EA96 /* AudioListViewController.swift */,
+				170247EA244D38BD00B6EA96 /* AudioListViewModel.swift */,
+				17DA5EB9244D376A0062E1F1 /* AudioViewModel.swift */,
+				17DA5EC7244D37AA0062E1F1 /* AudioCell.swift */,
+				17DA5EC8244D37AA0062E1F1 /* AudioCell.xib */,
+			);
+			path = AudioList;
 			sourceTree = "<group>";
 		};
 		17E3D73A2447F605004365BE /* YoutubePlayer */ = {
@@ -529,10 +634,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17024802244D941100B6EA96 /* AudioPlayerView.xib in Resources */,
 				1759EC75243EC82100F7101C /* WKYTPlayerView.bundle in Resources */,
 				171C0B5F2427B68800788ADE /* Main.storyboard in Resources */,
 				179A41182428F3E3004FE81F /* VideoCell.xib in Resources */,
+				17024806244D948800B6EA96 /* AudioMiniPlayerView.xib in Resources */,
 				17100E2D24485BA100672B8E /* YoutubePlayerControlBarView.xib in Resources */,
+				17DA5ECA244D37AA0062E1F1 /* AudioCell.xib in Resources */,
 				1799ED0424455EC300136B3F /* YoutubeMiniPlayerView.xib in Resources */,
 				1750DC6A242CFD2C000371B1 /* YoutubePlayerView.xib in Resources */,
 				171C0B1B2427B29400788ADE /* LaunchScreen.storyboard in Resources */,
@@ -659,10 +767,14 @@
 				17100E2B24485B9300672B8E /* YoutubePlayerControlBarView.swift in Sources */,
 				171C0B512427B35800788ADE /* UIViewController+Rx.swift in Sources */,
 				1750DC68242CFD16000371B1 /* YoutubePlayerView.swift in Sources */,
+				170247FA244D432800B6EA96 /* AudioDetailViewModel.swift in Sources */,
 				179A41202428F479004FE81F /* VideoDetailAssembler.swift in Sources */,
 				171C0B4B2427B35800788ADE /* Storyboards.swift in Sources */,
 				179A41102428F2CD004FE81F /* VideoListViewController.swift in Sources */,
+				17F57CA92449ACA4002665AA /* Audio.swift in Sources */,
+				170247FE244D909E00B6EA96 /* AudioPlayer.swift in Sources */,
 				171C0B4E2427B35800788ADE /* AppViewModel.swift in Sources */,
+				170247ED244D38BD00B6EA96 /* AudioListUseCase.swift in Sources */,
 				179A41112428F2CD004FE81F /* VideoViewModel.swift in Sources */,
 				179A41222428F479004FE81F /* VideoDetailUseCase.swift in Sources */,
 				1759EC6B243DD03500F7101C /* Double+.swift in Sources */,
@@ -673,14 +785,19 @@
 				171C0B562427B35800788ADE /* APIInput.swift in Sources */,
 				171C0B572427B35800788ADE /* APIOutput.swift in Sources */,
 				179A411F2428F479004FE81F /* VideoDetailNavigator.swift in Sources */,
+				170247EF244D38BD00B6EA96 /* AudioListViewModel.swift in Sources */,
+				170247EC244D38BD00B6EA96 /* AudioListViewController.swift in Sources */,
 				179A41062428F288004FE81F /* Video.swift in Sources */,
 				179A41212428F479004FE81F /* VideoDetailViewController.swift in Sources */,
 				1759EC89244048E000F7101C /* MainAssembler.swift in Sources */,
 				1799ED092445A8C900136B3F /* HavingYoutubePlayer.swift in Sources */,
 				171C0B582427B35800788ADE /* APIUrls.swift in Sources */,
 				171C0B0F2427B29100788ADE /* AppDelegate.swift in Sources */,
+				170247F7244D432800B6EA96 /* AudioDetailNavigator.swift in Sources */,
+				170247F8244D432800B6EA96 /* AudioDetailUseCase.swift in Sources */,
 				171C0B4C2427B35800788ADE /* AppAssembler.swift in Sources */,
 				171C0B522427B35800788ADE /* UnitTestViewController.swift in Sources */,
+				170247F6244D432800B6EA96 /* AudioDetailAssembler.swift in Sources */,
 				1759EC8B244048E000F7101C /* MainUseCase.swift in Sources */,
 				17E6445D244475D5000088AC /* YoutubeMiniPlayerViewModel.swift in Sources */,
 				17E63DE124480336000383B2 /* Constants.swift in Sources */,
@@ -690,19 +807,26 @@
 				179A41232428F479004FE81F /* VideoDetailViewModel.swift in Sources */,
 				171C0B552427B35800788ADE /* APIService.swift in Sources */,
 				179A41172428F3E3004FE81F /* VideoCell.swift in Sources */,
+				17F57CAB2449AEC6002665AA /* AudioRepository.swift in Sources */,
+				17DA5EC0244D376A0062E1F1 /* AudioViewModel.swift in Sources */,
 				171C0B4F2427B35800788ADE /* AppUseCase.swift in Sources */,
+				17024800244D90B100B6EA96 /* AudioPlayerView.swift in Sources */,
+				17DA5EC9244D37AA0062E1F1 /* AudioCell.swift in Sources */,
 				1759EC8C244048E000F7101C /* MainViewController.swift in Sources */,
 				1759EC8D244048E000F7101C /* MainViewModel.swift in Sources */,
 				171C0B4D2427B35800788ADE /* AppNavigator.swift in Sources */,
 				179A410F2428F2CD004FE81F /* VideoListViewModel.swift in Sources */,
 				171C0B532427B35800788ADE /* Utils.swift in Sources */,
 				1799ED0224455EB800136B3F /* YoutubeMiniPlayerView.swift in Sources */,
+				17024808244D949700B6EA96 /* AudioMiniPlayerView.swift in Sources */,
+				170247F9244D432800B6EA96 /* AudioDetailViewController.swift in Sources */,
+				170247EB244D38BD00B6EA96 /* AudioListAssembler.swift in Sources */,
 				17100E2524480EB900672B8E /* VideoRepository.swift in Sources */,
 				17100E2724480EF900672B8E /* RepositoriesAssembler.swift in Sources */,
 				171C0B542427B35800788ADE /* APIError.swift in Sources */,
+				170247EE244D38BD00B6EA96 /* AudioListNavigator.swift in Sources */,
 				1759EC8A244048E000F7101C /* MainNavigator.swift in Sources */,
 				179A410E2428F2CD004FE81F /* VideoListNavigator.swift in Sources */,
-				17100E292448349800672B8E /* CacheManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

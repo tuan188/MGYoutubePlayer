@@ -10,7 +10,7 @@ import UIKit
 
 final class MainViewController: UITabBarController, BindableType {
     
-    static weak var instance: MainViewController?
+    static weak var shared: MainViewController?
     
     // MARK: - Properties
     var viewModel: MainViewModel!
@@ -21,7 +21,7 @@ final class MainViewController: UITabBarController, BindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        MainViewController.instance = self
+        MainViewController.shared = self
         
         configView()
     }

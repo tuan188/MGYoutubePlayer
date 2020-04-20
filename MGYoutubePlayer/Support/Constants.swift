@@ -14,5 +14,6 @@ extension UIImage {
     static let play = UIImage(named: "play")
     static let pause = UIImage(named: "pause")
     static let videos = UIImage(named: "videos")
+    static let audios = UIImage(named: "audios")
     static let slider = UIImage(named: "slider")
 }

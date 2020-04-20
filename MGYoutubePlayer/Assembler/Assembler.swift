@@ -7,6 +7,8 @@
 //
 
 protocol Assembler: class,
+    AudioDetailAssembler,
+    AudioListAssembler,
     RepositoriesAssembler,
     MainAssembler,
     VideoDetailAssembler,

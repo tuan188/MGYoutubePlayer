@@ -39,11 +39,27 @@ extension MainAssembler where Self: DefaultAssembler {
         
         videoListNavigationController.viewControllers = [videoListViewController]
         
+        // Audio List
+        let audioListNavigationController = UINavigationController()
+        
+        let audioListViewController: AudioListViewController = self.resolve(
+            navigationController: audioListNavigationController
+        )
+        
+        audioListViewController.tabBarItem = UITabBarItem(
+            title: "Audio List",
+            image: UIImage.audios,
+            selectedImage: nil
+        )
+        
+        audioListNavigationController.viewControllers = [audioListViewController]
+        
         // Main
         let mainViewController = MainViewController()
         
         mainViewController.viewControllers = [
-            videoListNavigationController
+            videoListNavigationController,
+            audioListNavigationController
         ]
         
         let vm: MainViewModel = resolve(window: window)

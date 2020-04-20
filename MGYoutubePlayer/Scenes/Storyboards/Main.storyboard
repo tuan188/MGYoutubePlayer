@@ -38,6 +38,72 @@
             </objects>
             <point key="canvasLocation" x="168" y="143"/>
         </scene>
+        <!--Audio List View Controller-->
+        <scene sceneID="DVG-RN-qsT">
+            <objects>
+                <viewController storyboardIdentifier="AudioListViewController" id="9CZ-Ut-lfI" customClass="AudioListViewController" customModule="MGYoutubePlayer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NLs-go-Yaa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ec1-z6-x4I" customClass="LoadMoreTableView" customModule="MGLoadMore">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Ec1-z6-x4I" firstAttribute="leading" secondItem="Kjx-lw-AIj" secondAttribute="leading" id="5GC-Ab-k71"/>
+                            <constraint firstItem="Kjx-lw-AIj" firstAttribute="trailing" secondItem="Ec1-z6-x4I" secondAttribute="trailing" id="MUz-Do-tYh"/>
+                            <constraint firstItem="Kjx-lw-AIj" firstAttribute="bottom" secondItem="Ec1-z6-x4I" secondAttribute="bottom" id="YBI-g0-9DF"/>
+                            <constraint firstItem="Ec1-z6-x4I" firstAttribute="top" secondItem="Kjx-lw-AIj" secondAttribute="top" id="hPY-LD-JJt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Kjx-lw-AIj"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="Ec1-z6-x4I" id="gZO-pZ-5Zo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FSH-RB-WID" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="167" y="851"/>
+        </scene>
+        <!--Audio Detail View Controller-->
+        <scene sceneID="moi-lo-tsk">
+            <objects>
+                <viewController storyboardIdentifier="AudioDetailViewController" id="hyB-9p-pyl" customClass="AudioDetailViewController" customModule="MGYoutubePlayer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mqp-H3-EHt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="puI-5z-00x" customClass="LoadMoreTableView" customModule="MGLoadMore">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="1Pd-aB-bog" customClass="AudioPlayerView" customModule="MGYoutubePlayer" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="296"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                </view>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="puI-5z-00x" firstAttribute="leading" secondItem="jhf-2M-Q8d" secondAttribute="leading" id="1lp-Fo-e2S"/>
+                            <constraint firstItem="jhf-2M-Q8d" firstAttribute="trailing" secondItem="puI-5z-00x" secondAttribute="trailing" id="pLg-Ik-zx5"/>
+                            <constraint firstItem="puI-5z-00x" firstAttribute="top" secondItem="jhf-2M-Q8d" secondAttribute="top" id="qJH-z1-KB1"/>
+                            <constraint firstItem="jhf-2M-Q8d" firstAttribute="bottom" secondItem="puI-5z-00x" secondAttribute="bottom" id="sKq-Cx-eSl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="jhf-2M-Q8d"/>
+                    </view>
+                    <connections>
+                        <outlet property="audioPlayerView" destination="1Pd-aB-bog" id="qSt-56-4T3"/>
+                        <outlet property="tableView" destination="puI-5z-00x" id="aOP-MM-gKL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Psq-iH-lIu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="960.79999999999995" y="847.82608695652175"/>
+        </scene>
         <!--Title-->
         <scene sceneID="vqO-Ir-KcS">
             <objects>
