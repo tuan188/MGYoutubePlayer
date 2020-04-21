@@ -1,46 +1,45 @@
 //
-//  YoutubePlayerViewModel.swift
+//  AudioPlayerViewModel.swift
 //  MGYoutubePlayer
 //
-//  Created by Tuan Truong on 4/8/20.
+//  Created by Tuan Truong on 4/21/20.
 //  Copyright © 2020 Tuan Truong. All rights reserved.
 //
 
 import UIKit
 
-struct YoutubePlayerViewModel: ViewModelType {
-    
+struct AudioPlayerViewModel: ViewModelType {
     enum SeekState {
         case none
-        case dragging(Float)
-        case seek(Float)
+        case dragging(Double)
+        case seek(Double)
     }
     
     struct Input {
-        let loadTrigger: Driver<Video>
+        let loadTrigger: Driver<Audio>
         let playTrigger: Driver<Void>
         let stopTrigger: Driver<Void>
-        let seekTrigger: Driver<YoutubePlayerViewModel.SeekState>
-        let playTime: Driver<Float>
-        let state: Driver<YoutubePlayer.State>
-        let duration: Driver<Float>
-        let remainingTime: Driver<Float>
+        let seekTrigger: Driver<AudioPlayerViewModel.SeekState>
+        let playTime: Driver<Double>
+        let state: Driver<AudioPlayer.State>
+        let duration: Driver<Double>
+        let remainingTime: Driver<Double>
         let isReady: Driver<Bool>
-        let loadedFraction: Driver<Float>
+        let loadedFraction: Driver<Double>
     }
     
     struct Output {
-        let load: Driver<Video>
+        let load: Driver<Audio>
         let play: Driver<Void>
         let pause: Driver<Void>
         let stop: Driver<Void>
-        let seek: Driver<Float>
-        let playTime: Driver<Float>
-        let state: Driver<YoutubePlayer.State>
-        let duration: Driver<Float>
-        let remainingTime: Driver<Float>
+        let seek: Driver<Double>
+        let playTime: Driver<Double>
+        let state: Driver<AudioPlayer.State>
+        let duration: Driver<Double>
+        let remainingTime: Driver<Double>
         let isReady: Driver<Bool>
-        let loadedFraction: Driver<Float>
+        let loadedFraction: Driver<Double>
     }
     
     func transform(_ input: Input) -> Output {
@@ -50,11 +49,11 @@ struct YoutubePlayerViewModel: ViewModelType {
             .withLatestFrom(state)
         
         let play = playState
-            .filter { $0 != .playing && $0 != .buffering }
+            .filter { $0 != .playing && $0 != .waiting }
             .mapToVoid()
         
         let pause = playState
-            .filter { $0 == .playing || $0 == .buffering }
+            .filter { $0 == .playing || $0 == .waiting }
             .mapToVoid()
         
         let seekState = input.seekTrigger
@@ -62,7 +61,7 @@ struct YoutubePlayerViewModel: ViewModelType {
         
         let seek = seekState
             .mapToOptional()
-            .map { state -> Float? in
+            .map { state -> Double? in
                 if case let .seek(seconds) = state {
                     return seconds
                 }
@@ -72,7 +71,7 @@ struct YoutubePlayerViewModel: ViewModelType {
         
         let seekTime = seekState
             .mapToOptional()
-            .map { state -> Float? in
+            .map { state -> Double? in
                 if case let .dragging(seconds) = state {
                     return seconds
                 }

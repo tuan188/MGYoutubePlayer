@@ -21,14 +21,6 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
     
     var player: YoutubePlayer?
     
-    var playerView: WKYTPlayerView? {
-        return player?.playerView
-    }
-    
-    var isConfigured: Bool {
-        return player != nil
-    }
-    
     var videoContainerView: UIView {
         return containerView
     }
@@ -193,6 +185,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
             .drive(onNext: { [unowned self] time in
                 print("seek")
                 self.player?.seek(to: time)
+                self.player?.play()
             })
             .disposed(by: disposeBag)
     }

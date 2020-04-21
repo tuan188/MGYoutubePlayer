@@ -7,10 +7,16 @@
 //
 
 protocol AudioDetailNavigatorType {
-    
+    func toAudioDetail(audio: Audio)
 }
 
 struct AudioDetailNavigator: AudioDetailNavigatorType {
     unowned let assembler: Assembler
     unowned let navigationController: UINavigationController
+    
+    func toAudioDetail(audio: Audio) {
+        let vc: AudioDetailViewController = assembler.resolve(navigationController: navigationController,
+                                                              audio: audio)
+        navigationController.pushViewController(vc, animated: true)
+    }
 }

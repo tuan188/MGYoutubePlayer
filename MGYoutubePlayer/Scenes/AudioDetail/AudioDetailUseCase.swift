@@ -7,9 +7,13 @@
 //
 
 protocol AudioDetailUseCaseType {
-    
+    func getAudioList() -> Observable<[Audio]>
 }
 
 struct AudioDetailUseCase: AudioDetailUseCaseType {
+    let audioRepository: AudioRepositoryType
     
+    func getAudioList() -> Observable<[Audio]> {
+        return audioRepository.getAudioList()
+    }
 }

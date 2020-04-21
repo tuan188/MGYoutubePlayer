@@ -45,7 +45,7 @@
                     </userDefinedRuntimeAttributes>
                 </visualEffectView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Dfy-HB-Bdf">
-                    <rect key="frame" x="16" y="248" width="382" height="32"/>
+                    <rect key="frame" x="22" y="248" width="370" height="32"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bcX-5p-LvT">
                             <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -56,21 +56,27 @@
                             <inset key="imageEdgeInsets" minX="7" minY="7" maxX="7" maxY="7"/>
                             <state key="normal" image="play"/>
                         </button>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="daj-a0-bBc">
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="daj-a0-bBc">
                             <rect key="frame" x="38" y="0.0" width="20" height="32"/>
                         </activityIndicatorView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5nH-yT-pgd">
-                            <rect key="frame" x="64" y="0.0" width="26.333333333333329" height="32"/>
+                            <rect key="frame" x="64" y="0.0" width="36" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="36" id="23L-XG-eEP"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="W8q-74-sUv" customClass="ProgressSlider" customModule="MGYoutubePlayer" customModuleProvider="target">
-                            <rect key="frame" x="94.333333333333314" y="0.0" width="257.33333333333337" height="33"/>
-                            <color key="tintColor" red="1" green="0.2527923882" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <rect key="frame" x="104" y="0.0" width="221" height="33"/>
+                            <color key="tintColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </slider>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nq9-BP-Qp2">
-                            <rect key="frame" x="355.66666666666669" y="0.0" width="26.333333333333314" height="32"/>
+                            <rect key="frame" x="329" y="0.0" width="41" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="41" id="2lq-Kr-VB7"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -83,14 +89,14 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="01X-Vb-rEj" firstAttribute="leading" secondItem="Dfy-HB-Bdf" secondAttribute="leading" id="0Vj-1Y-Vws"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Dfy-HB-Bdf" secondAttribute="trailing" constant="16" id="C5C-Jb-GGc"/>
+                <constraint firstItem="01X-Vb-rEj" firstAttribute="leading" secondItem="Dfy-HB-Bdf" secondAttribute="leading" constant="-6" id="0Vj-1Y-Vws"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Dfy-HB-Bdf" secondAttribute="trailing" constant="22" id="C5C-Jb-GGc"/>
                 <constraint firstItem="6Kr-eX-pTs" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Jl7-lM-d9s"/>
                 <constraint firstItem="6Kr-eX-pTs" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="Xbm-7x-rdI"/>
                 <constraint firstItem="01X-Vb-rEj" firstAttribute="top" secondItem="Dfy-HB-Bdf" secondAttribute="top" id="oCP-EE-uwg"/>
-                <constraint firstItem="01X-Vb-rEj" firstAttribute="trailing" secondItem="Dfy-HB-Bdf" secondAttribute="trailing" id="qoA-Ws-SwC"/>
+                <constraint firstItem="01X-Vb-rEj" firstAttribute="trailing" secondItem="Dfy-HB-Bdf" secondAttribute="trailing" constant="6" id="qoA-Ws-SwC"/>
                 <constraint firstItem="01X-Vb-rEj" firstAttribute="bottom" secondItem="Dfy-HB-Bdf" secondAttribute="bottom" id="xOy-Az-PsU"/>
-                <constraint firstItem="Dfy-HB-Bdf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="xmv-se-r7o"/>
+                <constraint firstItem="Dfy-HB-Bdf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="22" id="xmv-se-r7o"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Dfy-HB-Bdf" secondAttribute="bottom" constant="16" id="yDr-ly-byr"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

@@ -21,7 +21,6 @@ extension VideoDetailViewModel: ViewModelType {
     }
 
     struct Output {
-        let title: Driver<String>
         let video: Driver<Video>
         let error: Driver<Error>
         let isLoading: Driver<Bool>
@@ -32,9 +31,6 @@ extension VideoDetailViewModel: ViewModelType {
     }
 
     func transform(_ input: Input) -> Output {
-        let title = input.loadTrigger
-            .map { self.video.title }
-    
         let video = input.loadTrigger
             .map { self.video }
         
@@ -45,7 +41,10 @@ extension VideoDetailViewModel: ViewModelType {
         
         let (videoList, error, isLoading, isReloading) = getListResult.destructured
         
-        let selectedVideo = select(trigger: input.selectVideoTrigger, items: videoList)
+        let videos = videoList
+            .map { $0.filter { !$0.isSameAs(self.video) } }
+        
+        let selectedVideo = select(trigger: input.selectVideoTrigger, items: videos)
             .do(onNext: navigator.toVideoDetail)
             .mapToVoid()
         
@@ -53,12 +52,11 @@ extension VideoDetailViewModel: ViewModelType {
                                          items: videoList)
         
         return Output(
-            title: title,
             video: video,
             error: error,
             isLoading: isLoading,
             isReloading: isReloading,
-            videoList: videoList,
+            videoList: videos,
             selectedVideo: selectedVideo,
             isEmpty: isEmpty
         )

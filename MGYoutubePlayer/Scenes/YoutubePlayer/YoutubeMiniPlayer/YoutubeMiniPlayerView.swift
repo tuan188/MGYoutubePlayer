@@ -30,7 +30,7 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
         addGestureRecognizer(tapGesture)
         
         tintColor = UIColor(white: 0.1, alpha: 1)
-        progressView.tintColor = UIColor.magenta
+        progressView.tintColor = UIColor.purple
     }
     
     @objc

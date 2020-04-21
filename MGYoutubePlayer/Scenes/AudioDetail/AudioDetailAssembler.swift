@@ -36,6 +36,6 @@ extension AudioDetailAssembler where Self: DefaultAssembler {
     }
     
     func resolve() -> AudioDetailUseCaseType {
-        return AudioDetailUseCase()
+        return AudioDetailUseCase(audioRepository: resolve())
     }
 }

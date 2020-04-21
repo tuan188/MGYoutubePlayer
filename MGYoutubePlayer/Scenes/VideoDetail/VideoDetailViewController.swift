@@ -70,7 +70,8 @@ final class VideoDetailViewController: UIViewController, BindableType {
         )
         let output = viewModel.transform(input)
         
-        output.title
+        output.video
+            .map { $0.title }
             .drive(self.rx.title)
             .disposed(by: rx.disposeBag)
         

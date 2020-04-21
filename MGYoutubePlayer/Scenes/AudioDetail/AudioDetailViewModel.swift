@@ -15,14 +15,50 @@ struct AudioDetailViewModel {
 // MARK: - ViewModelType
 extension AudioDetailViewModel: ViewModelType {
     struct Input {
-        
+        let loadTrigger: Driver<Void>
+        let reloadTrigger: Driver<Void>
+        let selectAudioTrigger: Driver<IndexPath>
     }
     
     struct Output {
-        
+        let audio: Driver<Audio>
+        let error: Driver<Error>
+        let isLoading: Driver<Bool>
+        let isReloading: Driver<Bool>
+        let audioList: Driver<[Audio]>
+        let selectedAudio: Driver<Void>
+        let isEmpty: Driver<Bool>
     }
     
     func transform(_ input: Input) -> Output {
-        return Output()
+        let audio = input.loadTrigger
+            .map { self.audio }
+        
+        let getListResult = getList(
+            loadTrigger: input.loadTrigger,
+            reloadTrigger: input.reloadTrigger,
+            getItems: useCase.getAudioList)
+        
+        let (audioList, error, isLoading, isReloading) = getListResult.destructured
+        
+        let audios = audioList
+            .map { $0.filter { !$0.isSameAs(self.audio) } }
+        
+        let selectedAudio = select(trigger: input.selectAudioTrigger, items: audios)
+            .do(onNext: navigator.toAudioDetail)
+            .mapToVoid()
+        
+        let isEmpty = checkIfDataIsEmpty(trigger: Driver.merge(isLoading, isReloading),
+                                         items: audioList)
+        
+        return Output(
+            audio: audio,
+            error: error,
+            isLoading: isLoading,
+            isReloading: isReloading,
+            audioList: audios,
+            selectedAudio: selectedAudio,
+            isEmpty: isEmpty
+        )
     }
 }

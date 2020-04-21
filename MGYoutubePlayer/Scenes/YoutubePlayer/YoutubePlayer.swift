@@ -25,7 +25,7 @@ final class YoutubePlayer: NSObject {
     // MARK: - Public properties
     
     var shouldRequestDurationChanges = false
-    var playerView: WKYTPlayerView?
+    private(set) var playerView: WKYTPlayerView?
     private(set) var video: Video?
     
     var playTime: Float {
@@ -155,8 +155,18 @@ final class YoutubePlayer: NSObject {
     
     func reload() {
         guard let videoId = self.video?.id else { return }
-        playerView?.cueVideo(byId: videoId, startSeconds: 0, suggestedQuality: .auto)
+        
         resetStats()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
+            self?.playerView?.getVideoLoadedFraction({ (fraction, error) in
+                if let error = error {
+                    self?._error.onNext(error)
+                } else {
+                    self?._loadedFraction.accept(fraction)
+                }
+            })
+        })
+        playerView?.cueVideo(byId: videoId, startSeconds: 0, suggestedQuality: .auto)
     }
     
     func play() {
@@ -174,7 +184,6 @@ final class YoutubePlayer: NSObject {
     
     func seek(to seconds: Float) {
         playerView?.seek(toSeconds: seconds, allowSeekAhead: true)
-        playerView?.playVideo()
     }
     
     func bingPlayerToFront() {

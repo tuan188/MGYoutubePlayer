@@ -82,6 +82,8 @@
 		17DA5ECA244D37AA0062E1F1 /* AudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17DA5EC8244D37AA0062E1F1 /* AudioCell.xib */; };
 		17E63DE124480336000383B2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E63DE024480336000383B2 /* Constants.swift */; };
 		17E6445D244475D5000088AC /* YoutubeMiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */; };
+		17F1383D244ED4C100688F5F /* AVPlayerItem+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */; };
+		17F1383F244EDED600688F5F /* AudioPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1383E244EDED600688F5F /* AudioPlayerViewModel.swift */; };
 		17F57CA92449ACA4002665AA /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F57CA82449ACA4002665AA /* Audio.swift */; };
 		17F57CAB2449AEC6002665AA /* AudioRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F57CAA2449AEC6002665AA /* AudioRepository.swift */; };
 		303D1AB98D99BCB49B37EC2E /* Pods_MGYoutubePlayerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0FE3BB990CF9A313844CD1E /* Pods_MGYoutubePlayerTests.framework */; };
@@ -182,6 +184,8 @@
 		17DA5EC8244D37AA0062E1F1 /* AudioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioCell.xib; sourceTree = "<group>"; };
 		17E63DE024480336000383B2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeMiniPlayerViewModel.swift; sourceTree = "<group>"; };
+		17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+.swift"; sourceTree = "<group>"; };
+		17F1383E244EDED600688F5F /* AudioPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModel.swift; sourceTree = "<group>"; };
 		17F57CA82449ACA4002665AA /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		17F57CAA2449AEC6002665AA /* AudioRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRepository.swift; sourceTree = "<group>"; };
 		18DA4CBE17AEA8559E9849DE /* Pods-MGYoutubePlayerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MGYoutubePlayerTests.debug.xcconfig"; path = "Target Support Files/Pods-MGYoutubePlayerTests/Pods-MGYoutubePlayerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 			children = (
 				170247FF244D90B100B6EA96 /* AudioPlayerView.swift */,
 				17024801244D941100B6EA96 /* AudioPlayerView.xib */,
+				17F1383E244EDED600688F5F /* AudioPlayerViewModel.swift */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 				171C0B3A2427B35800788ADE /* UIViewController+Rx.swift */,
 				1759EC6A243DD03500F7101C /* Double+.swift */,
 				1759EC6C243DE85800F7101C /* Float+.swift */,
+				17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -774,6 +780,7 @@
 				17F57CA92449ACA4002665AA /* Audio.swift in Sources */,
 				170247FE244D909E00B6EA96 /* AudioPlayer.swift in Sources */,
 				171C0B4E2427B35800788ADE /* AppViewModel.swift in Sources */,
+				17F1383D244ED4C100688F5F /* AVPlayerItem+.swift in Sources */,
 				170247ED244D38BD00B6EA96 /* AudioListUseCase.swift in Sources */,
 				179A41112428F2CD004FE81F /* VideoViewModel.swift in Sources */,
 				179A41222428F479004FE81F /* VideoDetailUseCase.swift in Sources */,
@@ -820,6 +827,7 @@
 				1799ED0224455EB800136B3F /* YoutubeMiniPlayerView.swift in Sources */,
 				17024808244D949700B6EA96 /* AudioMiniPlayerView.swift in Sources */,
 				170247F9244D432800B6EA96 /* AudioDetailViewController.swift in Sources */,
+				17F1383F244EDED600688F5F /* AudioPlayerViewModel.swift in Sources */,
 				170247EB244D38BD00B6EA96 /* AudioListAssembler.swift in Sources */,
 				17100E2524480EB900672B8E /* VideoRepository.swift in Sources */,
 				17100E2724480EF900672B8E /* RepositoriesAssembler.swift in Sources */,
