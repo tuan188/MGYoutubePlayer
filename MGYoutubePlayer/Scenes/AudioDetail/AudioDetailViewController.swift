@@ -13,7 +13,7 @@ final class AudioDetailViewController: UIViewController, BindableType {
     
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: LoadMoreTableView!
-    @IBOutlet weak var audioPlayerView: AudioPlayerView!
+    @IBOutlet weak var playerView: AudioPlayerView!
     
     // MARK: - Properties
     
@@ -26,16 +26,9 @@ final class AudioDetailViewController: UIViewController, BindableType {
         configView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        after(interval: 0.1) {
-//            MainViewController.shared?.hideMiniPlayer()
-//        }
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        moveVideoToMiniPlayer()
+        moveAudioToMiniPlayer()
     }
     
     deinit {
@@ -112,44 +105,43 @@ final class AudioDetailViewController: UIViewController, BindableType {
     }
     
     private func moveAudioToMiniPlayer() {
-        /*
-        guard let mainViewController = MainViewController.shared else { return }
-        
-        let miniPlayer = mainViewController.addMiniPlayer()
-        
-        if !miniPlayer.isActive {
+        guard playerView.isPlaying,
+            let tabBarController = self.tabBarController
+            else { return }
+
+        if let miniPlayer = tabBarController.audioMiniPlayer,
+            !miniPlayer.isPlaying {
+            playerView.movePlayer(to: miniPlayer)
+        } else {
+            let miniPlayer = tabBarController.addAudioMiniPlayer()
             playerView.movePlayer(to: miniPlayer)
         }
- */
     }
     
     func loadAudio(_ audio: Audio) {
-        audioPlayerView.load(audio: audio)
-        /*
-        guard let mainViewController = MainViewController.shared else { return }
+        guard let tabBarController = self.tabBarController else { return }
         
         // if miniplayer exists
-        if let miniPlayer = mainViewController.miniPlayer {
-            // if videos are the same, move player from mini player to player view and hide mini player
-            if let miniPlayerVideo = miniPlayer.player?.video,
-                miniPlayerVideo.isSameAs(video) {
+        if let miniPlayer = tabBarController.audioMiniPlayer {
+            // if audios are the same, move player from mini player to player view and hide mini player
+            if let miniPlayerAudio = miniPlayer.player?.audio,
+                miniPlayerAudio.isSameAs(audio) {
                 miniPlayer.movePlayer(to: playerView)
                 
-                if !playerView.isActive {
-                    playerView.load(video: video)
+                if !playerView.isPlaying {
+                    playerView.load(audio: audio)
                 }
-            } else if miniPlayer.isActive {
+            } else if miniPlayer.isPlaying {
                 // keep playing, init another player and assign to view controller's player view
-                playerView.load(video: video)
+                playerView.load(audio: audio)
             } else {
-                // if not playing, move player from mini player to player view, hide mini player and load video
+                // if not playing, move player from mini player to player view, hide mini player and load audio
                 miniPlayer.movePlayer(to: playerView)
-                playerView.load(video: video)
+                playerView.load(audio: audio)
             }
         } else {
-            playerView.load(video: video)
+            playerView.load(audio: audio)
         }
- */
     }
 }
 

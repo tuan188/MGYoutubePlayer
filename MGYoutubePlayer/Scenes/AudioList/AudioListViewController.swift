@@ -25,6 +25,27 @@ final class AudioListViewController: UIViewController, BindableType {
         super.viewDidLoad()
         configView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let tabBarController = self.tabBarController,
+            let miniPlayer = tabBarController.audioMiniPlayer,
+            miniPlayer.isPlaying {
+            
+            after(interval: 0.1) {
+                tabBarController.showAudioMiniPlayer()
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        after(interval: 0.1) {
+            self.tabBarController?.hideAudioMiniPlayer()
+        }
+    }
 
     deinit {
         logDeinit()
@@ -48,10 +69,16 @@ final class AudioListViewController: UIViewController, BindableType {
     }
 
     func bindViewModel() {
+        let showAudioTrigger = NotificationCenter.default.rx.notification(.showAudio)
+            .map { $0.object as? Audio }
+            .unwrap()
+            .asDriverOnErrorJustComplete()
+        
         let input = AudioListViewModel.Input(
             loadTrigger: Driver.just(()),
             reloadTrigger: tableView.refreshTrigger,
-            selectAudioTrigger: tableView.rx.itemSelected.asDriver()
+            selectAudioTrigger: tableView.rx.itemSelected.asDriver(),
+            showAudioTrigger: showAudioTrigger
         )
 
         let output = viewModel.transform(input)

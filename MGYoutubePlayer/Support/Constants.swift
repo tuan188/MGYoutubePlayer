@@ -8,6 +8,9 @@
 
 extension Notification.Name {
     static let showVideo = Notification.Name(rawValue: "showVideo")
+    static let showAudio = Notification.Name(rawValue: "showAudio")
+    static let stopYoutubeMiniPlayer = Notification.Name(rawValue: "stopYoutubeMiniPlayer")
+    static let stopAudioMiniPlayer = Notification.Name(rawValue: "stopAudioMiniPlayer")
 }
 
 extension UIImage {

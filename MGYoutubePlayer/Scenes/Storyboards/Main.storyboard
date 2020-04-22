@@ -96,7 +96,7 @@
                         <viewLayoutGuide key="safeArea" id="jhf-2M-Q8d"/>
                     </view>
                     <connections>
-                        <outlet property="audioPlayerView" destination="1Pd-aB-bog" id="qSt-56-4T3"/>
+                        <outlet property="playerView" destination="1Pd-aB-bog" id="jUW-ld-2KE"/>
                         <outlet property="tableView" destination="puI-5z-00x" id="aOP-MM-gKL"/>
                     </connections>
                 </viewController>

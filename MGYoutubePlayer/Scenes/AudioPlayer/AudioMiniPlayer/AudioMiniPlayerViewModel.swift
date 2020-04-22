@@ -1,68 +1,70 @@
 //
-//  YoutubeMiniPlayerViewModel.swift
+//  AudioMiniPlayerViewModel.swift
 //  MGYoutubePlayer
 //
-//  Created by Tuan Truong on 4/13/20.
+//  Created by Tuan Truong on 4/22/20.
 //  Copyright © 2020 Tuan Truong. All rights reserved.
 //
 
-struct YoutubeMiniPlayerViewModel {
-    var video: Video?
+import UIKit
+
+struct AudioMiniPlayerViewModel {
+    var audio: Audio?
 }
 
 // MARK: - ViewModelType
-extension YoutubeMiniPlayerViewModel: ViewModelType {
+extension AudioMiniPlayerViewModel: ViewModelType {
     struct Input {
-        let loadTrigger: Driver<Video>
+        let loadTrigger: Driver<Audio>
         let playTrigger: Driver<Void>
-        let stopTrigger: Driver<Video>
-        let playTime: Driver<Float>
-        let state: Driver<YoutubePlayer.State>
-        let duration: Driver<Float>
-        let remainingTime: Driver<Float>
+        let stopTrigger: Driver<Audio>
+        let playTime: Driver<Double>
+        let state: Driver<AudioPlayer.State>
+        let duration: Driver<Double>
+        let remainingTime: Driver<Double>
         let isReady: Driver<Bool>
     }
     
     struct Output {
-        let load: Driver<Video>
+        let load: Driver<Audio>
         let play: Driver<Void>
         let pause: Driver<Void>
         let stop: Driver<Void>
-        let playTime: Driver<Float>
-        let state: Driver<YoutubePlayer.State>
-        let duration: Driver<Float>
-        let remainingTime: Driver<Float>
-        let progress: Driver<Float>
+        let playTime: Driver<Double>
+        let state: Driver<AudioPlayer.State>
+        let duration: Driver<Double>
+        let remainingTime: Driver<Double>
+        let progress: Driver<Double>
         let isReady: Driver<Bool>
-        let videoTitle: Driver<String>
+        let audioTitle: Driver<String>
     }
     
     func transform(_ input: Input) -> Output {
-        let video = input.loadTrigger
+        let audio = input.loadTrigger
             .mapToOptional()
-            .startWith(self.video)
+            .startWith(self.audio)
             .unwrap()
         
-        let videoTitle = video
+        let audioTitle = audio
             .map { $0.title }
         
         let state = input.state
         
         let playState = input.playTrigger
             .withLatestFrom(state)
-            
+        
         let play = playState
-            .filter { $0 != .playing && $0 != .buffering }
+            .filter { $0 != .playing && $0 != .waiting }
             .mapToVoid()
         
         let pause = playState
-            .filter { $0 == .playing || $0 == .buffering }
+            .filter { $0 == .playing || $0 == .waiting }
             .mapToVoid()
         
         let progress = Driver.combineLatest(input.playTime, input.duration) { $0 / $1 }
         
         let stop = input.stopTrigger
-            .withLatestFrom(video) { ($0, $1) }
+            .withLatestFrom(audio) { ($0, $1) }
             .filter { !$0.0.isSameAs($0.1) }
             .mapToVoid()
         
@@ -77,7 +79,7 @@ extension YoutubeMiniPlayerViewModel: ViewModelType {
             remainingTime: input.remainingTime,
             progress: progress,
             isReady: input.isReady,
-            videoTitle: videoTitle
+            audioTitle: audioTitle
         )
     }
 }

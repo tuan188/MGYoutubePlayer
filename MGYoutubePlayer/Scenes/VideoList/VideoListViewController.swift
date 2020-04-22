@@ -29,12 +29,21 @@ final class VideoListViewController: UIViewController, BindableType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let mainViewController = MainViewController.shared,
-            let miniPlayer = mainViewController.miniPlayer,
+        if let tabBarController = self.tabBarController,
+            let miniPlayer = tabBarController.youtubeMiniPlayer,
             miniPlayer.isActive {
+            
             after(interval: 0.1) {
-                mainViewController.showMiniPlayer()
+                tabBarController.showYoutubeMiniPlayer()
             }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        after(interval: 0.1) {
+            self.tabBarController?.hideYoutubeMiniPlayer()
         }
     }
 

@@ -17,7 +17,6 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
 
     private var disposeBag = DisposeBag()
     private let loadTrigger = PublishSubject<Video>()
-    private let stopTrigger = PublishSubject<Void>()
     
     var player: YoutubePlayer?
     
@@ -70,10 +69,15 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
         
         disposeBag = DisposeBag()
         
+        let stopTrigger = NotificationCenter.default.rx.notification(.stopYoutubeMiniPlayer)
+            .map { $0.object as? Video }
+            .unwrap()
+            .asDriverOnErrorJustComplete()
+        
         let input = YoutubeMiniPlayerViewModel.Input(
             loadTrigger: loadTrigger.asDriverOnErrorJustComplete(),
             playTrigger: playButton.rx.tap.asDriver(),
-            stopTrigger: stopTrigger.asDriverOnErrorJustComplete(),
+            stopTrigger: stopTrigger,
             playTime: player.rx.playTime,
             state: player.rx.state,
             duration: player.rx.duration,

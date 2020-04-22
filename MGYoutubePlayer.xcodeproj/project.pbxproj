@@ -82,6 +82,8 @@
 		17DA5ECA244D37AA0062E1F1 /* AudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17DA5EC8244D37AA0062E1F1 /* AudioCell.xib */; };
 		17E63DE124480336000383B2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E63DE024480336000383B2 /* Constants.swift */; };
 		17E6445D244475D5000088AC /* YoutubeMiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */; };
+		17EE580C244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE580B244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift */; };
+		17EE580E244FEFE80017EF92 /* HavingAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE580D244FEFE80017EF92 /* HavingAudioPlayer.swift */; };
 		17F1383D244ED4C100688F5F /* AVPlayerItem+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */; };
 		17F1383F244EDED600688F5F /* AudioPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1383E244EDED600688F5F /* AudioPlayerViewModel.swift */; };
 		17F57CA92449ACA4002665AA /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F57CA82449ACA4002665AA /* Audio.swift */; };
@@ -184,6 +186,8 @@
 		17DA5EC8244D37AA0062E1F1 /* AudioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioCell.xib; sourceTree = "<group>"; };
 		17E63DE024480336000383B2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeMiniPlayerViewModel.swift; sourceTree = "<group>"; };
+		17EE580B244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMiniPlayerViewModel.swift; sourceTree = "<group>"; };
+		17EE580D244FEFE80017EF92 /* HavingAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HavingAudioPlayer.swift; sourceTree = "<group>"; };
 		17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+.swift"; sourceTree = "<group>"; };
 		17F1383E244EDED600688F5F /* AudioPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModel.swift; sourceTree = "<group>"; };
 		17F57CA82449ACA4002665AA /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 				17024804244D946700B6EA96 /* AudioMiniPlayer */,
 				17024803244D942600B6EA96 /* AudioPlayer */,
 				170247FD244D909E00B6EA96 /* AudioPlayer.swift */,
+				17EE580D244FEFE80017EF92 /* HavingAudioPlayer.swift */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 			children = (
 				17024805244D948800B6EA96 /* AudioMiniPlayerView.xib */,
 				17024807244D949700B6EA96 /* AudioMiniPlayerView.swift */,
+				17EE580B244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift */,
 			);
 			path = AudioMiniPlayer;
 			sourceTree = "<group>";
@@ -767,6 +773,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17EE580E244FEFE80017EF92 /* HavingAudioPlayer.swift in Sources */,
 				1759EC6D243DE85800F7101C /* Float+.swift in Sources */,
 				1759EC76243EC82100F7101C /* WKYTPlayerView.m in Sources */,
 				17B564532434390E0079B626 /* ProgressSlider.swift in Sources */,
@@ -807,6 +814,7 @@
 				170247F6244D432800B6EA96 /* AudioDetailAssembler.swift in Sources */,
 				1759EC8B244048E000F7101C /* MainUseCase.swift in Sources */,
 				17E6445D244475D5000088AC /* YoutubeMiniPlayerViewModel.swift in Sources */,
+				17EE580C244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift in Sources */,
 				17E63DE124480336000383B2 /* Constants.swift in Sources */,
 				17B56455243439650079B626 /* ProgressView.swift in Sources */,
 				1759EC69243DB79E00F7101C /* YoutubePlayerViewModel.swift in Sources */,

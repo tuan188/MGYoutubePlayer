@@ -17,6 +17,7 @@ extension AudioListViewModel: ViewModelType {
         let loadTrigger: Driver<Void>
         let reloadTrigger: Driver<Void>
         let selectAudioTrigger: Driver<IndexPath>
+        let showAudioTrigger: Driver<Audio>
     }
 
     struct Output {
@@ -36,7 +37,8 @@ extension AudioListViewModel: ViewModelType {
         
         let (audioList, error, isLoading, isReloading) = getListResult.destructured
 
-        let selectedAudio = select(trigger: input.selectAudioTrigger, items: audioList)
+        let selectedAudio = Driver.merge(select(trigger: input.selectAudioTrigger, items: audioList),
+                                         input.showAudioTrigger)
             .do(onNext: navigator.toAudioDetail)
             .mapToVoid()
 

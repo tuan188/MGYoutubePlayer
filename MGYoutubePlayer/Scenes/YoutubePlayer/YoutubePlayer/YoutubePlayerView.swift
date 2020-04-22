@@ -174,7 +174,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
                 switch state {
                 case .playing, .buffering:
                     self.controlBarView.playButton.setImage(UIImage.pause, for: .normal)
-                    self.stopMiniPlayerIfNeeded()
+                    self.stopMiniPlayer()
                 default:
                     self.controlBarView.playButton.setImage(UIImage.play, for: .normal)
                 }
@@ -194,14 +194,8 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
         disposeBag = DisposeBag()
     }
     
-    func stopMiniPlayerIfNeeded() {
-        guard let miniPlayer = MainViewController.shared?.miniPlayer,
-            let miniPlayerVideo = miniPlayer.player?.video,
-            let playerVideo = player?.video else { return }
-        
-        if !playerVideo.isSameAs(miniPlayerVideo) {
-            miniPlayer.stop()
-        }
+    func stopMiniPlayer() {
+        NotificationCenter.default.post(name: .stopYoutubeMiniPlayer, object: player?.video)
     }
     
     override func layoutSubviews() {

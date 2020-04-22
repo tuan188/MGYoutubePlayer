@@ -79,6 +79,7 @@ final class YoutubePlayer: NSObject {
     // MARK: - Methods
     
     deinit {
+        print("YoutubePlayer deinit")
         timer?.invalidate()
     }
     

@@ -51,13 +51,6 @@ final class AudioPlayer: NSObject {
         return state == AudioPlayer.State.playing || state == AudioPlayer.State.waiting
     }
     
-    var isActive: Bool {
-        let state = self.state
-        return state == AudioPlayer.State.playing
-            || state == AudioPlayer.State.waiting
-            || state == AudioPlayer.State.paused
-    }
-    
     // MARK: - Private properties
     
     fileprivate let _state = BehaviorRelay(value: AudioPlayer.State.unknown)
@@ -105,7 +98,7 @@ final class AudioPlayer: NSObject {
     }
     
     deinit {
-        print("Audio ViewModel deinit")
+        print("AudioPlayer deinit")
         
         timeControlStatusObservation?.invalidate()
         timeControlStatusObservation = nil
@@ -120,6 +113,8 @@ final class AudioPlayer: NSObject {
     
     func load(audio: Audio) {
         guard let url = URL(string: audio.url) else { return }
+        resetStats()
+        self.audio = audio
         
         let playerItem = AVPlayerItem(url: url)
         playerItem.canUseNetworkResourcesForLiveStreamingWhilePaused = true
@@ -139,14 +134,6 @@ final class AudioPlayer: NSObject {
         
         player.replaceCurrentItem(with: playerItem)
 //        player.automaticallyWaitsToMinimizeStalling = false
-    }
-    
-    func addPlayer() {
-        
-    }
-    
-    func movePlayer() {
-        
     }
     
     func resetStats() {
@@ -179,6 +166,10 @@ final class AudioPlayer: NSObject {
     }
 }
 
+enum AudioPlayerError: Error {
+    case unknown
+}
+
 // MARK: - Reactive
 extension Reactive where Base: AudioPlayer {
     var state: Driver<AudioPlayer.State> {
@@ -198,7 +189,7 @@ extension Reactive where Base: AudioPlayer {
     }
     
     var error: Driver<Error> {
-        return self.base._error.asDriver(onErrorJustReturn: YoutubePlayerError.unknown)
+        return self.base._error.asDriver(onErrorJustReturn: AudioPlayerError.unknown)
     }
     
     var isReady: Driver<Bool> {

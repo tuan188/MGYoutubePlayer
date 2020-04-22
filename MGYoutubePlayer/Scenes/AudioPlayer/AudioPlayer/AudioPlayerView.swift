@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class AudioPlayerView: UIView, NibOwnerLoadable {
+final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
@@ -168,13 +168,19 @@ final class AudioPlayerView: UIView, NibOwnerLoadable {
             .drive(onNext: { [unowned self] state in
                 print("Audio Player", state)
                 
+                let image: UIImage?
+                
                 switch state {
-                case .playing, .waiting:
-                    self.playButton.setImage(UIImage.pause, for: .normal)
-                    self.stopMiniPlayerIfNeeded()
+                case .waiting:
+                    image = UIImage.pause
+                case .playing:
+                    image = UIImage.pause
+                    self.stopMiniPlayer()
                 default:
-                    self.playButton.setImage(UIImage.play, for: .normal)
+                    image = UIImage.play
                 }
+                
+                self.playButton.setImage(image, for: .normal)
             })
             .disposed(by: disposeBag)
         
@@ -194,14 +200,8 @@ final class AudioPlayerView: UIView, NibOwnerLoadable {
         disposeBag = DisposeBag()
     }
     
-    func stopMiniPlayerIfNeeded() {
-//        guard let miniPlayer = MainViewController.shared?.miniPlayer,
-//            let miniPlayerVideo = miniPlayer.player?.video,
-//            let playerVideo = player?.video else { return }
-//
-//        if !playerVideo.isSameAs(miniPlayerVideo) {
-//            miniPlayer.stop()
-//        }
+    func stopMiniPlayer() {
+        NotificationCenter.default.post(name: .stopAudioMiniPlayer, object: player?.audio)
     }
 
 }

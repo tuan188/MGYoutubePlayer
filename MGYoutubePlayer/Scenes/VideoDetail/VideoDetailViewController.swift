@@ -26,13 +26,13 @@ final class VideoDetailViewController: UIViewController, BindableType {
         configView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        after(interval: 0.1) {
-            MainViewController.shared?.hideMiniPlayer()
-        }
-    }
-    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        after(interval: 0.1) {
+//            self.tabBarController?.hideYoutubeMiniPlayer()
+//        }
+//    }
+//    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         moveVideoToMiniPlayer()
@@ -112,20 +112,24 @@ final class VideoDetailViewController: UIViewController, BindableType {
     }
     
     private func moveVideoToMiniPlayer() {
-        guard let mainViewController = MainViewController.shared else { return }
+        guard playerView.isActive,
+            let tabBarController = self.tabBarController
+            else { return }
         
-        let miniPlayer = mainViewController.addMiniPlayer()
-        
-        if !miniPlayer.isActive {
+        if let miniPlayer = tabBarController.youtubeMiniPlayer,
+            !miniPlayer.isActive {
+            playerView.movePlayer(to: miniPlayer)
+        } else {
+            let miniPlayer = tabBarController.addYoutubeMiniPlayer()
             playerView.movePlayer(to: miniPlayer)
         }
     }
     
     func loadVideo(_ video: Video) {
-        guard let mainViewController = MainViewController.shared else { return }
+        guard let tabBarController = self.tabBarController else { return }
         
         // if miniplayer exists
-        if let miniPlayer = mainViewController.miniPlayer {
+        if let miniPlayer = tabBarController.youtubeMiniPlayer {
             // if videos are the same, move player from mini player to player view and hide mini player
             if let miniPlayerVideo = miniPlayer.player?.video,
                 miniPlayerVideo.isSameAs(video) {
