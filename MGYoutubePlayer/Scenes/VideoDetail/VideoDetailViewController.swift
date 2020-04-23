@@ -26,13 +26,6 @@ final class VideoDetailViewController: UIViewController, BindableType {
         configView()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        after(interval: 0.1) {
-//            self.tabBarController?.hideYoutubeMiniPlayer()
-//        }
-//    }
-//    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         moveVideoToMiniPlayer()
@@ -112,12 +105,12 @@ final class VideoDetailViewController: UIViewController, BindableType {
     }
     
     private func moveVideoToMiniPlayer() {
-        guard playerView.isActive,
-            let tabBarController = self.tabBarController
+        guard playerView.isPlaying,
+            let tabBarController = self.tabBarController ?? MainViewController.shared
             else { return }
         
         if let miniPlayer = tabBarController.youtubeMiniPlayer,
-            !miniPlayer.isActive {
+            !miniPlayer.isPlaying {
             playerView.movePlayer(to: miniPlayer)
         } else {
             let miniPlayer = tabBarController.addYoutubeMiniPlayer()
@@ -126,7 +119,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
     }
     
     func loadVideo(_ video: Video) {
-        guard let tabBarController = self.tabBarController else { return }
+        guard let tabBarController = self.tabBarController ?? MainViewController.shared else { return }
         
         // if miniplayer exists
         if let miniPlayer = tabBarController.youtubeMiniPlayer {

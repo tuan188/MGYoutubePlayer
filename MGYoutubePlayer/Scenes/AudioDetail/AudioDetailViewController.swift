@@ -106,7 +106,7 @@ final class AudioDetailViewController: UIViewController, BindableType {
     
     private func moveAudioToMiniPlayer() {
         guard playerView.isPlaying,
-            let tabBarController = self.tabBarController
+            let tabBarController = self.tabBarController ?? MainViewController.shared
             else { return }
 
         if let miniPlayer = tabBarController.audioMiniPlayer,
@@ -119,7 +119,7 @@ final class AudioDetailViewController: UIViewController, BindableType {
     }
     
     func loadAudio(_ audio: Audio) {
-        guard let tabBarController = self.tabBarController else { return }
+        guard let tabBarController = self.tabBarController ?? MainViewController.shared else { return }
         
         // if miniplayer exists
         if let miniPlayer = tabBarController.audioMiniPlayer {
@@ -128,10 +128,10 @@ final class AudioDetailViewController: UIViewController, BindableType {
                 miniPlayerAudio.isSameAs(audio) {
                 miniPlayer.movePlayer(to: playerView)
                 
-                if !playerView.isPlaying {
+                if !playerView.isActive {
                     playerView.load(audio: audio)
                 }
-            } else if miniPlayer.isPlaying {
+            } else if miniPlayer.isActive {
                 // keep playing, init another player and assign to view controller's player view
                 playerView.load(audio: audio)
             } else {

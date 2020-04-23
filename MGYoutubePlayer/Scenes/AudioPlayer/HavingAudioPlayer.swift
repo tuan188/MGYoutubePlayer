@@ -20,6 +20,10 @@ extension HavingAudioPlayer {
         return player?.isPlaying ?? false
     }
     
+    var isActive: Bool {
+        return player?.isActive ?? false
+    }
+    
     func movePlayer(to object: HavingAudioPlayer) {
         object.player = player
         object.bindViewModel()

@@ -48,7 +48,14 @@ final class AudioPlayer: NSObject {
     
     var isPlaying: Bool {
         let state = self.state
-        return state == AudioPlayer.State.playing || state == AudioPlayer.State.waiting
+        return state == .playing || state == .waiting
+    }
+    
+    var isActive: Bool {
+        let state = self.state
+        return state == .playing
+            || state == .waiting
+            || (state == .paused && playTime > 0)
     }
     
     // MARK: - Private properties
@@ -72,12 +79,16 @@ final class AudioPlayer: NSObject {
         timeObserver = player.addPeriodicTimeObserver(
             forInterval: CMTime(seconds: 1, preferredTimescale: 100),
             queue: DispatchQueue.main) { [weak self] (currentTime) in
-                self?._playTime.accept(currentTime.seconds)
+                guard let self = self else { return }
                 
-                if let buffer = self?.player.currentItem?.currentBuffer(),
-                    let duration = self?.player.currentItem?.duration {
-                    self?._loadedFraction
-                        .accept((buffer + currentTime.seconds) / duration.seconds)
+                self._playTime.accept(currentTime.seconds)
+                
+                if let buffer = self.player.currentItem?.currentBuffer(),
+                    let duration = self.player.currentItem?.duration.seconds,
+                    !duration.isNaN {
+                    
+                    self._loadedFraction.accept((buffer + currentTime.seconds) / duration)
+                    self._remainingTime.accept(duration - currentTime.seconds)
                 }
         }
         
@@ -141,18 +152,26 @@ final class AudioPlayer: NSObject {
         _duration.accept(0)
         _state.accept(.unknown)
         _isReady.accept(false)
-        
-        durationObservation?.invalidate()
+        _remainingTime.accept(0)
     }
     
     func play() {
-        player.play()
+        guard duration > 0 else { return }
+        
+        if Int(remainingTime) > 0 {
+            player.play()
+        } else {
+            seek(to: 0) { [weak self] (_) in
+                self?.player.play()
+            }
+        }
     }
     
     func stop() {
         resetStats()
-        player.pause()
-        player.replaceCurrentItem(with: nil)
+        seek(to: 0) { [weak self] (_) in
+            self?.player.pause()
+        }
     }
     
     func pause() {

@@ -31,7 +31,7 @@ final class AudioListViewController: UIViewController, BindableType {
         
         if let tabBarController = self.tabBarController,
             let miniPlayer = tabBarController.audioMiniPlayer,
-            miniPlayer.isPlaying {
+            miniPlayer.isActive {
             
             after(interval: 0.1) {
                 tabBarController.showAudioMiniPlayer()

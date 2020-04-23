@@ -12,12 +12,13 @@ final class MainViewController: UITabBarController, BindableType {
     
     // MARK: - Properties
     var viewModel: MainViewModel!
+    static var shared: MainViewController?
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        MainViewController.shared = self
         configView()
     }
     
