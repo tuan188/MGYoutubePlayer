@@ -9,7 +9,6 @@
 import UIKit
 import Reusable
 
-
 final class VideoListViewController: UIViewController, BindableType, ShowingYoutubeMiniPlayer {
 
     // MARK: - IBOutlets

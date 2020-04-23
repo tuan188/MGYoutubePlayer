@@ -116,6 +116,8 @@ final class AudioDetailViewController: UIViewController, BindableType {
             let miniPlayer = tabBarController.addAudioMiniPlayer()
             playerView.movePlayer(to: miniPlayer)
         }
+        
+        playerView.removeTargetRemoteTransportControls()
     }
     
     func loadAudio(_ audio: Audio) {
@@ -130,6 +132,9 @@ final class AudioDetailViewController: UIViewController, BindableType {
                 
                 if !playerView.isActive {
                     playerView.load(audio: audio)
+                } else {
+                    // update info
+                    playerView.setAudio(audio)
                 }
             } else if miniPlayer.isActive {
                 // keep playing, init another player and assign to view controller's player view

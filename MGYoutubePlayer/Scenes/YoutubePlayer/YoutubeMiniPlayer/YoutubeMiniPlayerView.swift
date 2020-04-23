@@ -22,6 +22,16 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
     
     var closeAction: (() -> Void)?
     
+    struct Configuration {
+        var height: CGFloat = 60
+        var leftMargin: CGFloat = 14
+        var rightMargin: CGFloat = -14
+        var bottomMargin: CGFloat = -12
+        var hiddenBottomMargin: CGFloat = 120
+        
+        static let `default` = Configuration()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

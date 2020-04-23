@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,8 +24,18 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             window.rootViewController = UnitTestViewController()
             window.makeKeyAndVisible()
         } else {
+            configApp()
             bindViewModel(window: window)
         }
+    }
+    
+    private func configApp() {
+        keepAppRunInBackground()
+    }
+    
+    private func keepAppRunInBackground() {
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+        try? AVAudioSession.sharedInstance().setActive(true)
     }
 
     private func bindViewModel(window: UIWindow) {

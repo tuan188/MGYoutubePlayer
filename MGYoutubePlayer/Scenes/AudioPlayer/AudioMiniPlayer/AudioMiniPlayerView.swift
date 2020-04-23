@@ -17,10 +17,27 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
 
     private var disposeBag = DisposeBag()
     private let loadTrigger = PublishSubject<Audio>()
+    private let setAudioTrigger = PublishSubject<Audio>()
     
+    // HavingAudioPlayer
     var player: AudioPlayer?
+    var playTarget: Any?
+    var pauseTarget: Any?
+    var backwardTarget: Any?
+    var forwardTarget: Any?
+    var changePositionTarget: Any?
     
     var closeAction: (() -> Void)?
+    
+    struct Configuration {
+        var height: CGFloat = 60
+        var leftMargin: CGFloat = 14
+        var rightMargin: CGFloat = -14
+        var bottomMargin: CGFloat = -12
+        var hiddenBottomMargin: CGFloat = 120
+        
+        static let `default` = Configuration()
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -59,6 +76,14 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         bindViewModel()
     }
     
+    // MARK: - HavingAudioPlayer
+    
+    func setAudio(_ audio: Audio) {
+        
+    }
+    
+    // MARK: - Bindings
+    
     func bindViewModel() {
         guard let player = self.player else { return }
         
@@ -69,6 +94,7 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
             .asDriverOnErrorJustComplete()
         
         let input = AudioMiniPlayerViewModel.Input(
+            setAudioTrigger: setAudioTrigger.asDriverOnErrorJustComplete(),
             loadTrigger: loadTrigger.asDriverOnErrorJustComplete(),
             playTrigger: playButton.rx.tap.asDriver(),
             stopTrigger: stopTrigger,
@@ -81,6 +107,16 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         
         let viewModel = AudioMiniPlayerViewModel(audio: player.audio)
         let output = viewModel.transform(input)
+        
+        output.audio
+            .drive(onNext: { [unowned self] audio in
+                self.titleLabel.text = audio.title
+                self.imageView.sd_setImage(with: URL(string: audio.imageUrl),
+                                           placeholderImage: UIImage.audioCover,
+                                           progress: nil,
+                                           completed: nil)
+            })
+            .disposed(by: disposeBag)
         
         output.load
             .drive(onNext: { [unowned self] audio in
@@ -103,11 +139,14 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         output.stop
             .drive(onNext: { [unowned self] in
                 self.player?.stop()
+                self.removeTargetRemoteTransportControls()
             })
             .disposed(by: disposeBag)
         
         output.duration
-            .drive()
+            .drive(onNext: { [unowned self] duration in
+                self.updateNowPlayingInfoCenter(duration: duration)
+            })
             .disposed(by: disposeBag)
         
         output.remainingTime
@@ -115,7 +154,9 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
             .disposed(by: disposeBag)
         
         output.playTime
-            .drive()
+            .drive(onNext: { [unowned self] playTime in
+                self.updateNowPlayingInfoCenter(playTime: playTime)
+            })
             .disposed(by: disposeBag)
         
         output.progress
@@ -131,21 +172,44 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
             .drive(onNext: { [unowned self] state in
                 print("Youtube Mini Player", state)
                 
+                let image: UIImage?
+                
                 switch state {
-                case .playing, .waiting:
-                    self.playButton.setImage(UIImage.pause, for: .normal)
+                case .waiting:
+                    image = UIImage.pause
+                case .playing:
+                    image = UIImage.pause
+                    self.removeTargetRemoteTransportControls()
+                    self.setupRemoteTransportControls()
+                    
+                    if let player = self.player {
+                        self.updateNowPlayingInfoCenter(for: player)
+                    }
                 default:
-                    self.playButton.setImage(UIImage.play, for: .normal)
+                    image = UIImage.play
                 }
+                
+                self.playButton.setImage(image, for: .normal)
             })
-            .disposed(by: disposeBag)
-        
-        output.audioTitle
-            .drive(titleLabel.rx.text)
             .disposed(by: disposeBag)
     }
     
     func unbindViewModel() {
         disposeBag = DisposeBag()
+    }
+    
+    private func updateNowPlayingInfoCenter(for player: AudioPlayer) {
+        self.updateNowPlayingInfoCenter(playTime: player.playTime, duration: player.duration)
+        
+        guard let audio = player.audio else { return }
+        
+        updateNowPlayingInfoCenter(title: audio.title)
+        
+        SDWebImageManager.shared.loadImage(with: URL(string: audio.imageUrl),
+                                           progress: nil) { [weak self] (image, _, error, _, _, _) in
+            if error == nil {
+                self?.updateNowPlayingInfoCenter(artWorkImage: image)
+            }
+        }
     }
 }

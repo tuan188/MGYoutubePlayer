@@ -11,6 +11,7 @@ import UIKit
 struct Audio {
     var url = ""
     var title = ""
+    var imageUrl = ""
 }
 
 extension Audio {

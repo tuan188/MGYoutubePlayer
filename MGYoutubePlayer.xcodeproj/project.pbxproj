@@ -84,6 +84,8 @@
 		17E6445D244475D5000088AC /* YoutubeMiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */; };
 		17EAB11C24516E76009609E5 /* ShowingYoutubeMiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EAB11B24516E76009609E5 /* ShowingYoutubeMiniPlayer.swift */; };
 		17EAB11E24516F40009609E5 /* ShowingAudioMiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EAB11D24516F40009609E5 /* ShowingAudioMiniPlayer.swift */; };
+		17EAB12024518D2F009609E5 /* UITabBarController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EAB11F24518D2F009609E5 /* UITabBarController+AudioPlayer.swift */; };
+		17EAB12224518E28009609E5 /* UITabBarController+YoutubePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EAB12124518E28009609E5 /* UITabBarController+YoutubePlayer.swift */; };
 		17EE580C244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE580B244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift */; };
 		17EE580E244FEFE80017EF92 /* HavingAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE580D244FEFE80017EF92 /* HavingAudioPlayer.swift */; };
 		17F1383D244ED4C100688F5F /* AVPlayerItem+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */; };
@@ -190,6 +192,8 @@
 		17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeMiniPlayerViewModel.swift; sourceTree = "<group>"; };
 		17EAB11B24516E76009609E5 /* ShowingYoutubeMiniPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowingYoutubeMiniPlayer.swift; sourceTree = "<group>"; };
 		17EAB11D24516F40009609E5 /* ShowingAudioMiniPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowingAudioMiniPlayer.swift; sourceTree = "<group>"; };
+		17EAB11F24518D2F009609E5 /* UITabBarController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+AudioPlayer.swift"; sourceTree = "<group>"; };
+		17EAB12124518E28009609E5 /* UITabBarController+YoutubePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+YoutubePlayer.swift"; sourceTree = "<group>"; };
 		17EE580B244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMiniPlayerViewModel.swift; sourceTree = "<group>"; };
 		17EE580D244FEFE80017EF92 /* HavingAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HavingAudioPlayer.swift; sourceTree = "<group>"; };
 		17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+.swift"; sourceTree = "<group>"; };
@@ -251,6 +255,9 @@
 				17024803244D942600B6EA96 /* AudioPlayer */,
 				170247FD244D909E00B6EA96 /* AudioPlayer.swift */,
 				17EE580D244FEFE80017EF92 /* HavingAudioPlayer.swift */,
+				17EAB11D24516F40009609E5 /* ShowingAudioMiniPlayer.swift */,
+				17EAB11F24518D2F009609E5 /* UITabBarController+AudioPlayer.swift */,
+				17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -366,7 +373,6 @@
 				171C0B3A2427B35800788ADE /* UIViewController+Rx.swift */,
 				1759EC6A243DD03500F7101C /* Double+.swift */,
 				1759EC6C243DE85800F7101C /* Float+.swift */,
-				17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -502,7 +508,7 @@
 				17793FEA242F0A3E005D86B2 /* YoutubePlayer.swift */,
 				1799ED082445A8C900136B3F /* HavingYoutubePlayer.swift */,
 				17EAB11B24516E76009609E5 /* ShowingYoutubeMiniPlayer.swift */,
-				17EAB11D24516F40009609E5 /* ShowingAudioMiniPlayer.swift */,
+				17EAB12124518E28009609E5 /* UITabBarController+YoutubePlayer.swift */,
 			);
 			path = YoutubePlayer;
 			sourceTree = "<group>";
@@ -786,6 +792,7 @@
 				17100E2B24485B9300672B8E /* YoutubePlayerControlBarView.swift in Sources */,
 				171C0B512427B35800788ADE /* UIViewController+Rx.swift in Sources */,
 				1750DC68242CFD16000371B1 /* YoutubePlayerView.swift in Sources */,
+				17EAB12024518D2F009609E5 /* UITabBarController+AudioPlayer.swift in Sources */,
 				170247FA244D432800B6EA96 /* AudioDetailViewModel.swift in Sources */,
 				179A41202428F479004FE81F /* VideoDetailAssembler.swift in Sources */,
 				171C0B4B2427B35800788ADE /* Storyboards.swift in Sources */,
@@ -802,6 +809,7 @@
 				17793FEB242F0A3E005D86B2 /* YoutubePlayer.swift in Sources */,
 				179A41142428F2CD004FE81F /* VideoListUseCase.swift in Sources */,
 				171C0B592427B35800788ADE /* Assembler.swift in Sources */,
+				17EAB12224518E28009609E5 /* UITabBarController+YoutubePlayer.swift in Sources */,
 				179A41122428F2CD004FE81F /* VideoListAssembler.swift in Sources */,
 				171C0B562427B35800788ADE /* APIInput.swift in Sources */,
 				171C0B572427B35800788ADE /* APIOutput.swift in Sources */,
@@ -1004,6 +1012,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NN74NJ78BB;
 				INFOPLIST_FILE = MGYoutubePlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1026,6 +1035,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NN74NJ78BB;
 				INFOPLIST_FILE = MGYoutubePlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (

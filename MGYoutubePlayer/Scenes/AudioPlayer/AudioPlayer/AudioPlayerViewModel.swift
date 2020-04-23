@@ -16,6 +16,7 @@ struct AudioPlayerViewModel: ViewModelType {
     }
     
     struct Input {
+        let setAudioTrigger: Driver<Audio>
         let loadTrigger: Driver<Audio>
         let playTrigger: Driver<Void>
         let stopTrigger: Driver<Void>
@@ -29,6 +30,7 @@ struct AudioPlayerViewModel: ViewModelType {
     }
     
     struct Output {
+        let audio: Driver<Audio>
         let load: Driver<Audio>
         let play: Driver<Void>
         let pause: Driver<Void>
@@ -43,6 +45,8 @@ struct AudioPlayerViewModel: ViewModelType {
     }
     
     func transform(_ input: Input) -> Output {
+        let audio = Driver.merge(input.setAudioTrigger, input.loadTrigger)
+        
         let state = input.state
         
         let playState = input.playTrigger
@@ -96,6 +100,7 @@ struct AudioPlayerViewModel: ViewModelType {
         let remainingTime = Driver.combineLatest(input.duration, displayTime) { $0 - $1 }
         
         return Output(
+            audio: audio,
             load: input.loadTrigger,
             play: play,
             pause: pause,

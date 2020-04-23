@@ -19,4 +19,5 @@ extension UIImage {
     static let videos = UIImage(named: "videos")
     static let audios = UIImage(named: "audios")
     static let slider = UIImage(named: "slider")
+    static let audioCover = UIImage(named: "audio_cover")
 }

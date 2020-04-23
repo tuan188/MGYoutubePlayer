@@ -178,10 +178,12 @@ final class AudioPlayer: NSObject {
         player.pause()
     }
     
-    func seek(to seconds: Double, completion: @escaping (Bool) -> Void) {
+    func seek(to seconds: Double, completion: ((Bool) -> Void)? = nil) {
         let timescale = player.currentItem?.asset.duration.timescale ?? 1
-        player.seek(to: CMTime(seconds: seconds, preferredTimescale: timescale),
-                    completionHandler: completion)
+        
+        player.seek(to: CMTime(seconds: seconds, preferredTimescale: timescale)) {
+            completion?($0)
+        }
     }
 }
 

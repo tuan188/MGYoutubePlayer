@@ -15,6 +15,7 @@ struct AudioMiniPlayerViewModel {
 // MARK: - ViewModelType
 extension AudioMiniPlayerViewModel: ViewModelType {
     struct Input {
+        let setAudioTrigger: Driver<Audio>
         let loadTrigger: Driver<Audio>
         let playTrigger: Driver<Void>
         let stopTrigger: Driver<Audio?>
@@ -26,6 +27,7 @@ extension AudioMiniPlayerViewModel: ViewModelType {
     }
     
     struct Output {
+        let audio: Driver<Audio>
         let load: Driver<Audio>
         let play: Driver<Void>
         let pause: Driver<Void>
@@ -36,17 +38,13 @@ extension AudioMiniPlayerViewModel: ViewModelType {
         let remainingTime: Driver<Double>
         let progress: Driver<Double>
         let isReady: Driver<Bool>
-        let audioTitle: Driver<String>
     }
     
     func transform(_ input: Input) -> Output {
-        let audio = input.loadTrigger
+        let audio = Driver.merge(input.setAudioTrigger, input.loadTrigger)
             .mapToOptional()
             .startWith(self.audio)
             .unwrap()
-        
-        let audioTitle = audio
-            .map { $0.title }
         
         let state = input.state
         
@@ -72,6 +70,7 @@ extension AudioMiniPlayerViewModel: ViewModelType {
             .mapToVoid()
         
         return Output(
+            audio: audio,
             load: input.loadTrigger,
             play: play,
             pause: pause,
@@ -81,8 +80,7 @@ extension AudioMiniPlayerViewModel: ViewModelType {
             duration: input.duration,
             remainingTime: input.remainingTime,
             progress: progress,
-            isReady: input.isReady,
-            audioTitle: audioTitle
+            isReady: input.isReady
         )
     }
 }
