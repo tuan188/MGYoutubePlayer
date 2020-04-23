@@ -66,7 +66,6 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         
         let stopTrigger = NotificationCenter.default.rx.notification(.stopAudioMiniPlayer)
             .map { $0.object as? Audio }
-            .unwrap()
             .asDriverOnErrorJustComplete()
         
         let input = AudioMiniPlayerViewModel.Input(

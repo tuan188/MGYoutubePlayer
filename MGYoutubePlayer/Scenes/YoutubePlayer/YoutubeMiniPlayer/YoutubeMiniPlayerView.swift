@@ -71,7 +71,6 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
         
         let stopTrigger = NotificationCenter.default.rx.notification(.stopYoutubeMiniPlayer)
             .map { $0.object as? Video }
-            .unwrap()
             .asDriverOnErrorJustComplete()
         
         let input = YoutubeMiniPlayerViewModel.Input(

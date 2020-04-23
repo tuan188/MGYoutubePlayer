@@ -15,7 +15,7 @@ extension YoutubeMiniPlayerViewModel: ViewModelType {
     struct Input {
         let loadTrigger: Driver<Video>
         let playTrigger: Driver<Void>
-        let stopTrigger: Driver<Video>
+        let stopTrigger: Driver<Video?>
         let playTime: Driver<Float>
         let state: Driver<YoutubePlayer.State>
         let duration: Driver<Float>
@@ -63,7 +63,10 @@ extension YoutubeMiniPlayerViewModel: ViewModelType {
         
         let stop = input.stopTrigger
             .withLatestFrom(video) { ($0, $1) }
-            .filter { !$0.0.isSameAs($0.1) }
+            .filter { playingVideo, thisVideo in
+                guard let playingVideo = playingVideo else { return true }
+                return !playingVideo.isSameAs(thisVideo)
+            }
             .mapToVoid()
         
         return Output(

@@ -9,7 +9,7 @@
 import UIKit
 import Reusable
 
-final class AudioListViewController: UIViewController, BindableType {
+final class AudioListViewController: UIViewController, BindableType, ShowingAudioMiniPlayer {
 
     // MARK: - IBOutlets
 
@@ -28,23 +28,12 @@ final class AudioListViewController: UIViewController, BindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let tabBarController = self.tabBarController,
-            let miniPlayer = tabBarController.audioMiniPlayer,
-            miniPlayer.isActive {
-            
-            after(interval: 0.1) {
-                tabBarController.showAudioMiniPlayer()
-            }
-        }
+        showAudioMiniPlayer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        after(interval: 0.1) {
-            self.tabBarController?.hideAudioMiniPlayer()
-        }
+        hideAudioMiniPlayer()
     }
 
     deinit {

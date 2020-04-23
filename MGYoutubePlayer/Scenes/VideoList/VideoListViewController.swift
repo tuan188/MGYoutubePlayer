@@ -9,7 +9,8 @@
 import UIKit
 import Reusable
 
-final class VideoListViewController: UIViewController, BindableType {
+
+final class VideoListViewController: UIViewController, BindableType, ShowingYoutubeMiniPlayer {
 
     // MARK: - IBOutlets
 
@@ -28,23 +29,12 @@ final class VideoListViewController: UIViewController, BindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let tabBarController = self.tabBarController,
-            let miniPlayer = tabBarController.youtubeMiniPlayer,
-            miniPlayer.isActive {
-            
-            after(interval: 0.1) {
-                tabBarController.showYoutubeMiniPlayer()
-            }
-        }
+        showYoutubeMiniPlayer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        after(interval: 0.1) {
-            self.tabBarController?.hideYoutubeMiniPlayer()
-        }
+        hideYoutubeMiniPlayer()
     }
 
     deinit {

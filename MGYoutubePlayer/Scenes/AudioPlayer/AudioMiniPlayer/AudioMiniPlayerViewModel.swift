@@ -17,7 +17,7 @@ extension AudioMiniPlayerViewModel: ViewModelType {
     struct Input {
         let loadTrigger: Driver<Audio>
         let playTrigger: Driver<Void>
-        let stopTrigger: Driver<Audio>
+        let stopTrigger: Driver<Audio?>
         let playTime: Driver<Double>
         let state: Driver<AudioPlayer.State>
         let duration: Driver<Double>
@@ -65,7 +65,10 @@ extension AudioMiniPlayerViewModel: ViewModelType {
         
         let stop = input.stopTrigger
             .withLatestFrom(audio) { ($0, $1) }
-            .filter { !$0.0.isSameAs($0.1) }
+            .filter { playingAudio, thisAudio in
+                guard let playingAudio = playingAudio else { return true }
+                return !playingAudio.isSameAs(thisAudio)
+            }
             .mapToVoid()
         
         return Output(

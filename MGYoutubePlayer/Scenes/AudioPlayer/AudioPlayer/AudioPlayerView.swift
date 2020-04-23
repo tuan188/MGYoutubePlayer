@@ -175,7 +175,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
                     image = UIImage.pause
                 case .playing:
                     image = UIImage.pause
-                    self.stopMiniPlayer()
+                    self.stopOtherPlayers()
                 default:
                     image = UIImage.play
                 }
@@ -200,8 +200,9 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
         disposeBag = DisposeBag()
     }
     
-    func stopMiniPlayer() {
+    func stopOtherPlayers() {
         NotificationCenter.default.post(name: .stopAudioMiniPlayer, object: player?.audio)
+        NotificationCenter.default.post(name: .stopYoutubeMiniPlayer, object: nil)
     }
 
 }

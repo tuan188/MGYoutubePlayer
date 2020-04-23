@@ -82,6 +82,8 @@
 		17DA5ECA244D37AA0062E1F1 /* AudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17DA5EC8244D37AA0062E1F1 /* AudioCell.xib */; };
 		17E63DE124480336000383B2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E63DE024480336000383B2 /* Constants.swift */; };
 		17E6445D244475D5000088AC /* YoutubeMiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */; };
+		17EAB11C24516E76009609E5 /* ShowingYoutubeMiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EAB11B24516E76009609E5 /* ShowingYoutubeMiniPlayer.swift */; };
+		17EAB11E24516F40009609E5 /* ShowingAudioMiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EAB11D24516F40009609E5 /* ShowingAudioMiniPlayer.swift */; };
 		17EE580C244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE580B244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift */; };
 		17EE580E244FEFE80017EF92 /* HavingAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE580D244FEFE80017EF92 /* HavingAudioPlayer.swift */; };
 		17F1383D244ED4C100688F5F /* AVPlayerItem+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */; };
@@ -186,6 +188,8 @@
 		17DA5EC8244D37AA0062E1F1 /* AudioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioCell.xib; sourceTree = "<group>"; };
 		17E63DE024480336000383B2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		17E64458244475D5000088AC /* YoutubeMiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeMiniPlayerViewModel.swift; sourceTree = "<group>"; };
+		17EAB11B24516E76009609E5 /* ShowingYoutubeMiniPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowingYoutubeMiniPlayer.swift; sourceTree = "<group>"; };
+		17EAB11D24516F40009609E5 /* ShowingAudioMiniPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowingAudioMiniPlayer.swift; sourceTree = "<group>"; };
 		17EE580B244FE3CC0017EF92 /* AudioMiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMiniPlayerViewModel.swift; sourceTree = "<group>"; };
 		17EE580D244FEFE80017EF92 /* HavingAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HavingAudioPlayer.swift; sourceTree = "<group>"; };
 		17F1383C244ED4C100688F5F /* AVPlayerItem+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+.swift"; sourceTree = "<group>"; };
@@ -497,6 +501,8 @@
 				1759EC71243EC82000F7101C /* WKYTPlayerView */,
 				17793FEA242F0A3E005D86B2 /* YoutubePlayer.swift */,
 				1799ED082445A8C900136B3F /* HavingYoutubePlayer.swift */,
+				17EAB11B24516E76009609E5 /* ShowingYoutubeMiniPlayer.swift */,
+				17EAB11D24516F40009609E5 /* ShowingAudioMiniPlayer.swift */,
 			);
 			path = YoutubePlayer;
 			sourceTree = "<group>";
@@ -791,6 +797,7 @@
 				170247ED244D38BD00B6EA96 /* AudioListUseCase.swift in Sources */,
 				179A41112428F2CD004FE81F /* VideoViewModel.swift in Sources */,
 				179A41222428F479004FE81F /* VideoDetailUseCase.swift in Sources */,
+				17EAB11E24516F40009609E5 /* ShowingAudioMiniPlayer.swift in Sources */,
 				1759EC6B243DD03500F7101C /* Double+.swift in Sources */,
 				17793FEB242F0A3E005D86B2 /* YoutubePlayer.swift in Sources */,
 				179A41142428F2CD004FE81F /* VideoListUseCase.swift in Sources */,
@@ -802,6 +809,7 @@
 				170247EF244D38BD00B6EA96 /* AudioListViewModel.swift in Sources */,
 				170247EC244D38BD00B6EA96 /* AudioListViewController.swift in Sources */,
 				179A41062428F288004FE81F /* Video.swift in Sources */,
+				17EAB11C24516E76009609E5 /* ShowingYoutubeMiniPlayer.swift in Sources */,
 				179A41212428F479004FE81F /* VideoDetailViewController.swift in Sources */,
 				1759EC89244048E000F7101C /* MainAssembler.swift in Sources */,
 				1799ED092445A8C900136B3F /* HavingYoutubePlayer.swift in Sources */,
