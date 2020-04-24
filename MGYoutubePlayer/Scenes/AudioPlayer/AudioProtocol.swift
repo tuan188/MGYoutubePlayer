@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AudioProtocol {
-    var url: String { get set }
+    var audioUrl: String { get set }
     var title: String { get set }
-    var imageUrl: String { get set }
+    var artworkUrl: String { get set }
 }

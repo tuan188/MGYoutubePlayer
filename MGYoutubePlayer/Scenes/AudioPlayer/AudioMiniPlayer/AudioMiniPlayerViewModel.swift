@@ -65,7 +65,7 @@ extension AudioMiniPlayerViewModel: ViewModelType {
             .withLatestFrom(audio) { ($0, $1) }
             .filter { playingAudioUrl, audio in
                 guard let playingAudioUrl = playingAudioUrl else { return true }
-                return audio.url != playingAudioUrl
+                return audio.audioUrl != playingAudioUrl
             }
             .mapToVoid()
         

@@ -42,7 +42,7 @@ extension VideoDetailViewModel: ViewModelType {
         let (videoList, error, isLoading, isReloading) = getListResult.destructured
         
         let videos = videoList
-            .map { $0.filter { $0.id != self.video.id } }
+            .map { $0.filter { $0.videoId != self.video.videoId } }
         
         let selectedVideo = select(trigger: input.selectVideoTrigger, items: videos)
             .do(onNext: navigator.toVideoDetail)

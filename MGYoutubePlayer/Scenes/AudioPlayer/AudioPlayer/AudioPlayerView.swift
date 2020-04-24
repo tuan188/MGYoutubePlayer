@@ -122,7 +122,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
         
         output.audio
             .drive(onNext: { [unowned self] audio in
-                self.coverImageView.sd_setImage(with: URL(string: audio.imageUrl),
+                self.coverImageView.sd_setImage(with: URL(string: audio.artworkUrl),
                                                 placeholderImage: UIImage.audioCover,
                                                 completed: nil)
             })
@@ -246,7 +246,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
     }
     
     private func stopOtherPlayers() {
-        NotificationCenter.default.post(name: .stopAudioMiniPlayer, object: player?.audio?.url)
+        NotificationCenter.default.post(name: .stopAudioMiniPlayer, object: player?.audio?.audioUrl)
         NotificationCenter.default.post(name: .stopYoutubeMiniPlayer, object: nil)
     }
     
@@ -258,7 +258,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
         
         updateNowPlayingInfoCenter(title: audio.title)
         
-        SDWebImageManager.shared.loadImage(with: URL(string: audio.imageUrl),
+        SDWebImageManager.shared.loadImage(with: URL(string: audio.artworkUrl),
                                            progress: nil) { [weak self] (image, _, error, _, _, _) in
             if error == nil {
                 self?.updateNowPlayingInfoCenter(artWorkImage: image)

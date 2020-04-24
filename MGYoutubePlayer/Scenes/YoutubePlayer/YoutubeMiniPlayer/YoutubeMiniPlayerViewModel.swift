@@ -44,7 +44,7 @@ extension YoutubeMiniPlayerViewModel: ViewModelType {
             .unwrap()
         
         let videoTitle = video
-            .map { $0.title }
+            .map { $0.videoTitle }
         
         let state = input.state
         
@@ -65,7 +65,7 @@ extension YoutubeMiniPlayerViewModel: ViewModelType {
             .withLatestFrom(video) { ($0, $1) }
             .filter { playingVideoId, video in
                 guard let playingVideoId = playingVideoId else { return true }
-                return video.id != playingVideoId
+                return video.videoId != playingVideoId
             }
             .mapToVoid()
         

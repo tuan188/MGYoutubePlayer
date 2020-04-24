@@ -9,6 +9,6 @@
 import UIKit
 
 protocol VideoProtocol {
-    var id: String { get set }
-    var title: String { get set }
+    var videoId: String { get }
+    var videoTitle: String { get }
 }

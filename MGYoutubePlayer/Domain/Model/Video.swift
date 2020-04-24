@@ -7,6 +7,6 @@
 //
 
 struct Video: VideoProtocol {
-    var id = ""
-    var title = ""
+    var videoId = ""
+    var videoTitle = ""
 }

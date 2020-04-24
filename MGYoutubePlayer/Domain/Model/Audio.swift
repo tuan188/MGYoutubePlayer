@@ -9,7 +9,7 @@
 import UIKit
 
 struct Audio: AudioProtocol {
-    var url = ""
+    var audioUrl = ""
     var title = ""
-    var imageUrl = ""
+    var artworkUrl = ""
 }

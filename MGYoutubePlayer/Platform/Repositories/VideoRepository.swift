@@ -15,9 +15,9 @@ protocol VideoRepositoryType {
 struct VideoRepository: VideoRepositoryType {
     func getVideoList() -> Observable<[Video]> {
         return Observable.just([
-            Video(id: "M7lc1UVf-VE", title: "YouTube Developers Live: Embedded Web Player Customization"),
-            Video(id: "jdqsiFw74Jk", title: "Youtube Data API v3 & jQuery To List Channel Videos"),
-            Video(id: "TlB_eWDSMt4", title: "Node.js Tutorial for Beginners: Learn Node in 1 Hour | Mosh")
+            Video(videoId: "M7lc1UVf-VE", videoTitle: "YouTube Developers Live: Embedded Web Player Customization"),
+            Video(videoId: "jdqsiFw74Jk", videoTitle: "Youtube Data API v3 & jQuery To List Channel Videos"),
+            Video(videoId: "TlB_eWDSMt4", videoTitle: "Node.js Tutorial for Beginners: Learn Node in 1 Hour | Mosh")
         ])
     }
 }

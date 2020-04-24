@@ -64,7 +64,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
         let output = viewModel.transform(input)
         
         output.video
-            .map { $0.title }
+            .map { $0.videoTitle }
             .drive(self.rx.title)
             .disposed(by: rx.disposeBag)
         
@@ -125,7 +125,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
         if let miniPlayer = tabBarController.youtubeMiniPlayer {
             // if videos are the same, move player from mini player to player view and hide mini player
             if let miniPlayerVideo = miniPlayer.player?.video,
-                miniPlayerVideo.id == video.id {
+                miniPlayerVideo.videoId == video.videoId {
                 miniPlayer.movePlayer(to: playerView)
                 
                 if !playerView.isActive {

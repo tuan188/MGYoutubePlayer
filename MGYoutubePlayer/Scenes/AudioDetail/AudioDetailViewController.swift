@@ -127,7 +127,7 @@ final class AudioDetailViewController: UIViewController, BindableType {
         if let miniPlayer = tabBarController.audioMiniPlayer {
             // if audios are the same, move player from mini player to player view and hide mini player
             if let miniPlayerAudio = miniPlayer.player?.audio,
-                miniPlayerAudio.url == audio.url {
+                miniPlayerAudio.audioUrl == audio.audioUrl {
                 miniPlayer.movePlayer(to: playerView)
                 
                 if !playerView.isActive {

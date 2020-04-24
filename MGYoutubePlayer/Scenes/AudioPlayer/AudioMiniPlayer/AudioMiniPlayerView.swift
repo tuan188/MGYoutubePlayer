@@ -112,7 +112,7 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         output.audio
             .drive(onNext: { [unowned self] audio in
                 self.titleLabel.text = audio.title
-                self.imageView.sd_setImage(with: URL(string: audio.imageUrl),
+                self.imageView.sd_setImage(with: URL(string: audio.artworkUrl),
                                            placeholderImage: UIImage.audioCover,
                                            progress: nil,
                                            completed: nil)
@@ -212,7 +212,7 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         
         updateNowPlayingInfoCenter(title: audio.title)
         
-        SDWebImageManager.shared.loadImage(with: URL(string: audio.imageUrl),
+        SDWebImageManager.shared.loadImage(with: URL(string: audio.artworkUrl),
                                            progress: nil) { [weak self] (image, _, error, _, _, _) in
             if error == nil {
                 self?.updateNowPlayingInfoCenter(artWorkImage: image)

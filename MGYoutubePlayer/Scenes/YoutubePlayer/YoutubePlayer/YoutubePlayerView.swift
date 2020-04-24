@@ -195,7 +195,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
     }
     
     private func stopOtherPlayers() {
-        NotificationCenter.default.post(name: .stopYoutubeMiniPlayer, object: player?.video?.id)
+        NotificationCenter.default.post(name: .stopYoutubeMiniPlayer, object: player?.video?.videoId)
         NotificationCenter.default.post(name: .stopAudioMiniPlayer, object: nil)
     }
     

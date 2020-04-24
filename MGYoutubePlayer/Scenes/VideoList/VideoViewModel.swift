@@ -10,11 +10,11 @@ struct VideoViewModel {
     let video: Video
     
     var id: String {
-        return video.id
+        return video.videoId
     }
         
     var title: String {
-        return video.title
+        return video.videoTitle
     }
         
 }

@@ -142,7 +142,7 @@ final class YoutubePlayer: NSObject {
             })
         })
         
-        playerView?.load(withVideoId: video.id, playerVars: playerVars)
+        playerView?.load(withVideoId: video.videoId, playerVars: playerVars)
     }
     
     private func resetStats() {
@@ -155,7 +155,7 @@ final class YoutubePlayer: NSObject {
     }
     
     func reload() {
-        guard let videoId = self.video?.id else { return }
+        guard let videoId = self.video?.videoId else { return }
         
         resetStats()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in

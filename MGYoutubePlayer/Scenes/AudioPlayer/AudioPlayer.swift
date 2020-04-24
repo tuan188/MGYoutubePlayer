@@ -123,7 +123,7 @@ final class AudioPlayer: NSObject {
     }
     
     func load(audio: AudioProtocol) {
-        guard let url = URL(string: audio.url) else { return }
+        guard let url = URL(string: audio.audioUrl) else { return }
         resetStats()
         self.audio = audio
         
