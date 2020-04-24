@@ -42,7 +42,7 @@ extension AudioDetailViewModel: ViewModelType {
         let (audioList, error, isLoading, isReloading) = getListResult.destructured
         
         let audios = audioList
-            .map { $0.filter { !$0.isSameAs(self.audio) } }
+            .map { $0.filter { $0.url != self.audio.url } }
         
         let selectedAudio = select(trigger: input.selectAudioTrigger, items: audios)
             .do(onNext: navigator.toAudioDetail)

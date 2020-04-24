@@ -125,7 +125,7 @@ final class VideoDetailViewController: UIViewController, BindableType {
         if let miniPlayer = tabBarController.youtubeMiniPlayer {
             // if videos are the same, move player from mini player to player view and hide mini player
             if let miniPlayerVideo = miniPlayer.player?.video,
-                miniPlayerVideo.isSameAs(video) {
+                miniPlayerVideo.id == video.id {
                 miniPlayer.movePlayer(to: playerView)
                 
                 if !playerView.isActive {

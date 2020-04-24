@@ -6,13 +6,7 @@
 //  Copyright © 2020 Tuan Truong. All rights reserved.
 //
 
-struct Video {
+struct Video: VideoProtocol {
     var id = ""
     var title = ""
-}
-
-extension Video {
-    func isSameAs(_ video: Video) -> Bool {
-        return self.id == video.id
-    }
 }

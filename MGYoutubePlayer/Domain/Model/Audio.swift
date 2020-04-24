@@ -8,14 +8,8 @@
 
 import UIKit
 
-struct Audio {
+struct Audio: AudioProtocol {
     var url = ""
     var title = ""
     var imageUrl = ""
-}
-
-extension Audio {
-    func isSameAs(_ audio: Audio) -> Bool {
-        return self.url == audio.url
-    }
 }

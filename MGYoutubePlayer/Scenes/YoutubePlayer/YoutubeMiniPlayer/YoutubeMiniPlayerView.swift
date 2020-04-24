@@ -16,7 +16,7 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
     @IBOutlet weak var titleLabel: UILabel!
 
     private var disposeBag = DisposeBag()
-    private let loadTrigger = PublishSubject<Video>()
+    private let loadTrigger = PublishSubject<VideoProtocol>()
     
     var player: YoutubePlayer?
     
@@ -60,7 +60,7 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
         print("YoutubeMiniPlayerView deinit")
     }
     
-    func load(video: Video) {
+    func load(video: VideoProtocol) {
         loadTrigger.onNext(video)
     }
     
@@ -80,7 +80,7 @@ final class YoutubeMiniPlayerView: UIView, NibLoadable, HavingYoutubePlayer {
         disposeBag = DisposeBag()
         
         let stopTrigger = NotificationCenter.default.rx.notification(.stopYoutubeMiniPlayer)
-            .map { $0.object as? Video }
+            .map { $0.object as? String }
             .asDriverOnErrorJustComplete()
         
         let input = YoutubeMiniPlayerViewModel.Input(

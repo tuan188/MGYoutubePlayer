@@ -16,8 +16,8 @@ struct AudioPlayerViewModel: ViewModelType {
     }
     
     struct Input {
-        let setAudioTrigger: Driver<Audio>
-        let loadTrigger: Driver<Audio>
+        let setAudioTrigger: Driver<AudioProtocol>
+        let loadTrigger: Driver<AudioProtocol>
         let playTrigger: Driver<Void>
         let stopTrigger: Driver<Void>
         let seekTrigger: Driver<AudioPlayerViewModel.SeekState>
@@ -30,8 +30,8 @@ struct AudioPlayerViewModel: ViewModelType {
     }
     
     struct Output {
-        let audio: Driver<Audio>
-        let load: Driver<Audio>
+        let audio: Driver<AudioProtocol>
+        let load: Driver<AudioProtocol>
         let play: Driver<Void>
         let pause: Driver<Void>
         let stop: Driver<Void>

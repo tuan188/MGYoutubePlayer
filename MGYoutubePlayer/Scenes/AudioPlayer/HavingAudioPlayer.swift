@@ -21,7 +21,7 @@ protocol HavingAudioPlayer: class {
     // Notifications
     var notificationDisposeBag: DisposeBag { get set }
     
-    func setAudio(_ audio: Audio)
+    func setAudio(_ audio: AudioProtocol)
     
     // Binding
     func bindViewModel()

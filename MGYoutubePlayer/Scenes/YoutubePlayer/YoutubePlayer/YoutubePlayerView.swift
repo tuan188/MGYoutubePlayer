@@ -15,7 +15,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
     // MARK: - Properties
     
     private var disposeBag = DisposeBag()
-    private let loadTrigger = PublishSubject<Video>()
+    private let loadTrigger = PublishSubject<VideoProtocol>()
     private let stopTrigger = PublishSubject<Void>()
     private let seekTrigger = PublishSubject<YoutubePlayerViewModel.SeekState>()
     
@@ -61,7 +61,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
         print("YoutubePlayerView deinit")
     }
     
-    func load(video: Video) {
+    func load(video: VideoProtocol) {
         if player == nil {
             configPlayer()
         } else {
@@ -195,7 +195,7 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
     }
     
     private func stopOtherPlayers() {
-        NotificationCenter.default.post(name: .stopYoutubeMiniPlayer, object: player?.video)
+        NotificationCenter.default.post(name: .stopYoutubeMiniPlayer, object: player?.video?.id)
         NotificationCenter.default.post(name: .stopAudioMiniPlayer, object: nil)
     }
     

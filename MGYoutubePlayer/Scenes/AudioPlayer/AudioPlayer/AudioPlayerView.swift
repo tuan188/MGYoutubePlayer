@@ -16,8 +16,8 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
     @IBOutlet weak var slider: ProgressSlider!
     @IBOutlet weak var remainingTimeLabel: UILabel!
     
-    private let setAudioTrigger = PublishSubject<Audio>()
-    private let loadTrigger = PublishSubject<Audio>()
+    private let setAudioTrigger = PublishSubject<AudioProtocol>()
+    private let loadTrigger = PublishSubject<AudioProtocol>()
     private let stopTrigger = PublishSubject<Void>()
     private let seekTrigger = PublishSubject<AudioPlayerViewModel.SeekState>()
     private var disposeBag = DisposeBag()
@@ -72,7 +72,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
             .disposed(by: rx.disposeBag)
     }
     
-    func load(audio: Audio) {
+    func load(audio: AudioProtocol) {
         if player == nil {
             configPlayer()
         } else {
@@ -92,7 +92,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
     
     // MARK: - HavingAudioPlayer
     
-    func setAudio(_ audio: Audio) {
+    func setAudio(_ audio: AudioProtocol) {
         setAudioTrigger.onNext(audio)
     }
     
@@ -182,7 +182,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
         
         output.isReady
             .drive(onNext: { [unowned self] isReady in
-                print("Ready:", isReady)
+                print("Audio Player Ready:", isReady)
                 self.playButton.isEnabled = isReady
                 self.slider.isEnabled = isReady
                 self.playTimeLabel.isHidden = !isReady
@@ -246,7 +246,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
     }
     
     private func stopOtherPlayers() {
-        NotificationCenter.default.post(name: .stopAudioMiniPlayer, object: player?.audio)
+        NotificationCenter.default.post(name: .stopAudioMiniPlayer, object: player?.audio?.url)
         NotificationCenter.default.post(name: .stopYoutubeMiniPlayer, object: nil)
     }
     

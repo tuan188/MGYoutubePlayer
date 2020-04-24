@@ -17,7 +17,7 @@ struct YoutubePlayerViewModel: ViewModelType {
     }
     
     struct Input {
-        let loadTrigger: Driver<Video>
+        let loadTrigger: Driver<VideoProtocol>
         let playTrigger: Driver<Void>
         let stopTrigger: Driver<Void>
         let seekTrigger: Driver<YoutubePlayerViewModel.SeekState>
@@ -30,7 +30,7 @@ struct YoutubePlayerViewModel: ViewModelType {
     }
     
     struct Output {
-        let load: Driver<Video>
+        let load: Driver<VideoProtocol>
         let play: Driver<Void>
         let pause: Driver<Void>
         let stop: Driver<Void>

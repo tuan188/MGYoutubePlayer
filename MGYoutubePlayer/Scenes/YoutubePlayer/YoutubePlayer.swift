@@ -26,7 +26,7 @@ final class YoutubePlayer: NSObject {
     
     var shouldRequestDurationChanges = false
     private(set) var playerView: WKYTPlayerView?
-    private(set) var video: Video?
+    private(set) var video: VideoProtocol?
     
     var playTime: Float {
         return _playTime.value
@@ -113,7 +113,7 @@ final class YoutubePlayer: NSObject {
         player.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
     }
     
-    func load(video: Video) {
+    func load(video: VideoProtocol) {
         let playerVars = [
             "autohide": 0,
             "controls": 0,
@@ -128,7 +128,7 @@ final class YoutubePlayer: NSObject {
         load(video: video, playerVars: playerVars)
     }
     
-    func load(video: Video, playerVars: [String: Any]) {
+    func load(video: VideoProtocol, playerVars: [String: Any]) {
         resetStats()
         self.video = video
         

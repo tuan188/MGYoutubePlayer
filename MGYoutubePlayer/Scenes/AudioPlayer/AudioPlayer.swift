@@ -20,7 +20,7 @@ final class AudioPlayer: NSObject {
     // MARK: - Public properties
     
     private(set) var player = AVPlayer()
-    private(set) var audio: Audio?
+    private(set) var audio: AudioProtocol?
     
     var playTime: Double {
         return _playTime.value
@@ -122,7 +122,7 @@ final class AudioPlayer: NSObject {
         }
     }
     
-    func load(audio: Audio) {
+    func load(audio: AudioProtocol) {
         guard let url = URL(string: audio.url) else { return }
         resetStats()
         self.audio = audio

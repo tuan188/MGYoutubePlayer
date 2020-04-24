@@ -15,8 +15,8 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
 
-    private let loadTrigger = PublishSubject<Audio>()
-    private let setAudioTrigger = PublishSubject<Audio>()
+    private let loadTrigger = PublishSubject<AudioProtocol>()
+    private let setAudioTrigger = PublishSubject<AudioProtocol>()
     private var disposeBag = DisposeBag()
     
     // HavingAudioPlayer
@@ -64,7 +64,7 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         print("AudioMiniPlayerView deinit")
     }
     
-    func load(audio: Audio) {
+    func load(audio: AudioProtocol) {
         loadTrigger.onNext(audio)
     }
     
@@ -79,7 +79,7 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
     
     // MARK: - HavingAudioPlayer
     
-    func setAudio(_ audio: Audio) {
+    func setAudio(_ audio: AudioProtocol) {
         
     }
     
@@ -91,7 +91,7 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         disposeBag = DisposeBag()
         
         let stopTrigger = NotificationCenter.default.rx.notification(.stopAudioMiniPlayer)
-            .map { $0.object as? Audio }
+            .map { $0.object as? String }
             .asDriverOnErrorJustComplete()
         
         let input = AudioMiniPlayerViewModel.Input(
