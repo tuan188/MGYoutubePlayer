@@ -15,11 +15,12 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
 
-    private var disposeBag = DisposeBag()
     private let loadTrigger = PublishSubject<Audio>()
     private let setAudioTrigger = PublishSubject<Audio>()
+    private var disposeBag = DisposeBag()
     
     // HavingAudioPlayer
+    var notificationDisposeBag = DisposeBag()
     var player: AudioPlayer?
     var playTarget: Any?
     var pauseTarget: Any?
@@ -179,6 +180,11 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
                     image = UIImage.pause
                 case .playing:
                     image = UIImage.pause
+                    
+                    // Notifications
+                    self.registerInterruptionAndRouteChangeNotifications()
+                    
+                    // Info Center
                     self.removeTargetRemoteTransportControls()
                     self.setupRemoteTransportControls()
                     
@@ -196,6 +202,7 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
     
     func unbindViewModel() {
         disposeBag = DisposeBag()
+        notificationDisposeBag = DisposeBag()
     }
     
     private func updateNowPlayingInfoCenter(for player: AudioPlayer) {

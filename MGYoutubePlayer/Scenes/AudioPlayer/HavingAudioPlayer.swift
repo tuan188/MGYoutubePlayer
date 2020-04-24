@@ -18,6 +18,9 @@ protocol HavingAudioPlayer: class {
     var forwardTarget: Any? { get set }
     var changePositionTarget: Any? { get set }
     
+    // Notifications
+    var notificationDisposeBag: DisposeBag { get set }
+    
     func setAudio(_ audio: Audio)
     
     // Binding
@@ -144,5 +147,78 @@ extension HavingAudioPlayer {
 //        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1.0
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+}
+
+// MARK: - Notification Handlers
+extension HavingAudioPlayer {
+    
+    func registerInterruptionAndRouteChangeNotifications() {
+        // Dispose current subscriptions
+        notificationDisposeBag = DisposeBag()
+        
+        NotificationCenter.default.rx.notification(AVAudioSession.interruptionNotification)
+            .subscribe(onNext: handleInterruption(notification:))
+            .disposed(by: notificationDisposeBag)
+        
+        NotificationCenter.default.rx.notification(AVAudioSession.routeChangeNotification)
+            .subscribe(onNext: handleRouteChange(notification:))
+            .disposed(by: notificationDisposeBag)
+    }
+    
+    private func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+            let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+                return
+        }
+        switch type {
+        case .began:
+            var shouldPause = true
+            if #available(iOS 10.3, *),
+                (notification.userInfo?[AVAudioSessionInterruptionWasSuspendedKey] as? UInt ) != nil {
+                shouldPause = false
+            }
+            if shouldPause {
+                stop()
+            }
+        case .ended:
+            if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
+                let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                if options.contains(.shouldResume) {
+                    print("Interruption Ended - playback should resume")
+                    play()
+                } else {
+                    print("Interruption Ended - playback should NOT resume")
+                }
+            }
+        @unknown default:
+            break
+        }
+    }
+    
+    private func handleRouteChange(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+            let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
+                return
+        }
+        switch reason {
+        case .newDeviceAvailable:
+            let session = AVAudioSession.sharedInstance()
+            for output in session.currentRoute.outputs where output.portType == AVAudioSession.Port.headphones {
+                print("headphones connected")
+            }
+        case .oldDeviceUnavailable:
+            if let previousRoute =
+                userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
+                for output in previousRoute.outputs where output.portType == AVAudioSession.Port.headphones {
+                    print("headphones disconnected")
+                    stop()
+                }
+            }
+        default:
+            break
+        }
     }
 }

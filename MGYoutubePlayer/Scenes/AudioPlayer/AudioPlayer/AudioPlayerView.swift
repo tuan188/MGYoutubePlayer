@@ -16,13 +16,14 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
     @IBOutlet weak var slider: ProgressSlider!
     @IBOutlet weak var remainingTimeLabel: UILabel!
     
-    private var disposeBag = DisposeBag()
     private let setAudioTrigger = PublishSubject<Audio>()
     private let loadTrigger = PublishSubject<Audio>()
     private let stopTrigger = PublishSubject<Void>()
     private let seekTrigger = PublishSubject<AudioPlayerViewModel.SeekState>()
+    private var disposeBag = DisposeBag()
     
     // HavingAudioPlayer
+    var notificationDisposeBag = DisposeBag()
     var player: AudioPlayer?
     var playTarget: Any?
     var pauseTarget: Any?
@@ -148,6 +149,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
         output.stop
             .drive(onNext: { [unowned self] in
                 self.player?.stop()
+                self.removeTargetRemoteTransportControls()
             })
             .disposed(by: disposeBag)
         
@@ -205,7 +207,13 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
                     image = UIImage.pause
                 case .playing:
                     image = UIImage.pause
+                    
                     self.stopOtherPlayers()
+                    
+                    // Notifications
+                    self.registerInterruptionAndRouteChangeNotifications()
+                    
+                    // Info Center
                     self.removeTargetRemoteTransportControls()
                     self.setupRemoteTransportControls()
                     
@@ -234,6 +242,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
     
     func unbindViewModel() {
         disposeBag = DisposeBag()
+        notificationDisposeBag = DisposeBag()
     }
     
     private func stopOtherPlayers() {
