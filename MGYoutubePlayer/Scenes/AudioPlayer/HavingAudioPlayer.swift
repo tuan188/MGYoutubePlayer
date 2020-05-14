@@ -85,12 +85,12 @@ extension HavingAudioPlayer {
     
     func backward(time: Double) {
         guard let player = player else { return }
-        seekTo(time: max(player.playTime - 15, 0.0))
+        seekTo(time: max(player.playTime - time, 0.0))
     }
     
     func forward(time: Double) {
         guard let player = player else { return }
-        seekTo(time: min(player.playTime + 30, player.duration))
+        seekTo(time: min(player.playTime + time, player.duration))
     }
 }
 
