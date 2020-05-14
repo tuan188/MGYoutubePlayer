@@ -11,7 +11,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YoutubePlayerControlBarView" customModule="MGYoutubePlayer" customModuleProvider="target">
             <connections>
                 <outlet property="activityIndicatorView" destination="7nY-KL-Xpn" id="v69-tq-Gdr"/>
-                <outlet property="fullscreenButton" destination="4ff-0M-BkR" id="8ht-t1-Tmz"/>
                 <outlet property="playButton" destination="FOZ-me-pHJ" id="ISh-5A-x2u"/>
                 <outlet property="playTimeLabel" destination="Vin-6b-u9f" id="ehR-9Y-xT3"/>
                 <outlet property="remainingTimeLabel" destination="JJo-Xg-2UJ" id="sGa-Na-SBm"/>
@@ -61,10 +60,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="rPD-lr-vyP" customClass="ProgressSlider" customModule="MGYoutubePlayer" customModuleProvider="target">
-                            <rect key="frame" x="104" y="0.0" width="215" height="33"/>
+                            <rect key="frame" x="104" y="0.0" width="253" height="33"/>
                         </slider>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JJo-Xg-2UJ">
-                            <rect key="frame" x="323" y="0.0" width="41" height="32"/>
+                            <rect key="frame" x="361" y="0.0" width="41" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="41" id="srO-Te-IHZ"/>
                             </constraints>
@@ -72,15 +71,6 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ff-0M-BkR">
-                            <rect key="frame" x="370" y="0.0" width="32" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="32" id="cOL-G8-aRJ"/>
-                            </constraints>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <inset key="imageEdgeInsets" minX="7" minY="7" maxX="7" maxY="7"/>
-                            <state key="normal" image="fullscreen"/>
-                        </button>
                     </subviews>
                 </stackView>
             </subviews>
@@ -101,7 +91,6 @@
         </view>
     </objects>
     <resources>
-        <image name="fullscreen" width="25" height="25"/>
         <image name="play" width="25" height="25"/>
     </resources>
 </document>

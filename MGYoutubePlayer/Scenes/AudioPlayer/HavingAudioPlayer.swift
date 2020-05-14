@@ -26,6 +26,9 @@ protocol HavingAudioPlayer: class {
     // Binding
     func bindViewModel()
     func unbindViewModel()
+    
+    // Now playing
+    func updateNowPlaying()
 }
 
 extension HavingAudioPlayer {
@@ -38,8 +41,28 @@ extension HavingAudioPlayer {
     }
     
     func movePlayer(to object: HavingAudioPlayer) {
+        // Return player from miniplayer to its owner
+        if let miniPlayer = object as? AudioMiniPlayerView,
+            let owner = miniPlayer.player?.owner {
+            miniPlayer.movePlayer(to: owner)
+        }
+        
+        // transfer player
         object.player = player
         object.bindViewModel()
+        
+        // Set new owner for player
+        if self is AudioMiniPlayerView,
+            let playerView = object as? AudioPlayerView {
+            player?.owner = playerView
+        }
+        
+        // register
+        object.cleanup()
+        object.registerInterruptionAndRouteChangeNotifications()
+        object.setupRemoteTransportControls()
+        
+        // clean up
         player = nil
         unbindViewModel()
     }
@@ -99,15 +122,18 @@ extension HavingAudioPlayer {
             return .success
         }
         
-        backwardTarget = commandCenter.previousTrackCommand.addTarget { [weak self] _ in
+        commandCenter.skipForwardCommand.preferredIntervals = [NSNumber(15)]
+        commandCenter.skipBackwardCommand.preferredIntervals = [NSNumber(15)]
+        
+        backwardTarget = commandCenter.skipBackwardCommand.addTarget { [weak self] _ in
             guard let self = self else { return .commandFailed }
             self.backward(time: 15)
             return .success
         }
         
-        forwardTarget = commandCenter.nextTrackCommand.addTarget { [weak self] _ in
+        forwardTarget = commandCenter.skipForwardCommand.addTarget { [weak self] _ in
             guard let self = self else { return .commandFailed }
-            self.forward(time: 30)
+            self.forward(time: 15)
             return .success
         }
     }
@@ -121,11 +147,14 @@ extension HavingAudioPlayer {
         commandCenter.nextTrackCommand.removeTarget(forwardTarget)
     }
     
-    func updateNowPlayingInfoCenter(title: String? = nil,
+    func updateNowPlayingInfoCenter(isPlaying: Bool,
+                                    title: String? = nil,
                                     playTime: Double? = nil,
                                     duration: Double? = nil,
                                     artWorkImage: UIImage? = nil) {
         var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo ?? [String: Any]()
+        
+        guard isPlaying || title == nowPlayingInfo[MPMediaItemPropertyTitle] as? String else { return }
         
         if let title = title {
             nowPlayingInfo[MPMediaItemPropertyTitle] = title
@@ -144,9 +173,12 @@ extension HavingAudioPlayer {
                                                                             requestHandler: { _ in artWorkImage })
         }
         
-//        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1.0
-        
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isPlaying ? player?.player.rate : 0.0
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    func resetNowPlayingInfoCenter() {
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
     }
 }
 
@@ -154,9 +186,6 @@ extension HavingAudioPlayer {
 extension HavingAudioPlayer {
     
     func registerInterruptionAndRouteChangeNotifications() {
-        // Dispose current subscriptions
-        notificationDisposeBag = DisposeBag()
-        
         NotificationCenter.default.rx.notification(AVAudioSession.interruptionNotification)
             .subscribe(onNext: handleInterruption(notification:))
             .disposed(by: notificationDisposeBag)
@@ -166,12 +195,17 @@ extension HavingAudioPlayer {
             .disposed(by: notificationDisposeBag)
     }
     
+    func unregisterInterruptionAndRouteChangeNotifications() {
+        notificationDisposeBag = DisposeBag()
+    }
+    
     private func handleInterruption(notification: Notification) {
         guard let userInfo = notification.userInfo,
             let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
             let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
                 return
         }
+        
         switch type {
         case .began:
             var shouldPause = true
@@ -179,8 +213,9 @@ extension HavingAudioPlayer {
                 (notification.userInfo?[AVAudioSessionInterruptionWasSuspendedKey] as? UInt ) != nil {
                 shouldPause = false
             }
+            
             if shouldPause {
-                stop()
+                pause()
             }
         case .ended:
             if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
@@ -214,11 +249,18 @@ extension HavingAudioPlayer {
                 userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
                 for output in previousRoute.outputs where output.portType == AVAudioSession.Port.headphones {
                     print("headphones disconnected")
-                    stop()
+                    pause()
                 }
             }
         default:
             break
         }
+    }
+}
+
+extension HavingAudioPlayer {
+    func cleanup() {
+        removeTargetRemoteTransportControls()
+        unregisterInterruptionAndRouteChangeNotifications()
     }
 }

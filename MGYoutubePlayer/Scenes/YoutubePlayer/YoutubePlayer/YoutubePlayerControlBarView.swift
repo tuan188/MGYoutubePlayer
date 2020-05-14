@@ -14,7 +14,6 @@ final class YoutubePlayerControlBarView: UIView, NibOwnerLoadable {
     @IBOutlet weak var playTimeLabel: UILabel!
     @IBOutlet weak var slider: ProgressSlider!
     @IBOutlet weak var remainingTimeLabel: UILabel!
-    @IBOutlet weak var fullscreenButton: UIButton!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

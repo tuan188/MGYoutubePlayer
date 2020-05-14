@@ -79,6 +79,8 @@ final class YoutubePlayerView: UIView, NibOwnerLoadable, HavingYoutubePlayer {
         
         // Binding
         bindViewModel()
+        
+        controlBarView.isHidden = true
     }
     
     func bindViewModel() {

@@ -30,10 +30,13 @@ extension UITabBarController {
         
         let miniPlayer = AudioMiniPlayerView.loadFromNib()
         miniPlayer.isUserInteractionEnabled = true
-        miniPlayer.closeAction = { [weak self, miniPlayer] in
-            miniPlayer.stop()
-            miniPlayer.removeTargetRemoteTransportControls()
+        miniPlayer.closeAction = { [weak self, weak miniPlayer] in
             self?.hideAudioMiniPlayer()
+            miniPlayer?.stop()
+            miniPlayer?.cleanup()
+            miniPlayer?.resetNowPlayingInfoCenter()
+            miniPlayer?.unbindViewModel()
+            miniPlayer?.player = nil
         }
         
         // shadow
@@ -68,17 +71,9 @@ extension UITabBarController {
         audioMiniPlayerBottomConstraint?.constant = AudioMiniPlayerView.Configuration.default.hiddenBottomMargin
         view.setNeedsUpdateConstraints()
         
-        func setMiniPlayerAlpha() {
-            audioMiniPlayer?.alpha = 0
-            view.layoutIfNeeded()
-        }
-        
-        if animated {
-            UIView.animate(withDuration: 0.33) {
-                setMiniPlayerAlpha()
-            }
-        } else {
-            setMiniPlayerAlpha()
+        UIView.animate(withDuration: animated ? 0.33 : 0) {
+            self.audioMiniPlayer?.alpha = 0
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -86,17 +81,9 @@ extension UITabBarController {
         audioMiniPlayerBottomConstraint?.constant = AudioMiniPlayerView.Configuration.default.bottomMargin
         view.setNeedsUpdateConstraints()
         
-        func setMiniPlayerAlpha() {
-            audioMiniPlayer?.alpha = 1
-            view.layoutIfNeeded()
-        }
-        
-        if animated {
-            UIView.animate(withDuration: 0.33) {
-                setMiniPlayerAlpha()
-            }
-        } else {
-            setMiniPlayerAlpha()
+        UIView.animate(withDuration: animated ? 0.33 : 0) {
+            self.audioMiniPlayer?.alpha = 1
+            self.view.layoutIfNeeded()
         }
     }
 }

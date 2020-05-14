@@ -115,15 +115,15 @@ final class YoutubePlayer: NSObject {
     
     func load(video: VideoProtocol) {
         let playerVars = [
-            "autohide": 0,
-            "controls": 0,
-            "playsinline": 1,
-            "showinfo": 0,
-            "rel": 0,
-            "modestbranding": 1,
-            "iv_load_policy": 3
-            //"theme" : "dark"
-            //"autoplay"     : 1
+            "modestbranding": "1",
+            "controls": "1",
+            "playsinline": "1",
+            "autohide": "1",
+            "autoplay": "0",
+            "fs": "1",
+            "loop": "0",
+            "enablejsapi": "1",
+            "iv_load_policy": "3"
         ]
         load(video: video, playerVars: playerVars)
     }

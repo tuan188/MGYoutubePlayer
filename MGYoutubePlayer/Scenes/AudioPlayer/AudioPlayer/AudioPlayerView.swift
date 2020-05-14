@@ -79,12 +79,18 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
             bindViewModel()
         }
         
-        loadTrigger.onNext(audio)
+        if player?.audio?.audioUrl != audio.audioUrl {
+            loadTrigger.onNext(audio)
+        } else {
+            // update info
+            setAudio(audio)
+        }
     }
     
     private func configPlayer() {
         // Init player
         self.player = AudioPlayer()
+        self.player?.owner = self
         
         // Binding
         bindViewModel()
@@ -94,6 +100,20 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
     
     func setAudio(_ audio: AudioProtocol) {
         setAudioTrigger.onNext(audio)
+    }
+    
+    func updateNowPlaying() {
+        guard let player = self.player,
+            let audio = player.audio
+            else { return }
+        
+        self.updateNowPlayingInfoCenter(
+            isPlaying: player.isPlaying,
+            title: audio.title,
+            playTime: player.playTime,
+            duration: player.duration,
+            artWorkImage: coverImageView.image
+        )
     }
     
     // MARK: - Bindings
@@ -149,14 +169,14 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
         output.stop
             .drive(onNext: { [unowned self] in
                 self.player?.stop()
-                self.removeTargetRemoteTransportControls()
+                self.cleanup()
             })
             .disposed(by: disposeBag)
         
         output.duration
             .drive(onNext: { [unowned self] duration in
                 self.slider.maximumValue = Float(duration)
-                self.updateNowPlayingInfoCenter(duration: duration)
+                self.updateNowPlaying()
             })
             .disposed(by: disposeBag)
         
@@ -176,7 +196,7 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
             .drive(onNext: { [unowned self] playTime in
                 self.slider.value = Float(playTime)
                 self.playTimeLabel.text = playTime.toMMSS()
-                self.updateNowPlayingInfoCenter(playTime: playTime)
+                self.updateNowPlaying()
             })
             .disposed(by: disposeBag)
         
@@ -196,34 +216,43 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
             })
             .disposed(by: disposeBag)
         
-        output.state
-            .drive(onNext: { [unowned self] state in
+        Driver.combineLatest(output.isReady, output.state)
+            .drive(onNext: { [unowned self] isReady, state in
                 print("Audio Player", state)
                 
                 let image: UIImage?
                 
                 switch state {
                 case .waiting:
+                    if isReady {
+                        self.activityIndicatorView.startAnimating()
+                    }
+                    
                     image = UIImage.pause
                 case .playing:
+                    if isReady {
+                        self.activityIndicatorView.stopAnimating()
+                    }
+                    
                     image = UIImage.pause
                     
                     self.stopOtherPlayers()
+                    self.cleanup()
                     
                     // Notifications
                     self.registerInterruptionAndRouteChangeNotifications()
                     
                     // Info Center
-                    self.removeTargetRemoteTransportControls()
                     self.setupRemoteTransportControls()
-                    
-                    if let player = self.player {
-                        self.updateNowPlayingInfoCenter(for: player)
-                    }
                 default:
+                    if isReady {
+                        self.activityIndicatorView.stopAnimating()
+                    }
+                    
                     image = UIImage.play
                 }
                 
+                self.updateNowPlaying()
                 self.playButton.setImage(image, for: .normal)
             })
             .disposed(by: disposeBag)
@@ -234,7 +263,6 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
                 self.player?.seek(to: time, completion: { (success) in
                     print("seek success:", success)
                     self.seekTrigger.onNext(.none)
-                    self.player?.play()
                 })
             })
             .disposed(by: disposeBag)
@@ -249,21 +277,4 @@ final class AudioPlayerView: UIView, NibOwnerLoadable, HavingAudioPlayer {
         NotificationCenter.default.post(name: .stopAudioMiniPlayer, object: player?.audio?.audioUrl)
         NotificationCenter.default.post(name: .stopYoutubeMiniPlayer, object: nil)
     }
-    
-    private func updateNowPlayingInfoCenter(for player: AudioPlayer) {
-        self.updateNowPlayingInfoCenter(playTime: player.playTime, duration: player.duration)
-        self.updateNowPlayingInfoCenter(artWorkImage: coverImageView.image)
-        
-        guard let audio = player.audio else { return }
-        
-        updateNowPlayingInfoCenter(title: audio.title)
-        
-        SDWebImageManager.shared.loadImage(with: URL(string: audio.artworkUrl),
-                                           progress: nil) { [weak self] (image, _, error, _, _, _) in
-            if error == nil {
-                self?.updateNowPlayingInfoCenter(artWorkImage: image)
-            }
-        }
-    }
-
 }

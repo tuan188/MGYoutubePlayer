@@ -67,17 +67,9 @@ extension UITabBarController {
         youtubeMiniPlayerBottomConstraint?.constant = YoutubeMiniPlayerView.Configuration.default.hiddenBottomMargin
         view.setNeedsUpdateConstraints()
         
-        func setMiniPlayerAlpha() {
-            youtubeMiniPlayer?.alpha = 0
-            view.layoutIfNeeded()
-        }
-        
-        if animated {
-            UIView.animate(withDuration: 0.33) {
-                setMiniPlayerAlpha()
-            }
-        } else {
-            setMiniPlayerAlpha()
+        UIView.animate(withDuration: animated ? 0.33 : 0.0) {
+            self.youtubeMiniPlayer?.alpha = 0
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -85,17 +77,9 @@ extension UITabBarController {
         youtubeMiniPlayerBottomConstraint?.constant = YoutubeMiniPlayerView.Configuration.default.bottomMargin
         view.setNeedsUpdateConstraints()
         
-        func setMiniPlayerAlpha() {
-            youtubeMiniPlayer?.alpha = 1
-            view.layoutIfNeeded()
-        }
-        
-        if animated {
-            UIView.animate(withDuration: 0.33) {
-                setMiniPlayerAlpha()
-            }
-        } else {
-            setMiniPlayerAlpha()
+        UIView.animate(withDuration: animated ? 0.33 : 0.0) {
+            self.youtubeMiniPlayer?.alpha = 1
+            self.view.layoutIfNeeded()
         }
     }
 }

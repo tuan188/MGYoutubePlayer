@@ -83,6 +83,20 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         
     }
     
+    func updateNowPlaying() {
+        guard let player = self.player,
+            let audio = player.audio
+            else { return }
+        
+        self.updateNowPlayingInfoCenter(
+            isPlaying: player.isPlaying,
+            title: audio.title,
+            playTime: player.playTime,
+            duration: player.duration,
+            artWorkImage: imageView.image
+        )
+    }
+    
     // MARK: - Bindings
     
     func bindViewModel() {
@@ -139,14 +153,22 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
         
         output.stop
             .drive(onNext: { [unowned self] in
-                self.player?.stop()
-                self.removeTargetRemoteTransportControls()
+                if let owner = self.player?.owner {
+                    self.player?.pause()
+                    self.movePlayer(to: owner)
+                } else {
+                    self.player?.stop()
+                    self.unbindViewModel()
+                    self.player = nil
+                }
+                
+                self.cleanup()
             })
             .disposed(by: disposeBag)
         
         output.duration
-            .drive(onNext: { [unowned self] duration in
-                self.updateNowPlayingInfoCenter(duration: duration)
+            .drive(onNext: { [unowned self] _ in
+                self.updateNowPlaying()
             })
             .disposed(by: disposeBag)
         
@@ -155,8 +177,8 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
             .disposed(by: disposeBag)
         
         output.playTime
-            .drive(onNext: { [unowned self] playTime in
-                self.updateNowPlayingInfoCenter(playTime: playTime)
+            .drive(onNext: { [unowned self] _ in
+                self.updateNowPlaying()
             })
             .disposed(by: disposeBag)
         
@@ -181,20 +203,18 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
                 case .playing:
                     image = UIImage.pause
                     
+                    self.cleanup()
+                    
                     // Notifications
                     self.registerInterruptionAndRouteChangeNotifications()
                     
                     // Info Center
-                    self.removeTargetRemoteTransportControls()
                     self.setupRemoteTransportControls()
-                    
-                    if let player = self.player {
-                        self.updateNowPlayingInfoCenter(for: player)
-                    }
                 default:
                     image = UIImage.play
                 }
                 
+                self.updateNowPlaying()
                 self.playButton.setImage(image, for: .normal)
             })
             .disposed(by: disposeBag)
@@ -203,20 +223,5 @@ final class AudioMiniPlayerView: UIView, NibLoadable, HavingAudioPlayer {
     func unbindViewModel() {
         disposeBag = DisposeBag()
         notificationDisposeBag = DisposeBag()
-    }
-    
-    private func updateNowPlayingInfoCenter(for player: AudioPlayer) {
-        self.updateNowPlayingInfoCenter(playTime: player.playTime, duration: player.duration)
-        
-        guard let audio = player.audio else { return }
-        
-        updateNowPlayingInfoCenter(title: audio.title)
-        
-        SDWebImageManager.shared.loadImage(with: URL(string: audio.artworkUrl),
-                                           progress: nil) { [weak self] (image, _, error, _, _, _) in
-            if error == nil {
-                self?.updateNowPlayingInfoCenter(artWorkImage: image)
-            }
-        }
     }
 }

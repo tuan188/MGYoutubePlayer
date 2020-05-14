@@ -105,23 +105,22 @@ final class AudioDetailViewController: UIViewController, BindableType {
     }
     
     private func moveAudioToMiniPlayer() {
-        guard playerView.isPlaying,
-            let tabBarController = self.tabBarController ?? MainViewController.shared
+        guard let playerView = self.playerView,
+            let tabBarController = self.tabBarController ?? MainViewController.shared,
+            let miniPlayer = tabBarController.audioMiniPlayer
             else { return }
-
-        if let miniPlayer = tabBarController.audioMiniPlayer,
-            !miniPlayer.isPlaying {
-            playerView.movePlayer(to: miniPlayer)
-        } else {
-            let miniPlayer = tabBarController.addAudioMiniPlayer()
+        
+        if playerView.isPlaying
+            || (playerView.isActive && !miniPlayer.isActive) {
             playerView.movePlayer(to: miniPlayer)
         }
         
-        playerView.removeTargetRemoteTransportControls()
+        playerView.cleanup()
     }
     
     func loadAudio(_ audio: Audio) {
-        guard let tabBarController = self.tabBarController ?? MainViewController.shared else { return }
+        guard let playerView = self.playerView,
+            let tabBarController = self.tabBarController ?? MainViewController.shared else { return }
         
         // if miniplayer exists
         if let miniPlayer = tabBarController.audioMiniPlayer {
@@ -136,12 +135,7 @@ final class AudioDetailViewController: UIViewController, BindableType {
                     // update info
                     playerView.setAudio(audio)
                 }
-            } else if miniPlayer.isActive {
-                // keep playing, init another player and assign to view controller's player view
-                playerView.load(audio: audio)
             } else {
-                // if not playing, move player from mini player to player view, hide mini player and load audio
-                miniPlayer.movePlayer(to: playerView)
                 playerView.load(audio: audio)
             }
         } else {

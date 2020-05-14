@@ -19,6 +19,7 @@ final class AudioPlayer: NSObject {
     
     // MARK: - Public properties
     
+    weak var owner: AudioPlayerView?
     private(set) var player = AVPlayer()
     private(set) var audio: AudioProtocol?
     
