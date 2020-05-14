@@ -32,6 +32,7 @@ extension UITabBarController {
         miniPlayer.isUserInteractionEnabled = true
         miniPlayer.closeAction = { [weak self, weak miniPlayer] in
             self?.hideAudioMiniPlayer()
+            miniPlayer?.pause()
             miniPlayer?.stop()
             miniPlayer?.cleanup()
             miniPlayer?.resetNowPlayingInfoCenter()

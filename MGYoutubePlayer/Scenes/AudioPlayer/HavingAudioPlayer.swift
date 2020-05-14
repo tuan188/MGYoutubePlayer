@@ -100,12 +100,14 @@ extension HavingAudioPlayer {
     func setupRemoteTransportControls() {
         let commandCenter = MPRemoteCommandCenter.shared()
         
+        commandCenter.playCommand.isEnabled = true
         playTarget = commandCenter.playCommand.addTarget { [weak self] _ in
             guard let self = self else { return .commandFailed }
             self.play()
             return .success
         }
         
+        commandCenter.pauseCommand.isEnabled = true
         pauseTarget = commandCenter.pauseCommand.addTarget { [weak self] _ in
             guard let self = self else { return .commandFailed }
             self.pause()
@@ -179,6 +181,11 @@ extension HavingAudioPlayer {
     
     func resetNowPlayingInfoCenter() {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
+        
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.pauseCommand.isEnabled = false
+        commandCenter.playCommand.isEnabled = false
+        
     }
 }
 
